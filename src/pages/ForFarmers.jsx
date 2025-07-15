@@ -1,4 +1,4 @@
-// src/pages/ForFarmer.jsx
+// src/pages/ForFarmers.jsx
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ import {
  * Menyediakan informasi, manfaat, kalkulator potensi karbon, dan FAQ
  * yang relevan bagi petani yang tertarik untuk bergabung.
  */
-const ForFarmer = () => {
+const ForFarmers = () => { // Changed component name to ForFarmers
   const [calculatorData, setCalculatorData] = useState({
     landType: '',
     landSize: '',
@@ -70,6 +70,10 @@ const ForFarmer = () => {
     fotoLahan: null, // For file input
     pernyataanKesediaan: null // For file input
   });
+
+  // State untuk status pengiriman formulir
+  const [submissionStatus, setSubmissionStatus] = useState('idle'); // 'idle', 'loading', 'success', 'error'
+  const [submissionMessage, setSubmissionMessage] = useState('');
 
   /**
    * Menghitung potensi serapan karbon dan nilai ekonomi berdasarkan input petani.
@@ -114,25 +118,6 @@ const ForFarmer = () => {
     });
   };
 
-  // Data untuk dropdown lokasi (contoh)
-  const provinces = ['Aceh', 'Sumatera Utara', 'Jawa Barat', 'Jawa Tengah', 'Jawa Timur', 'Lampung', 'Sulawesi Selatan', 'Maluku', 'Yogyakarta'];
-  const kabupatenKotaByProvinsi = {
-    'Aceh': ['Aceh Tengah', 'Banda Aceh'],
-    'Jawa Barat': ['Bandung', 'Bogor'],
-    'Yogyakarta': ['Sleman', 'Bantul']
-    // ... tambahkan data lain sesuai kebutuhan
-  };
-  const kecamatanByKabupatenKota = {
-    'Aceh Tengah': ['Bies', 'Pegasing'],
-    'Sleman': ['Depok', 'Ngaglik']
-    // ...
-  };
-  const desaKelurahanByKecamatan = {
-    'Bies': ['Bies Mulie', 'Bies Penantanan'],
-    'Depok': ['Condongcatur', 'Maguwoharjo']
-    // ...
-  };
-
   // Data untuk dropdown jenis tumbuhan
   const jenisTumbuhanOptions = [
     'Kopi', 'Kakao', 'Agroforestri', 'Hutan Rakyat', 'Sawit', 'Karet', 'Cengkeh', 'Vanili', 'Lainnya'
@@ -164,38 +149,97 @@ const ForFarmer = () => {
   };
 
   // Fungsi untuk submit formulir pendaftaran
-  const handleRegistrationSubmit = (e) => {
+  const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registration Form submitted:', registrationFormData);
-    // Di sini Anda bisa menambahkan logika untuk mengirim data ke backend
-    alert('Formulir pendaftaran lahan Anda telah terkirim! Tim kami akan segera menghubungi Anda.');
-    // Reset form setelah submit
-    setRegistrationFormData({
-      namaLengkap: '',
-      nomorKTP: '',
-      alamatLengkap: '',
-      namaKelompokTani: '',
-      nomorTelepon: '',
-      email: '',
-      provinsi: '',
-      kabupatenKota: '',
-      kecamatan: '',
-      desaKelurahan: '',
-      nomorDokumenTanah: '',
-      luasLahan: '',
-      satuanLuasLahan: 'hektar',
-      jenisTumbuhan: [],
-      jenisTanamanUtama: '',
-      jenisPohonPenaung: '',
-      tahunTanamPohonPenaung: '',
-      jenisTanah: '',
-      kemiringanLahan: '',
-      riwayatPenggunaanLahan: '',
-      deskripsiAktivitasPertanian: '',
-      statusKepemilikanLahan: '',
-      fotoLahan: null,
-      pernyataanKesediaan: null
-    });
+    setSubmissionStatus('loading');
+    setSubmissionMessage('Mengirim formulir Anda...');
+
+    // URL endpoint REST API WordPress Anda
+    // Anda perlu mengganti ini dengan endpoint yang sebenarnya di WordPress Anda
+    // Contoh: 'https://impactinstitute.asia/wp-json/your-custom-namespace/v1/submit-farmer-form'
+    const wordpressApiEndpoint = 'https://impactinstitute.asia/wp-json/wp/v2/posts'; // Contoh: Mengirim sebagai post baru
+
+    const formData = new FormData();
+    // Menambahkan semua data teks ke FormData
+    for (const key in registrationFormData) {
+      if (registrationFormData.hasOwnProperty(key)) {
+        // Handle array for jenisTumbuhan
+        if (key === 'jenisTumbuhan' && Array.isArray(registrationFormData[key])) {
+          formData.append(key, registrationFormData[key].join(', ')); // Join array into a string
+        } else if (key !== 'fotoLahan' && key !== 'pernyataanKesediaan' && registrationFormData[key] !== null) {
+          formData.append(key, registrationFormData[key]);
+        }
+      }
+    }
+
+    // Menambahkan file foto lahan
+    if (registrationFormData.fotoLahan) {
+      for (let i = 0; i < registrationFormData.fotoLahan.length; i++) {
+        formData.append('foto_lahan[]', registrationFormData.fotoLahan[i]);
+      }
+    }
+
+    // Menambahkan file pernyataan kesediaan
+    if (registrationFormData.pernyataanKesediaan && registrationFormData.pernyataanKesediaan[0]) {
+      formData.append('pernyataan_kesediaan', registrationFormData.pernyataanKesediaan[0]);
+    }
+
+    try {
+      const response = await fetch(wordpressApiEndpoint, {
+        method: 'POST',
+        // Penting: Jangan set Content-Type header secara manual saat menggunakan FormData
+        // Browser akan mengaturnya secara otomatis dengan boundary yang benar
+        body: formData,
+        // Jika WordPress Anda memerlukan otentikasi (misalnya, token JWT atau Basic Auth)
+        // Anda perlu menambahkannya di sini. Contoh:
+        // headers: {
+        //   'Authorization': 'Bearer YOUR_AUTH_TOKEN'
+        // }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Form submission successful:', result);
+        setSubmissionStatus('success');
+        setSubmissionMessage('Formulir pendaftaran lahan Anda telah terkirim! Tim kami akan segera menghubungi Anda.');
+        // Reset form setelah submit sukses
+        setRegistrationFormData({
+          namaLengkap: '',
+          nomorKTP: '',
+          alamatLengkap: '',
+          namaKelompokTani: '',
+          nomorTelepon: '',
+          email: '',
+          provinsi: '',
+          kabupatenKota: '',
+          kecamatan: '',
+          desaKelurahan: '',
+          nomorDokumenTanah: '',
+          luasLahan: '',
+          satuanLuasLahan: 'hektar',
+          jenisTumbuhan: [],
+          jenisTanamanUtama: '',
+          jenisPohonPenaung: '',
+          tahunTanamPohonPenaung: '',
+          jenisTanah: '',
+          kemiringanLahan: '',
+          riwayatPenggunaanLahan: '',
+          deskripsiAktivitasPertanian: '',
+          statusKepemilikanLahan: '',
+          fotoLahan: null,
+          pernyataanKesediaan: null
+        });
+      } else {
+        const errorData = await response.json();
+        console.error('Form submission failed:', response.status, errorData);
+        setSubmissionStatus('error');
+        setSubmissionMessage(`Gagal mengirim formulir: ${errorData.message || 'Terjadi kesalahan.'}`);
+      }
+    } catch (error) {
+      console.error('Error during form submission:', error);
+      setSubmissionStatus('error');
+      setSubmissionMessage(`Terjadi kesalahan jaringan: ${error.message}`);
+    }
   };
 
 
@@ -499,7 +543,7 @@ const ForFarmer = () => {
                   <Label htmlFor="namaLengkap">Nama Lengkap sesuai KTP *</Label>
                   <Input
                     id="namaLengkap"
-                    placeholder="Masukkan nama lengkap Anda"
+                    placeholder="Masukkan nama lengkap Anda sesuai KTP"
                     value={registrationFormData.namaLengkap}
                     onChange={(e) => handleRegistrationInputChange('namaLengkap', e.target.value)}
                     required
@@ -570,78 +614,47 @@ const ForFarmer = () => {
                   </div>
                 </div>
 
-                {/* Lokasi Lahan (Provinsi, Kabupaten/Kota, Kecamatan, Desa/Kelurahan) */}
+                {/* Lokasi Lahan (Provinsi, Kabupaten/Kota, Kecamatan, Desa/Kelurahan) - Changed to Input */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2 text-left">
                     <Label htmlFor="provinsi">Provinsi *</Label>
-                    <Select
+                    <Input
+                      id="provinsi"
+                      placeholder="Masukkan nama Provinsi"
                       value={registrationFormData.provinsi}
-                      onValueChange={(value) => handleRegistrationInputChange('provinsi', value)}
+                      onChange={(e) => handleRegistrationInputChange('provinsi', e.target.value)}
                       required
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih Provinsi" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
-                        {provinces.map(prov => (
-                          <SelectItem key={prov} value={prov}>{prov}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    />
                   </div>
                   <div className="space-y-2 text-left">
                     <Label htmlFor="kabupatenKota">Kabupaten/Kota *</Label>
-                    <Select
+                    <Input
+                      id="kabupatenKota"
+                      placeholder="Masukkan nama Kabupaten/Kota"
                       value={registrationFormData.kabupatenKota}
-                      onValueChange={(value) => handleRegistrationInputChange('kabupatenKota', value)}
-                      disabled={!registrationFormData.provinsi} // Disable if no province selected
+                      onChange={(e) => handleRegistrationInputChange('kabupatenKota', e.target.value)}
                       required
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih Kabupaten/Kota" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
-                        {(kabupatenKotaByProvinsi[registrationFormData.provinsi] || []).map(kab => (
-                          <SelectItem key={kab} value={kab}>{kab}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    />
                   </div>
                   <div className="space-y-2 text-left">
                     <Label htmlFor="kecamatan">Kecamatan *</Label>
-                    <Select
+                    <Input
+                      id="kecamatan"
+                      placeholder="Masukkan nama Kecamatan"
                       value={registrationFormData.kecamatan}
-                      onValueChange={(value) => handleRegistrationInputChange('kecamatan', value)}
-                      disabled={!registrationFormData.kabupatenKota} // Disable if no kab/kota selected
+                      onChange={(e) => handleRegistrationInputChange('kecamatan', e.target.value)}
                       required
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih Kecamatan" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
-                        {(kecamatanByKabupatenKota[registrationFormData.kabupatenKota] || []).map(kec => (
-                          <SelectItem key={kec} value={kec}>{kec}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    />
                   </div>
                   <div className="space-y-2 text-left">
                     <Label htmlFor="desaKelurahan">Desa/Kelurahan *</Label>
-                    <Select
+                    <Input
+                      id="desaKelurahan"
+                      placeholder="Masukkan nama Desa/Kelurahan"
                       value={registrationFormData.desaKelurahan}
-                      onValueChange={(value) => handleRegistrationInputChange('desaKelurahan', value)}
-                      disabled={!registrationFormData.kecamatan} // Disable if no kecamatan selected
+                      onChange={(e) => handleRegistrationInputChange('desaKelurahan', e.target.value)}
                       required
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih Desa/Kelurahan" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
-                        {(desaKelurahanByKecamatan[registrationFormData.kecamatan] || []).map(desa => (
-                          <SelectItem key={desa} value={desa}>{desa}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    />
                   </div>
                 </div>
 
@@ -862,11 +875,22 @@ const ForFarmer = () => {
                   <p className="text-xs text-gray-500">Format PDF atau Word.</p>
                 </div>
 
-                <Button type="submit" className="w-full bg-primary hover:bg-primary-dark">
-                  Kirim Pendaftaran
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button type="submit" className="w-full bg-primary hover:bg-primary-dark" disabled={submissionStatus === 'loading'}>
+                  {submissionStatus === 'loading' ? 'Mengirim...' : 'Kirim Pendaftaran'}
+                  {submissionStatus === 'loading' ? null : <ArrowRight className="ml-2 h-5 w-5" />}
                 </Button>
               </form>
+
+              {/* Submission Status Message */}
+              {submissionMessage && (
+                <div className={`mt-4 p-3 rounded-lg text-sm ${
+                  submissionStatus === 'success' ? 'bg-green-100 text-green-700' :
+                  submissionStatus === 'error' ? 'bg-red-100 text-red-700' :
+                  'bg-blue-100 text-blue-700'
+                }`}>
+                  {submissionMessage}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -901,4 +925,4 @@ const ForFarmer = () => {
   );
 };
 
-export default ForFarmer;
+export default ForFarmers; // Changed export name to ForFarmers
