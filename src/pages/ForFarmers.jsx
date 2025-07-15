@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea'; // Import Textarea component
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
   DollarSign,
   Leaf,
@@ -376,7 +376,7 @@ const ForFarmer = () => {
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih jenis lahan" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                       <SelectItem value="hutan-primer">Hutan Primer</SelectItem>
                       <SelectItem value="hutan-sekunder">Hutan Sekunder</SelectItem>
                       <SelectItem value="agroforestri">Agroforestri</SelectItem>
@@ -416,6 +416,7 @@ const ForFarmer = () => {
                     id="carbonPrice"
                     type="number"
                     step="0.01"
+                    placeholder="Harga karbon saat ini"
                     value={calculatorData.carbonPrice}
                     onChange={(e) => setCalculatorData(prev => ({ ...prev, carbonPrice: parseFloat(e.target.value) }))}
                   />
@@ -581,7 +582,7 @@ const ForFarmer = () => {
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih Provinsi" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                         {provinces.map(prov => (
                           <SelectItem key={prov} value={prov}>{prov}</SelectItem>
                         ))}
@@ -599,7 +600,7 @@ const ForFarmer = () => {
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih Kabupaten/Kota" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                         {(kabupatenKotaByProvinsi[registrationFormData.provinsi] || []).map(kab => (
                           <SelectItem key={kab} value={kab}>{kab}</SelectItem>
                         ))}
@@ -617,7 +618,7 @@ const ForFarmer = () => {
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih Kecamatan" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                         {(kecamatanByKabupatenKota[registrationFormData.kabupatenKota] || []).map(kec => (
                           <SelectItem key={kec} value={kec}>{kec}</SelectItem>
                         ))}
@@ -635,7 +636,7 @@ const ForFarmer = () => {
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih Desa/Kelurahan" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                         {(desaKelurahanByKecamatan[registrationFormData.kecamatan] || []).map(desa => (
                           <SelectItem key={desa} value={desa}>{desa}</SelectItem>
                         ))}
@@ -680,7 +681,7 @@ const ForFarmer = () => {
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih Satuan" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                         <SelectItem value="hektar">Hektar (Ha)</SelectItem>
                         <SelectItem value="meter-persegi">Meter Persegi (m²)</SelectItem>
                         <SelectItem value="are">Are</SelectItem>
@@ -700,7 +701,7 @@ const ForFarmer = () => {
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih jenis tumbuhan" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                       {jenisTumbuhanOptions.map(option => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
@@ -743,7 +744,7 @@ const ForFarmer = () => {
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Tahun" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                       {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
                         <SelectItem key={year} value={String(year)}>{year}</SelectItem>
                       ))}
@@ -762,7 +763,7 @@ const ForFarmer = () => {
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Jenis Tanah" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                       {jenisTanahOptions.map(option => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
@@ -795,7 +796,7 @@ const ForFarmer = () => {
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Riwayat Penggunaan Lahan" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                       {riwayatLahanOptions.map(option => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
@@ -826,7 +827,7 @@ const ForFarmer = () => {
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Status Kepemilikan" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                       {statusKepemilikanOptions.map(option => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
