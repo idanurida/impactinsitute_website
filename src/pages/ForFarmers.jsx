@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea'; // Import Textarea component
 import {
   DollarSign,
   Leaf,
@@ -22,7 +23,9 @@ import {
   PiggyBank,
   Cloud,
   LandPlot,
-  CalendarDays
+  CalendarDays,
+  Upload, // New icon for file upload
+  FileText // New icon for document upload
 } from 'lucide-react';
 
 /**
@@ -39,6 +42,34 @@ const ForFarmer = () => {
   });
 
   const [calculatorResult, setCalculatorResult] = useState(null);
+
+  // State untuk data formulir pendaftaran lahan
+  const [registrationFormData, setRegistrationFormData] = useState({
+    namaLengkap: '',
+    nomorKTP: '',
+    alamatLengkap: '',
+    namaKelompokTani: '',
+    nomorTelepon: '',
+    email: '',
+    provinsi: '',
+    kabupatenKota: '',
+    kecamatan: '',
+    desaKelurahan: '',
+    nomorDokumenTanah: '',
+    luasLahan: '',
+    satuanLuasLahan: 'hektar', // Default satuan
+    jenisTumbuhan: [], // Bisa multiple select atau diisi bebas
+    jenisTanamanUtama: '',
+    jenisPohonPenaung: '',
+    tahunTanamPohonPenaung: '',
+    jenisTanah: '',
+    kemiringanLahan: '',
+    riwayatPenggunaanLahan: '',
+    deskripsiAktivitasPertanian: '',
+    statusKepemilikanLahan: '',
+    fotoLahan: null, // For file input
+    pernyataanKesediaan: null // For file input
+  });
 
   /**
    * Menghitung potensi serapan karbon dan nilai ekonomi berdasarkan input petani.
@@ -82,6 +113,91 @@ const ForFarmer = () => {
       totalValue: totalValueOverProjectLife.toLocaleString('id-ID', { style: 'currency', currency: 'USD' })
     });
   };
+
+  // Data untuk dropdown lokasi (contoh)
+  const provinces = ['Aceh', 'Sumatera Utara', 'Jawa Barat', 'Jawa Tengah', 'Jawa Timur', 'Lampung', 'Sulawesi Selatan', 'Maluku', 'Yogyakarta'];
+  const kabupatenKotaByProvinsi = {
+    'Aceh': ['Aceh Tengah', 'Banda Aceh'],
+    'Jawa Barat': ['Bandung', 'Bogor'],
+    'Yogyakarta': ['Sleman', 'Bantul']
+    // ... tambahkan data lain sesuai kebutuhan
+  };
+  const kecamatanByKabupatenKota = {
+    'Aceh Tengah': ['Bies', 'Pegasing'],
+    'Sleman': ['Depok', 'Ngaglik']
+    // ...
+  };
+  const desaKelurahanByKecamatan = {
+    'Bies': ['Bies Mulie', 'Bies Penantanan'],
+    'Depok': ['Condongcatur', 'Maguwoharjo']
+    // ...
+  };
+
+  // Data untuk dropdown jenis tumbuhan
+  const jenisTumbuhanOptions = [
+    'Kopi', 'Kakao', 'Agroforestri', 'Hutan Rakyat', 'Sawit', 'Karet', 'Cengkeh', 'Vanili', 'Lainnya'
+  ];
+
+  // Data untuk dropdown jenis tanah
+  const jenisTanahOptions = [
+    'Tanah Liat', 'Tanah Berpasir', 'Tanah Gambut', 'Tanah Vulkanik', 'Tanah Aluvial', 'Lainnya'
+  ];
+
+  // Data untuk dropdown riwayat penggunaan lahan
+  const riwayatLahanOptions = [
+    'Kebun', 'Belukar', 'Hutan', 'Sawah', 'Lainnya'
+  ];
+
+  // Data untuk dropdown status kepemilikan lahan
+  const statusKepemilikanOptions = [
+    'Milik Pribadi/Sertifikat', 'Milik Adat', 'SKT (Surat Keterangan Tanah)', 'Sewa/Pinjam', 'Lainnya'
+  ];
+
+  // Fungsi untuk menangani perubahan input formulir pendaftaran
+  const handleRegistrationInputChange = (field, value) => {
+    setRegistrationFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Fungsi untuk menangani perubahan file input
+  const handleFileUpload = (field, files) => {
+    setRegistrationFormData(prev => ({ ...prev, [field]: files }));
+  };
+
+  // Fungsi untuk submit formulir pendaftaran
+  const handleRegistrationSubmit = (e) => {
+    e.preventDefault();
+    console.log('Registration Form submitted:', registrationFormData);
+    // Di sini Anda bisa menambahkan logika untuk mengirim data ke backend
+    alert('Formulir pendaftaran lahan Anda telah terkirim! Tim kami akan segera menghubungi Anda.');
+    // Reset form setelah submit
+    setRegistrationFormData({
+      namaLengkap: '',
+      nomorKTP: '',
+      alamatLengkap: '',
+      namaKelompokTani: '',
+      nomorTelepon: '',
+      email: '',
+      provinsi: '',
+      kabupatenKota: '',
+      kecamatan: '',
+      desaKelurahan: '',
+      nomorDokumenTanah: '',
+      luasLahan: '',
+      satuanLuasLahan: 'hektar',
+      jenisTumbuhan: [],
+      jenisTanamanUtama: '',
+      jenisPohonPenaung: '',
+      tahunTanamPohonPenaung: '',
+      jenisTanah: '',
+      kemiringanLahan: '',
+      riwayatPenggunaanLahan: '',
+      deskripsiAktivitasPertanian: '',
+      statusKepemilikanLahan: '',
+      fotoLahan: null,
+      pernyataanKesediaan: null
+    });
+  };
+
 
   const faqs = [
     {
@@ -375,50 +491,381 @@ const ForFarmer = () => {
               <CardTitle>Formulir Pendaftaran Lahan</CardTitle>
               <CardDescription>Tim kami akan menghubungi Anda setelah menerima formulir.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="namaLengkap">Nama Lengkap</Label>
-                  <Input id="namaLengkap" placeholder="Masukkan nama lengkap Anda" />
+            <CardContent className="space-y-6"> {/* Increased spacing for better look */}
+              <form onSubmit={handleRegistrationSubmit} className="space-y-6">
+                {/* Nama Lengkap sesuai KTP */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="namaLengkap">Nama Lengkap sesuai KTP *</Label>
+                  <Input
+                    id="namaLengkap"
+                    placeholder="Masukkan nama lengkap Anda"
+                    value={registrationFormData.namaLengkap}
+                    onChange={(e) => handleRegistrationInputChange('namaLengkap', e.target.value)}
+                    required
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Masukkan alamat email Anda" />
+
+                {/* Nomor KTP */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="nomorKTP">Nomor KTP *</Label>
+                  <Input
+                    id="nomorKTP"
+                    type="text"
+                    placeholder="Masukkan 16 digit Nomor KTP Anda"
+                    value={registrationFormData.nomorKTP}
+                    onChange={(e) => handleRegistrationInputChange('nomorKTP', e.target.value)}
+                    maxLength={16}
+                    required
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="telepon">Nomor Telepon</Label>
-                  <Input id="telepon" type="tel" placeholder="Masukkan nomor telepon" />
+
+                {/* Alamat Lengkap */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="alamatLengkap">Alamat Lengkap *</Label>
+                  <Textarea
+                    id="alamatLengkap"
+                    placeholder="Masukkan alamat lengkap Anda (Jalan, Nomor, RT/RW, Kelurahan, Kecamatan, Kota, Provinsi, Kode Pos)"
+                    rows={3}
+                    value={registrationFormData.alamatLengkap}
+                    onChange={(e) => handleRegistrationInputChange('alamatLengkap', e.target.value)}
+                    required
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lokasiLahan">Lokasi Lahan (Provinsi/Kabupaten)</Label>
-                  <Input id="lokasiLahan" placeholder="Contoh: Aceh Tengah" />
+
+                {/* Nama Kelompok Tani/Koperasi */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="namaKelompokTani">Nama Kelompok Tani/Koperasi (Opsional)</Label>
+                  <Input
+                    id="namaKelompokTani"
+                    placeholder="Jika tergabung dalam kelompok tani/koperasi"
+                    value={registrationFormData.namaKelompokTani}
+                    onChange={(e) => handleRegistrationInputChange('namaKelompokTani', e.target.value)}
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="luasLahanForm">Luas Lahan (Hektar)</Label>
-                  <Input id="luasLahanForm" type="number" placeholder="Contoh: 10" />
+
+                {/* Informasi Kontak (Nomor Telepon/WhatsApp, Email) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="nomorTelepon">Nomor Telepon/WhatsApp *</Label>
+                    <Input
+                      id="nomorTelepon"
+                      type="tel"
+                      placeholder="Contoh: +6281234567890"
+                      value={registrationFormData.nomorTelepon}
+                      onChange={(e) => handleRegistrationInputChange('nomorTelepon', e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="email">Email *</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="nama@contoh.com"
+                      value={registrationFormData.email}
+                      onChange={(e) => handleRegistrationInputChange('email', e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="jenisLahanForm">Jenis Tutupan Lahan</Label>
-                  <Select>
+
+                {/* Lokasi Lahan (Provinsi, Kabupaten/Kota, Kecamatan, Desa/Kelurahan) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="provinsi">Provinsi *</Label>
+                    <Select
+                      value={registrationFormData.provinsi}
+                      onValueChange={(value) => handleRegistrationInputChange('provinsi', value)}
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih Provinsi" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {provinces.map(prov => (
+                          <SelectItem key={prov} value={prov}>{prov}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="kabupatenKota">Kabupaten/Kota *</Label>
+                    <Select
+                      value={registrationFormData.kabupatenKota}
+                      onValueChange={(value) => handleRegistrationInputChange('kabupatenKota', value)}
+                      disabled={!registrationFormData.provinsi} // Disable if no province selected
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih Kabupaten/Kota" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {(kabupatenKotaByProvinsi[registrationFormData.provinsi] || []).map(kab => (
+                          <SelectItem key={kab} value={kab}>{kab}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="kecamatan">Kecamatan *</Label>
+                    <Select
+                      value={registrationFormData.kecamatan}
+                      onValueChange={(value) => handleRegistrationInputChange('kecamatan', value)}
+                      disabled={!registrationFormData.kabupatenKota} // Disable if no kab/kota selected
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih Kecamatan" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {(kecamatanByKabupatenKota[registrationFormData.kabupatenKota] || []).map(kec => (
+                          <SelectItem key={kec} value={kec}>{kec}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="desaKelurahan">Desa/Kelurahan *</Label>
+                    <Select
+                      value={registrationFormData.desaKelurahan}
+                      onValueChange={(value) => handleRegistrationInputChange('desaKelurahan', value)}
+                      disabled={!registrationFormData.kecamatan} // Disable if no kecamatan selected
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih Desa/Kelurahan" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {(desaKelurahanByKecamatan[registrationFormData.kecamatan] || []).map(desa => (
+                          <SelectItem key={desa} value={desa}>{desa}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Nomor Dokumen Kepemilikan Tanah/lahan */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="nomorDokumenTanah">Nomor Dokumen Kepemilikan Tanah/Lahan *</Label>
+                  <Input
+                    id="nomorDokumenTanah"
+                    placeholder="Contoh: SHM 12345 / SKT 67890"
+                    value={registrationFormData.nomorDokumenTanah}
+                    onChange={(e) => handleRegistrationInputChange('nomorDokumenTanah', e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Luas Lahan (dalam Hektar atau satuan lain yang relevan) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="luasLahan">Luas Lahan *</Label>
+                    <Input
+                      id="luasLahan"
+                      type="number"
+                      step="0.01"
+                      placeholder="Masukkan luas lahan"
+                      value={registrationFormData.luasLahan}
+                      onChange={(e) => handleRegistrationInputChange('luasLahan', e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2 text-left">
+                    <Label htmlFor="satuanLuasLahan">Satuan Luas Lahan *</Label>
+                    <Select
+                      value={registrationFormData.satuanLuasLahan}
+                      onValueChange={(value) => handleRegistrationInputChange('satuanLuasLahan', value)}
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih Satuan" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="hektar">Hektar (Ha)</SelectItem>
+                        <SelectItem value="meter-persegi">Meter Persegi (m²)</SelectItem>
+                        <SelectItem value="are">Are</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Jenis Tumbuhan yang Ada/Akan Ditanam */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="jenisTumbuhan">Jenis Tumbuhan yang Ada/Akan Ditanam *</Label>
+                  <Select
+                    value={registrationFormData.jenisTumbuhan[0] || ''} // Mengambil item pertama jika ada, atau string kosong
+                    onValueChange={(value) => handleRegistrationInputChange('jenisTumbuhan', [value])} // Simpan sebagai array
+                    required
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder="Pilih jenis lahan" />
+                      <SelectValue placeholder="Pilih jenis tumbuhan" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="hutan-primer">Hutan Primer</SelectItem>
-                      <SelectItem value="hutan-sekunder">Hutan Sekunder</SelectItem>
-                      <SelectItem value="agroforestri">Agroforestri</SelectItem>
-                      <SelectItem value="perkebunan-kopi">Perkebunan Kopi</SelectItem>
-                      <SelectItem value="perkebunan-karet">Perkebunan Karet</SelectItem>
-                      <SelectItem value="lahan-restorasi">Lahan Restorasi</SelectItem>
-                      <SelectItem value="pertanian-kering">Pertanian Lahan Kering</SelectItem>
+                      {jenisTumbuhanOptions.map(option => (
+                        <SelectItem key={option} value={option}>{option}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
-              <Button className="w-full bg-primary hover:bg-primary-dark">
-                Kirim Pendaftaran
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+
+                {/* Jenis Tanaman Utama */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="jenisTanamanUtama">Jenis Tanaman Utama (Contoh: Kopi Arabika, Kakao Lokal) *</Label>
+                  <Input
+                    id="jenisTanamanUtama"
+                    placeholder="Contoh: Kopi Arabika, Kakao Lokal"
+                    value={registrationFormData.jenisTanamanUtama}
+                    onChange={(e) => handleRegistrationInputChange('jenisTanamanUtama', e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Jenis Pohon Penaung */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="jenisPohonPenaung">Jenis Pohon Penaung (Contoh: Lamtoro, Sengon) *</Label>
+                  <Input
+                    id="jenisPohonPenaung"
+                    placeholder="Contoh: Lamtoro, Sengon"
+                    value={registrationFormData.jenisPohonPenaung}
+                    onChange={(e) => handleRegistrationInputChange('jenisPohonPenaung', e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Tahun Tanam Pohon Penaung */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="tahunTanamPohonPenaung">Tahun Tanam Pohon Penaung *</Label>
+                  <Select
+                    value={registrationFormData.tahunTanamPohonPenaung}
+                    onValueChange={(value) => handleRegistrationInputChange('tahunTanamPohonPenaung', value)}
+                    required
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih Tahun" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                        <SelectItem key={year} value={String(year)}>{year}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Jenis Tanah */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="jenisTanah">Jenis Tanah *</Label>
+                  <Select
+                    value={registrationFormData.jenisTanah}
+                    onValueChange={(value) => handleRegistrationInputChange('jenisTanah', value)}
+                    required
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih Jenis Tanah" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {jenisTanahOptions.map(option => (
+                        <SelectItem key={option} value={option}>{option}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Kemiringan lahan dalam (%) */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="kemiringanLahan">Kemiringan Lahan (%) *</Label>
+                  <Input
+                    id="kemiringanLahan"
+                    type="number"
+                    step="0.1"
+                    placeholder="Contoh: 15"
+                    value={registrationFormData.kemiringanLahan}
+                    onChange={(e) => handleRegistrationInputChange('kemiringanLahan', e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Riwayat Penggunaan Lahan sebelumnya */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="riwayatPenggunaanLahan">Riwayat Penggunaan Lahan Sebelumnya *</Label>
+                  <Select
+                    value={registrationFormData.riwayatPenggunaanLahan}
+                    onValueChange={(value) => handleRegistrationInputChange('riwayatPenggunaanLahan', value)}
+                    required
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih Riwayat Penggunaan Lahan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {riwayatLahanOptions.map(option => (
+                        <SelectItem key={option} value={option}>{option}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Deskripsi aktivitas pertanian yang dilakukan */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="deskripsiAktivitasPertanian">Deskripsi Aktivitas Pertanian yang Dilakukan (Pemupukan, Penyiangan, Pengairan, dll.)</Label>
+                  <Textarea
+                    id="deskripsiAktivitasPertanian"
+                    placeholder="Jelaskan aktivitas pertanian yang biasa Anda lakukan di lahan ini."
+                    rows={3}
+                    value={registrationFormData.deskripsiAktivitasPertanian}
+                    onChange={(e) => handleRegistrationInputChange('deskripsiAktivitasPertanian', e.target.value)}
+                  />
+                </div>
+
+                {/* Status Kepemilikan Lahan */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="statusKepemilikanLahan">Status Kepemilikan Lahan *</Label>
+                  <Select
+                    value={registrationFormData.statusKepemilikanLahan}
+                    onValueChange={(value) => handleRegistrationInputChange('statusKepemilikanLahan', value)}
+                    required
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih Status Kepemilikan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {statusKepemilikanOptions.map(option => (
+                        <SelectItem key={option} value={option}>{option}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Upload Foto Lahan */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="fotoLahan">Upload Foto Lahan (minimal 3 foto, JPG/PNG, maks 5MB/foto) *</Label>
+                  <Input
+                    id="fotoLahan"
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                    multiple
+                    onChange={(e) => handleFileUpload('fotoLahan', e.target.files)}
+                    required
+                  />
+                  <p className="text-xs text-gray-500">Minimal 3 foto dari sudut berbeda. Maksimal 5MB per foto.</p>
+                </div>
+
+                {/* Lampirkan pernyataan kesediaan (Kuasa Pengelolaan Penjualan Karbon) */}
+                <div className="space-y-2 text-left">
+                  <Label htmlFor="pernyataanKesediaan">Lampirkan Pernyataan Kesediaan (Kuasa Pengelolaan Penjualan Karbon) *</Label>
+                  <Input
+                    id="pernyataanKesediaan"
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    onChange={(e) => handleFileUpload('pernyataanKesediaan', e.target.files)}
+                    required
+                  />
+                  <p className="text-xs text-gray-500">Format PDF atau Word.</p>
+                </div>
+
+                <Button type="submit" className="w-full bg-primary hover:bg-primary-dark">
+                  Kirim Pendaftaran
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </form>
             </CardContent>
           </Card>
         </div>
@@ -454,4 +901,3 @@ const ForFarmer = () => {
 };
 
 export default ForFarmer;
-
