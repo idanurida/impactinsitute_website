@@ -1,56 +1,49 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Users, Target, Heart, Award, Handshake } from 'lucide-react'
+// src/pages/AboutUs.jsx
 
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Users,
+  Leaf,
+  Globe,
+  Handshake,
+  ShieldCheck,
+  ArrowRight,
+  Target,
+  Lightbulb,
+  Cloud,
+  Award
+} from 'lucide-react';
+
+/**
+ * Komponen halaman Tentang Kami.
+ * Menyediakan informasi tentang misi, visi, nilai-nilai, dan cerita Impact Institute.
+ */
 const AboutUs = () => {
-  const teamMembers = [
-    {
-      name: 'Dr. Ahmad Susanto',
-      role: 'Direktur Eksekutif',
-      background: 'Ph.D. Kehutanan, 15+ tahun pengalaman konservasi',
-      image: '/api/placeholder/200/200'
-    },
-    {
-      name: 'Sari Wijayanti, M.Sc.',
-      role: 'Manajer Program Karbon',
-      background: 'M.Sc. Environmental Science, Sertifikasi VCS',
-      image: '/api/placeholder/200/200'
-    },
-    {
-      name: 'Budi Hartono',
-      role: 'Koordinator Lapangan',
-      background: '10+ tahun pengalaman pemberdayaan petani',
-      image: '/api/placeholder/200/200'
-    },
-    {
-      name: 'Dr. Maya Sari',
-      role: 'Kepala Riset & Teknologi',
-      background: 'Ph.D. Pertanian Berkelanjutan, Ahli MRV',
-      image: '/api/placeholder/200/200'
-    }
-  ]
-
   const values = [
     {
-      icon: <Heart className="h-8 w-8 text-red-500" />,
+      icon: Target, // Menggunakan ikon Lucide langsung
+      title: 'Dampak Nyata',
+      description: 'Kami berkomitmen untuk menciptakan perubahan positif dan terukur bagi lingkungan dan masyarakat.'
+    },
+    {
+      icon: Handshake, // Menggunakan ikon Lucide langsung
       title: 'Transparansi',
-      description: 'Kami berkomitmen pada keterbukaan informasi dan akuntabilitas dalam setiap aspek operasional.'
+      description: 'Setiap proses dan hasil kami dapat dipertanggungjawabkan dan transparan bagi semua pihak.'
     },
     {
-      icon: <Target className="h-8 w-8 text-green-500" />,
+      icon: Leaf, // Menggunakan ikon Lucide langsung
       title: 'Keberlanjutan',
-      description: 'Fokus pada solusi jangka panjang yang menguntungkan lingkungan, ekonomi, dan sosial.'
+      description: 'Mendorong praktik yang menjaga keseimbangan ekologis dan memberikan manfaat jangka panjang.'
     },
     {
-      icon: <Users className="h-8 w-8 text-blue-500" />,
-      title: 'Pemberdayaan Petani',
-      description: 'Menempatkan kesejahteraan petani sebagai prioritas utama dalam setiap program.'
-    },
-    {
-      icon: <Award className="h-8 w-8 text-purple-500" />,
-      title: 'Integritas',
-      description: 'Menjunjung tinggi standar etika dan profesionalisme dalam setiap kegiatan.'
+      icon: Users, // Menggunakan ikon Lucide langsung
+      title: 'Pemberdayaan',
+      description: 'Memberdayakan petani dan komunitas lokal melalui pengetahuan, sumber daya, dan peluang ekonomi.'
     }
-  ]
+  ];
 
   const partners = [
     'Kementerian Lingkungan Hidup dan Kehutanan',
@@ -59,63 +52,107 @@ const AboutUs = () => {
     'Climate Action Reserve',
     'Indonesian Carbon Exchange',
     'WWF Indonesia'
-  ]
+  ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-600 to-green-800 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Tentang Impact Institute</h1>
-            <p className="text-xl text-green-100 max-w-3xl mx-auto">
-              Yayasan nirlaba yang berkomitmen mendorong perubahan positif di sektor pertanian, 
-              perkebunan, dan kehutanan di Indonesia melalui solusi iklim berkelanjutan.
+      <section
+        className="relative text-white overflow-hidden py-24 lg:py-32
+                   bg-[url('https://images.unsplash.com/photo-1579761596229-2e0f4f9f4a1f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center"
+      >
+        {/* Overlay untuk membuat teks lebih mudah dibaca dan memberikan gradien */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/70 via-primary-medium/60 to-accent-teal/50"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+            Tentang Impact Institute
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto">
+            Membangun masa depan yang hijau dan berkelanjutan, satu lahan pada satu waktu.
+          </p>
+        </div>
+      </section>
+
+      {/* Our Story / Mission Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Cerita Kami</h2>
+            <p className="text-lg text-gray-700 mb-4">
+              Impact Institute didirikan dengan visi untuk menjembatani kesenjangan antara potensi lahan pertanian Indonesia dan kebutuhan global akan solusi iklim. Kami percaya bahwa petani, sebagai penjaga lahan, memiliki peran krusial dalam mitigasi perubahan iklim.
             </p>
+            <p className="text-lg text-gray-700 mb-4">
+              Dimulai dari sebuah ide sederhana, kami berkembang menjadi platform yang menghubungkan petani dengan pasar karbon, memastikan bahwa upaya mereka dalam praktik pertanian berkelanjutan dihargai secara ekonomi.
+            </p>
+            <p className="text-lg text-gray-700">
+              Kami berdedikasi untuk menciptakan ekosistem yang transparan, adil, dan menguntungkan bagi semua pihak yang terlibat dalam gerakan karbon positif.
+            </p>
+          </div>
+          <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg">
+            <img
+              src="https://placehold.co/600x400/C1E1A7/0E2C40?text=Cerita+Kami"
+              alt="Our Story"
+              className="w-full h-full object-cover"
+              onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/600x400/CCCCCC/000000?text=Image+Error"; }}
+            />
           </div>
         </div>
       </section>
 
-      {/* Vision & Mission */}
-      <section className="py-16 bg-white">
+      {/* Mission, Vision, Values Section */}
+      <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <Card className="border-l-4 border-l-green-500">
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Visi Kami</h2>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  Menjadi yayasan terdepan di Indonesia yang mewujudkan ekonomi hijau yang inklusif 
-                  dan berkelanjutan melalui pemberdayaan masyarakat, restorasi ekosistem, dan inovasi 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <Card className="p-6">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-gray-900 flex items-center justify-center space-x-2">
+                  <Lightbulb className="h-6 w-6 text-primary" />
+                  <span>Visi Kami</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">
+                  Menjadi platform terdepan di Indonesia yang mewujudkan ekonomi hijau yang inklusif
+                  dan berkelanjutan melalui pemberdayaan masyarakat, restorasi ekosistem, dan inovasi
                   di bidang nilai ekonomi karbon.
                 </p>
               </CardContent>
             </Card>
-
-            <Card className="border-l-4 border-l-blue-500">
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Misi Kami</h2>
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>Meningkatkan kesejahteraan petani melalui nilai tambah ekonomi dari praktik berkelanjutan</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>Memulihkan dan melindungi ekosistem melalui proyek restorasi dan konservasi</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>Mendorong transparansi dan akuntabilitas dalam proyek karbon</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>Membangun kapasitas dan edukasi masyarakat tentang praktik berkelanjutan</span>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>Membangun ekosistem kemitraan untuk solusi inovatif perubahan iklim</span>
-                  </li>
+            <Card className="p-6">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-gray-900 flex items-center justify-center space-x-2">
+                  <Target className="h-6 w-6 text-primary" />
+                  <span>Misi Kami</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="list-disc list-inside text-left text-gray-700 space-y-2">
+                  <li>Memfasilitasi akses petani ke pasar karbon.</li>
+                  <li>Mendukung implementasi praktik pertanian berkelanjutan.</li>
+                  <li>Memastikan transparansi dan integritas dalam setiap transaksi karbon.</li>
+                  <li>Meningkatkan kesejahteraan ekonomi dan lingkungan komunitas pertanian.</li>
                 </ul>
+              </CardContent>
+            </Card>
+            <Card className="p-6">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-gray-900 flex items-center justify-center space-x-2">
+                  <Award className="h-6 w-6 text-primary" />
+                  <span>Nilai-nilai Kami</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 gap-4">
+                  {values.map((value, index) => (
+                    <div key={index} className="flex items-start text-left space-x-3">
+                      <value.icon className="h-5 w-5 text-green-600 flex-shrink-0 mt-1" />
+                      <div>
+                        <h3 className="font-semibold text-gray-900">{value.title}</h3>
+                        <p className="text-sm text-gray-600">{value.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -128,76 +165,29 @@ const AboutUs = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Profil Impact Institute</h2>
           </div>
-          
+
           <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
             <p className="text-xl mb-6">
-              Impact Institute adalah sebuah yayasan nirlaba yang berkomitmen penuh untuk mendorong perubahan positif 
-              di sektor pertanian, perkebunan, dan kehutanan di Indonesia. Didirikan dengan keyakinan bahwa solusi iklim 
-              harus sejalan dengan peningkatan kesejahteraan masyarakat, kami bekerja sama dengan para petani dan komunitas 
-              lokal untuk mengembangkan dan mengelola proyek-proyek penyerapan karbon berbasis lahan serta memfasilitasi 
+              Impact Institute berkomitmen penuh untuk mendorong perubahan positif
+              di sektor pertanian, perkebunan, dan kehutanan di Indonesia. Didirikan dengan keyakinan bahwa solusi iklim
+              harus sejalan dengan peningkatan kesejahteraan masyarakat, kami bekerja sama dengan para petani dan komunitas
+              lokal untuk mengembangkan dan mengelola proyek-proyek penyerapan karbon berbasis lahan serta memfasilitasi
               pemasaran produk-produk berkelanjutan hasil kerja keras mereka.
             </p>
-            
+
             <p className="mb-6">
-              Kami menggabungkan keahlian teknis dalam ilmu iklim, kehutanan, dan pertanian berkelanjutan dengan pemahaman 
-              mendalam tentang kebutuhan masyarakat akar rumput. Melalui model yang transparan dan akuntabel, kami memfasilitasi 
-              akses petani ke pasar karbon, memastikan mereka menerima manfaat langsung dari upaya konservasi dan restorasi 
+              Kami menggabungkan keahlian teknis dalam ilmu iklim, kehutanan, dan pertanian berkelanjutan dengan pemahaman
+              mendalam tentang kebutuhan masyarakat akar rumput. Melalui model yang transparan dan akuntabel, kami memfasilitasi
+              akses petani ke pasar karbon, memastikan mereka menerima manfaat langsung dari upaya konservasi dan restorasi
               lahan mereka, sekaligus membuka akses pasar bagi produk berkualitas tinggi mereka.
             </p>
-            
+
             <p>
-              Impact Institute tidak hanya berfokus pada penjualan unit karbon, tetapi juga pada pembangunan kapasitas, 
-              transfer pengetahuan, dan penciptaan ekosistem ekonomi hijau yang resilien. Kami percaya bahwa setiap pohon 
-              yang ditanam, setiap lahan yang direstorasi, dan setiap petani yang diberdayakan adalah langkah maju menuju 
+              Impact Institute tidak hanya berfokus pada penjualan unit karbon, tetapi juga pada pembangunan kapasitas,
+              transfer pengetahuan, dan penciptaan ekosistem ekonomi hijau yang resilien. Kami percaya bahwa setiap pohon
+              yang ditanam, setiap lahan yang direstorasi, dan setiap petani yang diberdayakan adalah langkah maju menuju
               masa depan yang lebih hijau dan adil bagi semua.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Tim Inti</h2>
-            <p className="text-xl text-gray-600">Dipimpin oleh para ahli berpengalaman di bidangnya</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4"></div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                  <p className="text-green-600 font-medium mb-3">{member.role}</p>
-                  <p className="text-sm text-gray-600">{member.background}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nilai-nilai Perusahaan</h2>
-            <p className="text-xl text-gray-600">Prinsip-prinsip yang memandu setiap langkah kami</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex justify-center mb-4">
-                    {value.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
-                  <p className="text-gray-600">{value.description}</p>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
@@ -209,7 +199,7 @@ const AboutUs = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Kemitraan & Afiliasi</h2>
             <p className="text-xl text-gray-600">Bekerja sama dengan organisasi terpercaya</p>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             {partners.map((partner, index) => (
               <div key={index} className="text-center">
@@ -246,8 +236,7 @@ const AboutUs = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default AboutUs
-
+export default AboutUs;

@@ -1,3 +1,5 @@
+// src/pages/Contact.jsx
+
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -20,6 +22,8 @@ const Contact = () => {
     e.preventDefault()
     // Handle form submission
     console.log('Form submitted:', formData)
+    // Mengganti alert dengan cara yang lebih baik jika ini adalah aplikasi web
+    // Misalnya, menampilkan pesan sukses di UI atau menggunakan toast notification
     alert('Pesan Anda telah terkirim! Kami akan menghubungi Anda segera.')
   }
 
@@ -35,7 +39,7 @@ const Contact = () => {
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Hubungi Kami</h1>
             <p className="text-xl text-green-100 max-w-3xl mx-auto">
-              Siap bergabung dengan gerakan karbon positif? Hubungi tim kami untuk konsultasi 
+              Siap bergabung dengan gerakan karbon positif? Hubungi tim kami untuk konsultasi
               dan informasi lebih lanjut tentang program-program Impact Institute.
             </p>
           </div>
@@ -57,9 +61,9 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-700">
-                    Jl. Contoh No. 123<br />
-                    Jakarta Selatan 12345<br />
-                    Indonesia
+                    Suite 202, Bintaro Center<br />
+                    Jl. Deplu Raya, Bintaro<br />
+                    Jakarta Selatan
                   </p>
                 </CardContent>
               </Card>
@@ -68,12 +72,11 @@ const Contact = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Phone className="h-5 w-5 text-green-600" />
-                    <span>Telepon</span>
+                    <span>Telepon & WhatsApp</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">+62 21 1234 5678</p>
-                  <p className="text-gray-700">+62 812 3456 7890 (WhatsApp)</p>
+                  <p className="text-gray-700">+62 812-1826-9298</p>
                 </CardContent>
               </Card>
 
@@ -85,9 +88,9 @@ const Contact = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700">info@impactinstitute.id</p>
-                  <p className="text-gray-700">carbon@impactinstitute.id</p>
-                  <p className="text-gray-700">marketplace@impactinstitute.id</p>
+                  <p className="text-gray-700">info@impactinstitute.asia</p>
+                  <p className="text-gray-700">carbon@impactinstitute.asia</p>
+                  <p className="text-gray-700">marketplace@impactinstitute.asia</p>
                 </CardContent>
               </Card>
 
@@ -131,7 +134,7 @@ const Contact = () => {
                           required
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
                         <Label htmlFor="email">Email *</Label>
                         <Input
@@ -151,12 +154,12 @@ const Contact = () => {
                         <Input
                           id="phone"
                           type="tel"
-                          placeholder="+62 812 3456 7890"
+                          placeholder="+62 812-1826-9298"
                           value={formData.phone}
                           onChange={(e) => handleInputChange('phone', e.target.value)}
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
                         <Label htmlFor="subject">Subjek *</Label>
                         <Select value={formData.subject} onValueChange={(value) => handleInputChange('subject', value)}>
@@ -199,15 +202,15 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Map Section */}
+      {/* Menghilangkan bagian "Map Section" seperti yang diminta */}
+      {/*
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Lokasi Kantor</h2>
             <p className="text-xl text-gray-600">Kunjungi kantor kami untuk konsultasi langsung</p>
           </div>
-          
-          {/* Map Placeholder */}
+
           <div className="bg-gray-200 h-96 rounded-lg flex items-center justify-center">
             <div className="text-center text-gray-500">
               <MapPin className="h-12 w-12 mx-auto mb-4" />
@@ -217,6 +220,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      */}
 
       {/* FAQ Section */}
       <section className="py-16 bg-gray-50">
@@ -224,7 +228,7 @@ const Contact = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Pertanyaan yang Sering Diajukan</h2>
           </div>
-          
+
           <div className="space-y-6">
             {[
               {
@@ -241,7 +245,7 @@ const Contact = () => {
               },
               {
                 question: 'Bagaimana cara membeli unit karbon?',
-                answer: 'Pembeli karbon dapat menghubungi tim kami melalui halaman "Untuk Pembeli Karbon" atau email carbon@impactinstitute.id untuk mendiskusikan kebutuhan dan mendapatkan penawaran kustom.'
+                answer: 'Pembeli karbon dapat menghubungi tim kami melalui halaman "Untuk Pembeli Karbon" atau email carbon@impactinstitute.asia untuk mendiskusikan kebutuhan dan mendapatkan penawaran kustom.'
               }
             ].map((faq, index) => (
               <Card key={index}>
@@ -259,4 +263,3 @@ const Contact = () => {
 }
 
 export default Contact
-

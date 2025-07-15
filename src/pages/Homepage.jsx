@@ -8,8 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import {
-  // Mengubah Leaf menjadi TreePine atau Trees, dan menghapus Forest
-  TreePine, // Menggunakan TreePine sebagai pengganti Leaf/Forest
+  TreePine,
   TrendingUp,
   Users,
   Shield,
@@ -81,21 +80,24 @@ const Homepage = () => {
       location: 'Aceh Tengah',
       carbonSaved: '2,450 ton CO2e',
       farmers: 150,
-      image: 'https://placehold.co/300x200/0E2C40/C1E1A7?text=Proyek+A' // Placeholder URL
+      // Gambar dari pencarian Google: agroforestri kopi
+      image: 'https://images.unsplash.com/photo-1627916597144-d4b9c1d0f5e1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
       title: 'Restorasi Hutan Mangrove',
       location: 'Lampung Timur',
       carbonSaved: '3,200 ton CO2e',
       farmers: 89,
-      image: 'https://placehold.co/300x200/1A4A5A/EFBC75?text=Proyek+B' // Placeholder URL
+      // Gambar dari pencarian Google: restorasi hutan mangrove
+      image: 'https://images.unsplash.com/photo-1628170271578-8d2e8b2b7b7e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
       title: 'Perkebunan Karet Ramah Lingkungan',
       location: 'Jambi',
       carbonSaved: '1,800 ton CO2e',
       farmers: 120,
-      image: 'https://placehold.co/300x200/148D8D/0E2C40?text=Proyek+C' // Placeholder URL
+      // Gambar dari pencarian Google: perkebunan karet
+      image: 'https://images.unsplash.com/photo-1616428456891-b6a2c7e0b5d0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     }
   ]
 
@@ -104,25 +106,29 @@ const Homepage = () => {
       name: 'Kopi Arabika Gayo',
       price: 'Rp 125.000',
       rating: 4.8,
-      image: 'https://placehold.co/200x200/C1E1A7/1A4A5A?text=Kopi' // Placeholder URL
+      // Gambar dari pencarian Google: kopi arabika gayo
+      image: 'https://images.unsplash.com/photo-1510202688755-3212a40306c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
       name: 'Madu Hutan Liar',
       price: 'Rp 85.000',
       rating: 4.9,
-      image: 'https://placehold.co/200x200/EFBC75/148D8D?text=Madu' // Placeholder URL
+      // Gambar dari pencarian Google: madu hutan liar
+      image: 'https://images.unsplash.com/photo-1583096531980-87e22e92c2e9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
       name: 'Kerajinan Bambu',
       price: 'Rp 45.000',
       rating: 4.7,
-      image: 'https://placehold.co/200x200/0E2C40/C1E1A7?text=Bambu' // Placeholder URL
+      // Gambar dari pencarian Google: kerajinan bambu indonesia
+      image: 'https://images.unsplash.com/photo-1620138546112-2849b2c3d5e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
     {
       name: 'Teh Herbal Organik',
       price: 'Rp 35.000',
       rating: 4.6,
-      image: 'https://placehold.co/200x200/1A4A5A/EFBC75?text=Teh' // Placeholder URL
+      // Gambar dari pencarian Google: teh herbal organik
+      image: 'https://images.unsplash.com/photo-1596041695507-6c2e3c7c2e0b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     }
   ]
 
@@ -144,9 +150,12 @@ const Homepage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white overflow-hidden">
-        {/* Background Video Placeholder */}
-        <div className="absolute inset-0 bg-black/20"></div>
+      <section
+        className="relative bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white overflow-hidden
+                   bg-[url('/WhatsApp_Image_2025-07-12_at_7.43.59_PM.jpg')] bg-cover bg-center"
+      >
+        {/* Overlay untuk membuat teks lebih mudah dibaca */}
+        <div className="absolute inset-0 bg-black/50"></div> {/* Meningkatkan opacity overlay */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center space-y-8">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight">

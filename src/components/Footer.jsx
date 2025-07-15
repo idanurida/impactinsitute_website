@@ -15,8 +15,7 @@ const Footer = () => {
               <span className="text-xl font-bold">Impact Institute</span>
             </div>
             <p className="text-gray-300 text-sm">
-              Yayasan nirlaba yang berkomitmen mendorong perubahan positif di sektor pertanian, 
-              perkebunan, dan kehutanan di Indonesia melalui solusi iklim berkelanjutan.
+              Mendorong perubahan positif di sektor pertanian, perkebunan, dan kehutanan di Indonesia melalui solusi iklim berkelanjutan.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -66,24 +65,25 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-green-500 mt-1 flex-shrink-0" />
                 <span className="text-gray-300">
-                  Jl. Contoh No. 123<br />
-                  Jakarta Selatan 12345<br />
-                  Indonesia
+                  Suite 202, Bintaro Center<br />
+                  Jl. Deplu Raya, Bintaro<br />
+                  Jakarta Selatan
                 </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-green-500 flex-shrink-0" />
-                <span className="text-gray-300">+62 21 1234 5678</span>
+                <span className="text-gray-300">+62 812-1826-9298</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-green-500 flex-shrink-0" />
-                <span className="text-gray-300">info@impactinstitute.id</span>
+                <span className="text-gray-300">info@impactinstitute.asia</span>
               </div>
             </div>
             <div className="text-sm text-gray-300">
               <p className="font-medium">Jam Operasional:</p>
               <p>Senin - Jumat: 09:00 - 17:00 WIB</p>
               <p>Sabtu: 09:00 - 14:00 WIB</p>
+              <p>Minggu: Tutup</p>
             </div>
           </div>
         </div>
@@ -113,4 +113,3 @@ const Footer = () => {
 }
 
 export default Footer
-
