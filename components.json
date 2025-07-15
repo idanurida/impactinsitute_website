@@ -1,21 +1,20 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
+  "style": "new-york", // Atau gaya yang Anda pilih
   "rsc": false,
-  "tsx": false,
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/App.css",
-    "baseColor": "gray",
+    "baseColor": "gray", // Atau warna yang Anda pilih
     "cssVariables": true,
     "prefix": ""
   },
   "aliases": {
-    "components": "@/components/components",
-    "utils": "@/components/lib/utils",
-    "ui": "@/components/components/ui",
-    "lib": "@/components/lib",
-    "hooks": "@/components/hooks"
+    "components": "@/components",
+    "utils": "@/lib/utils"
   },
-  "iconLibrary": "lucide"
+  "paths": {
+    "components": "src/components", // <-- PASTIKAN INI HANYA "src/components"
+    "utils": "src/lib/utils"
+  }
 }
