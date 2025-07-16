@@ -2,20 +2,20 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import HttpBackend from 'i18next-http-backend'; // Jika Anda memuat terjemahan dari backend
+import HttpBackend from 'i18next-http-backend';
 
 i18n
-  .use(HttpBackend) // Menggunakan backend HTTP untuk memuat terjemahan
-  .use(LanguageDetector) // Mendeteksi bahasa pengguna dari browser
-  .use(initReactI18next) // Meneruskan instance i18n ke react-i18next
+  .use(HttpBackend)
+  .use(LanguageDetector)
+  .use(initReactI18next)
   .init({
     fallbackLng: 'id', // Bahasa fallback jika bahasa yang terdeteksi tidak tersedia
     debug: true, // Aktifkan debug untuk melihat log i18n di konsol
 
     // Konfigurasi backend untuk memuat file JSON
-    backend: {
-      loadPath: '/locales/{{lng}}/translation.json', // Path ke file terjemahan Anda
-    },
+    // Path ini relatif terhadap root publik (folder 'dist' setelah build)
+    // Karena folder 'locales' dipindahkan ke 'public/', maka path ini benar
+    loadPath: '/locales/{{lng}}/translation.json',
 
     interpolation: {
       escapeValue: false, // React sudah melindungi dari XSS
@@ -23,14 +23,13 @@ i18n
     detection: {
       order: ['path', 'cookie', 'localStorage', 'navigator', 'htmlTag'],
       lookupFromPathIndex: 0, // Mengambil bahasa dari segmen pertama path (misal: /id/halaman)
-      checkWhitelist: true // Periksa apakah bahasa ada di daftar yang didukung
+      checkWhitelist: true
     },
-    // Daftar bahasa yang didukung
     supportedLngs: ['id', 'en'],
-    nonExplicitSupportedLngs: true, // Izinkan bahasa yang tidak secara eksplisit didukung
-    load: 'languageOnly', // Hanya memuat 'en' atau 'id', bukan 'en-US'
+    nonExplicitSupportedLngs: true,
+    load: 'languageOnly',
     react: {
-      useSuspense: false // Nonaktifkan Suspense untuk menghindari masalah loading awal
+      useSuspense: false
     }
   });
 
