@@ -1,49 +1,62 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Lock } from 'lucide-react';
+import { Link, useParams } from 'react-router-dom'; // Import useParams
+import { useTranslation } from 'react-i18next'; // Import useTranslation
 
 const PrivacyPolicy = () => {
+    const { t } = useTranslation();
+    const { lang } = useParams();
+
     return (
         <div className="min-h-screen bg-gray-50 py-20">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Card>
                     <CardHeader className="text-center">
                         <Lock className="mx-auto h-12 w-12 text-blue-600 mb-4" />
-                        <CardTitle className="text-3xl">Kebijakan Privasi</CardTitle>
+                        <CardTitle className="text-3xl">{t('privacy_policy_page_title')}</CardTitle>
                     </CardHeader>
                     <CardContent className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                        
-                        <h4>1. Pengumpulan Informasi</h4>
+
+                        <h4>{t('privacy_section1_title')}</h4>
                         <p>
-                            Kami mengumpulkan informasi dari Anda ketika Anda mendaftar di situs kami, mengisi formulir, atau memasukkan informasi di situs kami. Informasi yang dikumpulkan termasuk nama, nomor identitas, alamat, informasi kontak, dan detail lahan Anda.
+                            {t('privacy_section1_paragraph1')}
                         </p>
 
-                        <h4>2. Penggunaan Informasi</h4>
+                        <h4>{t('privacy_section2_title')}</h4>
                         <p>
-                            Informasi yang kami kumpulkan dari Anda dapat digunakan untuk:
+                            {t('privacy_section2_paragraph1')}
                             <ul>
-                                <li>Memverifikasi kelayakan Anda untuk program kami.</li>
-                                <li>Mempersonalisasi pengalaman Anda dan menanggapi kebutuhan individu Anda.</li>
-                                <li>Menjalankan, mengelola, dan melaporkan proyek karbon.</li>
-                                <li>Mengirim email atau notifikasi berkala mengenai status proyek Anda.</li>
+                                <li>{t('privacy_section2_list_item1')}</li>
+                                <li>{t('privacy_section2_list_item2')}</li>
+                                <li>{t('privacy_section2_list_item3')}</li>
+                                <li>{t('privacy_section2_list_item4')}</li>
                             </ul>
                         </p>
 
-                        <h4>3. Keamanan Informasi</h4>
+                        <h4>{t('privacy_section3_title')}</h4>
                         <p>
-                            Kami menerapkan berbagai langkah keamanan untuk menjaga keamanan informasi pribadi Anda. Kami tidak akan menjual, memperdagangkan, atau mentransfer informasi pribadi Anda kepada pihak luar tanpa persetujuan Anda, kecuali untuk tujuan verifikasi oleh lembaga standar karbon yang relevan.
-                        </p>
-                        
-                        <h4>4. Penggunaan Cookie</h4>
-                        <p>
-                            Situs kami dapat menggunakan "cookie" untuk meningkatkan pengalaman pengguna. Anda dapat memilih untuk mengatur browser web Anda untuk menolak cookie.
+                            {t('privacy_section3_paragraph1')}
                         </p>
 
-                        <h4>5. Persetujuan</h4>
+                        <h4>{t('privacy_section4_title')}</h4>
                         <p>
-                            Dengan menggunakan situs kami, Anda dengan ini menyetujui kebijakan privasi kami dan menyetujui persyaratannya.
+                            {t('privacy_section4_paragraph1')}
+                        </p>
+
+                        <h4>{t('privacy_section5_title')}</h4>
+                        <p>
+                            {t('privacy_section5_paragraph1')}
                         </p>
                     </CardContent>
                 </Card>
+                <div className="text-center mt-12">
+                  <Link
+                    to={`/${lang}/`} // Pastikan tautan menggunakan prefix bahasa
+                    className="text-green-600 hover:underline text-lg"
+                  >
+                    {t('back_to_home_button')}
+                  </Link>
+                </div>
             </div>
         </div>
     );

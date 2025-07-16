@@ -2,33 +2,35 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Menu, X, Leaf } from 'lucide-react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select' // Import Select components
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useTranslation } from 'react-i18next'; // Import useTranslation hook
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [currentLang, setCurrentLang] = useState('id') // State untuk bahasa aktif
+  // const [currentLang, setCurrentLang] = useState('id') // Hapus state ini
   const location = useLocation()
+  const { t, i18n } = useTranslation(); // Inisialisasi useTranslation
 
+  // Gunakan kunci terjemahan untuk item navigasi
+  // Pastikan kunci-kunci ini ada di file src/locales/en/translation.json dan src/locales/id/translation.json Anda
   const navigationItems = [
-    { name: 'Beranda', path: '/' },
-    { name: 'Tentang Kami', path: '/tentang-kami' },
-    { name: 'Bagaimana Kami Bekerja', path: '/bagaimana-kami-bekerja' },
-    { name: 'Proyek Kami', path: '/proyek-kami' },
-    { name: 'Untuk Petani', path: '/untuk-petani' },
-    { name: 'Untuk Pembeli Karbon', path: '/untuk-pembeli-karbon' },
-    { name: 'Marketplace', path: '/marketplace' },
-    { name: 'Berita & Edukasi', path: '/berita-edukasi' },
-    { name: 'Kontak', path: '/kontak' },
+    { name: t('home'), path: '/' }, // Menggunakan t() untuk terjemahan
+    { name: t('about_us'), path: '/tentang-kami' },
+    { name: t('how_we_work'), path: '/bagaimana-kami-bekerja' },
+    { name: t('our_projects'), path: '/proyek-kami' },
+    { name: t('for_farmers'), path: '/untuk-petani' },
+    { name: t('for_carbon_buyers'), path: '/untuk-pembeli-karbon' },
+    // { name: t('marketplace'), path: '/marketplace' }, // Hapus ini
+    { name: t('news_education'), path: '/berita-edukasi' },
+    { name: t('contact'), path: '/kontak' },
   ]
 
   const isActive = (path) => location.pathname === path
 
-  // Fungsi untuk menangani perubahan bahasa
+  // Fungsi untuk menangani perubahan bahasa menggunakan i18n.changeLanguage
   const handleLanguageChange = (lang) => {
-    setCurrentLang(lang)
-    // Di sini Anda akan menambahkan logika untuk mengganti bahasa di seluruh aplikasi.
-    // Ini mungkin melibatkan penggunaan context API atau pustaka i18n seperti react-i18next.
-    console.log(`Bahasa diubah ke: ${lang}`)
+    i18n.changeLanguage(lang);
+    // console.log(`Bahasa diubah ke: ${lang}`); // Debugging, bisa dihapus
   }
 
   return (
@@ -60,7 +62,8 @@ const Header = () => {
               </Link>
             ))}
             {/* Language Selector for Desktop */}
-            <Select value={currentLang} onValueChange={handleLanguageChange}>
+            {/* Gunakan i18n.language untuk mendapatkan bahasa aktif */}
+            <Select value={i18n.language} onValueChange={handleLanguageChange}>
               <SelectTrigger className="w-[80px] h-8">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
@@ -75,14 +78,15 @@ const Header = () => {
           <div className="hidden lg:flex items-center space-x-4">
             <Button asChild className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
               {/* Mengarahkan langsung ke section form pendaftaran lahan */}
-              <Link to="/untuk-petani#daftar-lahan">Daftarkan Lahan</Link>
+              <Link to="/untuk-petani#daftar-lahan">{t('register_land_button')}</Link> {/* Terjemahkan teks tombol */}
             </Button>
           </div>
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center space-x-2"> {/* Added flex for spacing */}
             {/* Language Selector for Mobile */}
-            <Select value={currentLang} onValueChange={handleLanguageChange}>
+            {/* Gunakan i18n.language untuk mendapatkan bahasa aktif */}
+            <Select value={i18n.language} onValueChange={handleLanguageChange}>
               <SelectTrigger className="w-[70px] h-8">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
@@ -124,7 +128,7 @@ const Header = () => {
                 <Button asChild className="w-full bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
                   {/* Mengarahkan langsung ke section form pendaftaran lahan */}
                   <Link to="/untuk-petani#daftar-lahan" onClick={() => setIsMenuOpen(false)}>
-                    Daftarkan Lahan Anda
+                    {t('register_land_button_mobile')} {/* Terjemahkan teks tombol */}
                   </Link>
                 </Button>
               </div>

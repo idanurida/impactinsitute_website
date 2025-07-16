@@ -1,35 +1,41 @@
 // src/pages/Contact.jsx
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom'; // Import useParams for language prefix
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { useTranslation } from 'react-i18next'; // Import useTranslation
 
 const Contact = () => {
+  const { t, i18n } = useTranslation(); // Initialize useTranslation
+  const { lang } = useParams(); // Get current language from URL params
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     subject: '',
     message: ''
-  })
+  });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // Handle form submission
-    console.log('Form submitted:', formData)
-    // Mengganti alert dengan cara yang lebih baik jika ini adalah aplikasi web
-    // Misalnya, menampilkan pesan sukses di UI atau menggunakan toast notification
-    alert('Pesan Anda telah terkirim! Kami akan menghubungi Anda segera.')
-  }
+    console.log('Form submitted:', formData);
+    // Mengganti alert dengan pesan terjemahan
+    alert(t('form_success_message')); // Menggunakan t() untuk pesan sukses
+    // Anda bisa menambahkan logika pengiriman data ke backend di sini
+    // (misalnya, menggunakan fetch atau axios ke endpoint WordPress)
+  };
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
   return (
     <div className="min-h-screen">
@@ -37,10 +43,9 @@ const Contact = () => {
       <section className="bg-gradient-to-br from-green-600 to-green-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Hubungi Kami</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">{t('contact_hero_title')}</h1>
             <p className="text-xl text-green-100 max-w-3xl mx-auto">
-              Siap bergabung dengan gerakan karbon positif? Hubungi tim kami untuk konsultasi
-              dan informasi lebih lanjut tentang program-program Impact Institute.
+              {t('contact_hero_description')}
             </p>
           </div>
         </div>
@@ -56,14 +61,14 @@ const Contact = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <MapPin className="h-5 w-5 text-green-600" />
-                    <span>Alamat Kantor</span>
+                    <span>{t('office_address_title')}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-700">
-                    Suite 202, Bintaro Center<br />
-                    Jl. Deplu Raya, Bintaro<br />
-                    Jakarta Selatan
+                    {t('address_line1')}<br />
+                    {t('address_line2')}<br />
+                    {t('address_line3')}
                   </p>
                 </CardContent>
               </Card>
@@ -72,7 +77,7 @@ const Contact = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Phone className="h-5 w-5 text-green-600" />
-                    <span>Telepon & WhatsApp</span>
+                    <span>{t('phone_whatsapp_title')}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -84,13 +89,13 @@ const Contact = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Mail className="h-5 w-5 text-green-600" />
-                    <span>Email</span>
+                    <span>{t('email_title')}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-700">info@impactinstitute.asia</p>
                   <p className="text-gray-700">carbon@impactinstitute.asia</p>
-                  <p className="text-gray-700">marketplace@impactinstitute.asia</p>
+                  {/* <p className="text-gray-700">marketplace@impactinstitute.asia</p> // Dihapus */}
                 </CardContent>
               </Card>
 
@@ -98,14 +103,14 @@ const Contact = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Clock className="h-5 w-5 text-green-600" />
-                    <span>Jam Operasional</span>
+                    <span>{t('operating_hours_title_contact')}</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-gray-700">
-                    <p><strong>Senin - Jumat:</strong> 09:00 - 17:00 WIB</p>
-                    <p><strong>Sabtu:</strong> 09:00 - 14:00 WIB</p>
-                    <p><strong>Minggu:</strong> Tutup</p>
+                    <p><strong>{t('operating_hours_weekday_title')}:</strong> {t('operating_hours_weekday_contact')}</p>
+                    <p><strong>{t('operating_hours_saturday_title')}:</strong> {t('operating_hours_saturday_contact')}</p>
+                    <p><strong>{t('operating_hours_sunday_title')}:</strong> {t('operating_hours_sunday_contact')}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -115,20 +120,20 @@ const Contact = () => {
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>Kirim Pesan</CardTitle>
+                  <CardTitle>{t('send_message_title')}</CardTitle>
                   <p className="text-gray-600">
-                    Isi formulir di bawah ini dan tim kami akan menghubungi Anda dalam 1x24 jam.
+                    {t('send_message_description')}
                   </p>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="name">Nama Lengkap *</Label>
+                        <Label htmlFor="name">{t('full_name_label')} *</Label>
                         <Input
                           id="name"
                           type="text"
-                          placeholder="Masukkan nama lengkap"
+                          placeholder={t('full_name_placeholder')}
                           value={formData.name}
                           onChange={(e) => handleInputChange('name', e.target.value)}
                           required
@@ -136,11 +141,11 @@ const Contact = () => {
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="email">Email *</Label>
+                        <Label htmlFor="email">{t('email_label')} *</Label>
                         <Input
                           id="email"
                           type="email"
-                          placeholder="nama@email.com"
+                          placeholder={t('email_placeholder')}
                           value={formData.email}
                           onChange={(e) => handleInputChange('email', e.target.value)}
                           required
@@ -150,39 +155,39 @@ const Contact = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Nomor Telepon</Label>
+                        <Label htmlFor="phone">{t('phone_number_label')}</Label>
                         <Input
                           id="phone"
                           type="tel"
-                          placeholder="+62 812-1826-9298"
+                          placeholder={t('phone_number_placeholder')}
                           value={formData.phone}
                           onChange={(e) => handleInputChange('phone', e.target.value)}
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="subject">Subjek *</Label>
+                        <Label htmlFor="subject">{t('subject_label')} *</Label>
                         <Select value={formData.subject} onValueChange={(value) => handleInputChange('subject', value)}>
                           <SelectTrigger>
-                            <SelectValue placeholder="Pilih subjek" />
+                            <SelectValue placeholder={t('select_subject_placeholder')} />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="pendaftaran-petani">Pendaftaran Petani</SelectItem>
-                            <SelectItem value="pembelian-karbon">Pembelian Unit Karbon</SelectItem>
-                            <SelectItem value="marketplace">Marketplace & Produk</SelectItem>
-                            <SelectItem value="kemitraan">Kemitraan</SelectItem>
-                            <SelectItem value="media-pers">Media & Pers</SelectItem>
-                            <SelectItem value="lainnya">Lainnya</SelectItem>
+                            <SelectItem value="pendaftaran-petani">{t('subject_farmer_registration')}</SelectItem>
+                            <SelectItem value="pembelian-karbon">{t('subject_carbon_purchase')}</SelectItem>
+                            {/* <SelectItem value="marketplace">{t('subject_marketplace')}</SelectItem> // Dihapus */}
+                            <SelectItem value="kemitraan">{t('subject_partnership')}</SelectItem>
+                            <SelectItem value="media-pers">{t('subject_media_press')}</SelectItem>
+                            <SelectItem value="lainnya">{t('subject_other')}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message">Pesan *</Label>
+                      <Label htmlFor="message">{t('message_label')} *</Label>
                       <Textarea
                         id="message"
-                        placeholder="Tuliskan pesan Anda di sini..."
+                        placeholder={t('message_placeholder')}
                         rows={6}
                         value={formData.message}
                         onChange={(e) => handleInputChange('message', e.target.value)}
@@ -192,7 +197,7 @@ const Contact = () => {
 
                     <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
                       <Send className="mr-2 h-4 w-4" />
-                      Kirim Pesan
+                      {t('send_message_button')}
                     </Button>
                   </form>
                 </CardContent>
@@ -202,50 +207,30 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Menghilangkan bagian "Map Section" seperti yang diminta */}
-      {/*
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Lokasi Kantor</h2>
-            <p className="text-xl text-gray-600">Kunjungi kantor kami untuk konsultasi langsung</p>
-          </div>
-
-          <div className="bg-gray-200 h-96 rounded-lg flex items-center justify-center">
-            <div className="text-center text-gray-500">
-              <MapPin className="h-12 w-12 mx-auto mb-4" />
-              <p className="text-lg">Peta Lokasi Kantor</p>
-              <p className="text-sm">Google Maps akan diintegrasikan di sini</p>
-            </div>
-          </div>
-        </div>
-      </section>
-      */}
-
       {/* FAQ Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Pertanyaan yang Sering Diajukan</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('faq_title')}</h2>
           </div>
 
           <div className="space-y-6">
             {[
               {
-                question: 'Bagaimana cara mendaftarkan lahan untuk program karbon?',
-                answer: 'Anda dapat mendaftar melalui halaman "Untuk Petani" di website kami atau menghubungi tim kami langsung. Proses dimulai dengan pengisian formulir online dan akan dilanjutkan dengan verifikasi lapangan.'
+                question: t('faq1_question'),
+                answer: t('faq1_answer')
               },
               {
-                question: 'Berapa lama proses verifikasi lahan?',
-                answer: 'Proses verifikasi biasanya memakan waktu 2-4 minggu tergantung lokasi dan kompleksitas lahan. Tim kami akan melakukan survei lapangan dan analisis kelayakan.'
+                question: t('faq2_question'),
+                answer: t('faq2_answer')
               },
               {
-                question: 'Apakah ada biaya untuk bergabung dalam program?',
-                answer: 'Tidak ada biaya pendaftaran untuk petani. Impact Institute akan menanggung semua biaya verifikasi dan pengembangan proyek. Petani akan menerima pembagian keuntungan dari penjualan karbon.'
+                question: t('faq3_question'),
+                answer: t('faq3_answer')
               },
               {
-                question: 'Bagaimana cara membeli unit karbon?',
-                answer: 'Pembeli karbon dapat menghubungi tim kami melalui halaman "Untuk Pembeli Karbon" atau email carbon@impactinstitute.asia untuk mendiskusikan kebutuhan dan mendapatkan penawaran kustom.'
+                question: t('faq4_question'),
+                answer: t('faq4_answer')
               }
             ].map((faq, index) => (
               <Card key={index}>
@@ -259,7 +244,7 @@ const Contact = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

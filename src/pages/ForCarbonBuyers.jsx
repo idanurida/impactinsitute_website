@@ -1,386 +1,364 @@
 // src/pages/ForCarbonBuyers.jsx
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
-  Leaf,
+  Building,
   DollarSign,
-  Globe,
+  LeafyGreen,
   Handshake,
-  BarChart,
   ArrowRight,
   CheckCircle,
-  Lightbulb,
-  Building,
-  Scale,
-  Target,
-  LineChart,
   Mail,
-  Loader2 // Import Loader2 for loading spinner
+  Phone,
+  MapPin,
+  Clock // Added Clock icon for operating hours
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-/**
- * Komponen halaman Untuk Pembeli Karbon.
- * Menyediakan informasi, manfaat, proses pembelian, dan ajakan bertindak
- * yang relevan bagi perusahaan atau individu yang tertarik membeli kredit karbon.
- */
-const ForBuyer = () => {
-  // State for contact form data
-  const [contactFormData, setContactFormData] = useState({
+const ForCarbonBuyers = () => {
+  const { t } = useTranslation();
+  const { lang } = useParams();
+
+  const [formData, setFormData] = useState({
     companyName: '',
     contactPerson: '',
     emailBuyer: '',
     phoneBuyer: '',
+    country: '',
+    industry: '',
+    carbonVolume: '',
     message: ''
   });
 
-  // State for form submission status
-  const [submissionStatus, setSubmissionStatus] = useState('idle'); // 'idle', 'loading', 'success', 'error'
-  const [submissionMessage, setSubmissionMessage] = useState('');
+  const [submissionStatus, setSubmissionStatus] = useState(null); // 'success', 'error', 'loading'
 
-  const benefits = [
-    {
-      icon: Target,
-      title: 'Capai Target Net-Zero',
-      description: 'Offset emisi Anda dan penuhi komitmen keberlanjutan perusahaan dengan kredit karbon terverifikasi.'
-    },
-    {
-      icon: Scale,
-      title: 'Kepatuhan Regulasi',
-      description: 'Patuhi regulasi karbon nasional dan internasional dengan membeli kredit dari proyek-proyek terdaftar.'
-    },
-    {
-      icon: Lightbulb,
-      title: 'Dampak Positif Lingkungan',
-      description: 'Berinvestasi langsung pada proyek-proyek yang memulihkan ekosistem dan menyerap karbon dari atmosfer.'
-    },
-    {
-      icon: Building,
-      title: 'Tingkatkan Reputasi Perusahaan',
-      description: 'Demonstrasikan komitmen Anda terhadap keberlanjutan dan tarik konsumen serta investor yang sadar lingkungan.'
-    }
-  ];
-
-  const processSteps = [
-    {
-      step: '1',
-      title: 'Identifikasi Kebutuhan',
-      description: 'Tentukan volume kredit karbon yang Anda butuhkan berdasarkan jejak emisi dan target keberlanjutan Anda.'
-    },
-    {
-      step: '2',
-      title: 'Pilih Proyek',
-      description: 'Jelajahi portofolio kami yang terverifikasi dan pilih yang selaras dengan nilai-nilai Anda.'
-    },
-    {
-      step: '3',
-      title: 'Pembelian Kredit',
-      description: 'Lakukan pembelian kredit karbon melalui platform kami dengan proses yang transparan dan aman.'
-    },
-    {
-      step: '4',
-      title: 'Pelaporan & Sertifikasi',
-      description: 'Terima sertifikat kepemilikan kredit karbon dan laporan dampak proyek Anda.'
-    }
-  ];
-
-  // Handle form input changes
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setContactFormData(prev => ({ ...prev, [id]: value }));
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmissionStatus('loading');
-    setSubmissionMessage('Mengirim pesan Anda...');
 
-    // URL endpoint REST API WordPress Anda
-    // Anda perlu membuat custom endpoint di WordPress untuk menerima data ini
-    // dan mengirimkan email ke buyer@impactinstitute.asia
-    const wordpressApiEndpoint = 'https://impactinstitute.asia/wp-json/custom/v1/submit-buyer-contact'; // Contoh endpoint kustom
+    // API Key dari wp-config.php, diteruskan sebagai environment variable di Netlify
+    const API_KEY = import.meta.env.VITE_WP_API_KEY; // Pastikan ini sesuai dengan nama env var Anda
 
-    const formData = new FormData();
-    for (const key in contactFormData) {
-      formData.append(key, contactFormData[key]);
+    if (!API_KEY) {
+      console.error("API Key is not defined. Please set VITE_WP_API_KEY in your .env file.");
+      setSubmissionStatus('error');
+      alert(t('api_key_missing_error')); // Terjemahkan pesan error
+      return;
     }
 
     try {
-      const response = await fetch(wordpressApiEndpoint, {
+      const response = await fetch('https://impactinstitute.asia/wp-json/custom/v1/submit-buyer-registration', {
         method: 'POST',
-        body: formData,
-        // Jika WordPress Anda memerlukan otentikasi, tambahkan di sini
-        // headers: { 'Authorization': 'Bearer YOUR_AUTH_TOKEN' }
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': API_KEY // Mengirim API Key melalui header kustom
+        },
+        body: JSON.stringify(formData)
       });
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Form submission successful:', result);
-        setSubmissionStatus('success');
-        setSubmissionMessage('Pesan Anda telah terkirim! Tim kami akan segera menghubungi Anda.');
-        // Reset form after successful submission
-        setContactFormData({
-          companyName: '',
-          contactPerson: '',
-          emailBuyer: '',
-          phoneBuyer: '',
-          message: ''
-        });
-      } else {
+      if (!response.ok) {
         const errorData = await response.json();
-        console.error('Form submission failed:', response.status, errorData);
-        setSubmissionStatus('error');
-        setSubmissionMessage(`Gagal mengirim pesan: ${errorData.message || 'Terjadi kesalahan.'}`);
+        throw new Error(errorData.message || t('form_submission_failed')); // Terjemahkan pesan error
       }
+
+      const result = await response.json();
+      console.log('Form submission successful:', result);
+      setSubmissionStatus('success');
+      setFormData({ // Reset form
+        companyName: '',
+        contactPerson: '',
+        emailBuyer: '',
+        phoneBuyer: '',
+        country: '',
+        industry: '',
+        carbonVolume: '',
+        message: ''
+      });
+      alert(t('form_submission_success')); // Terjemahkan pesan sukses
+
     } catch (error) {
-      console.error('Error during form submission:', error);
+      console.error('Error submitting form:', error);
       setSubmissionStatus('error');
-      setSubmissionMessage(`Terjadi kesalahan jaringan: ${error.message}`);
+      alert(`${t('form_submission_error')}: ${error.message}`); // Terjemahkan pesan error
     }
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Hero Section for Carbon Buyers */}
-      <section className="relative bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white overflow-hidden py-24 lg:py-32">
-        <div className="absolute inset-0 bg-black/20"></div>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section
+        id="hero"
+        className="relative bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white overflow-hidden py-24 lg:py-32"
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-            Berinvestasi pada Masa Depan Berkelanjutan
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+            {t('carbon_buyers_hero_title_part1')}<br />
+            <span className="text-accent-green">{t('carbon_buyers_hero_title_part2')}</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto">
-            Beli kredit karbon dari proyek-proyek terverifikasi kami dan
-            jadilah bagian dari solusi perubahan iklim global.
+          <p className="text-xl text-gray-100 max-w-3xl mx-auto">
+            {t('carbon_buyers_hero_description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
-              <Link to="/marketplace#hero"> {/* Assuming marketplace is where projects are listed */}
-                Jelajahi Proyek
+              <Link to={`/${lang}/kontak`}>
+                {t('contact_us_button')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary-dark">
-              <Link to="#contact-us">Hubungi Kami</Link>
+              <Link to={`/${lang}/proyek-kami`}>{t('view_our_projects_button')}</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Why Buy Carbon Credits */}
+      {/* Why Partner Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Mengapa Membeli Kredit Karbon?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('why_partner_title')}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Manfaat strategis dan lingkungan bagi bisnis Anda
+              {t('why_partner_description')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="text-center space-y-4 p-6 bg-card rounded-lg shadow-md">
-                <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                  <benefit.icon className="h-8 w-8 text-green-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">{benefit.title}</h3>
-                <p className="text-gray-600">{benefit.description}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="text-center space-y-4">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+                <LeafyGreen className="h-8 w-8 text-green-600" />
               </div>
-            ))}
+              <h3 className="text-xl font-semibold text-gray-900">{t('high_quality_credits_title')}</h3>
+              <p className="text-gray-600">{t('high_quality_credits_desc')}</p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+                <DollarSign className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">{t('competitive_pricing_title')}</h3>
+              <p className="text-gray-600">{t('competitive_pricing_desc')}</p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+                <Handshake className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">{t('direct_impact_title')}</h3>
+              <p className="text-gray-600">{t('direct_impact_desc')}</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works for Buyers */}
+      {/* Carbon Buyer Registration Form */}
       <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Proses Pembelian Kredit Karbon</h2>
-            <p className="text-xl text-gray-600">Langkah mudah untuk mengoffset emisi Anda</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('buyer_form_title')}</h2>
+            <p className="text-xl text-gray-600">
+              {t('buyer_form_description')}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {processSteps.map((step, index) => (
-              <div key={index} className="text-center space-y-4 p-6 bg-card rounded-lg shadow-md">
-                <div className="bg-primary text-primary-foreground w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
-                  {step.step}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action / Contact Form */}
-      <section id="contact-us" className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Siap Memulai Perjalanan Karbon Positif Anda?
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Hubungi tim kami untuk konsultasi gratis dan temukan proyek yang tepat untuk Anda.
-          </p>
-          <Card className="p-6">
+          <Card>
             <CardHeader>
-              <CardTitle className="flex items-center justify-center space-x-2">
-                <Mail className="h-6 w-6 text-primary" />
-                <span>Formulir Kontak</span>
-              </CardTitle>
-              <CardDescription>Kami akan menghubungi Anda sesegera mungkin.</CardDescription>
+              <CardTitle>{t('buyer_contact_form_heading')}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="companyName">Nama Perusahaan</Label>
+                    <Label htmlFor="companyName">{t('company_name_label')} *</Label>
                     <Input
                       id="companyName"
-                      placeholder="Masukkan nama perusahaan Anda"
-                      value={contactFormData.companyName}
-                      onChange={handleInputChange}
+                      type="text"
+                      placeholder={t('company_name_placeholder')}
+                      value={formData.companyName}
+                      onChange={(e) => handleInputChange('companyName', e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="contactPerson">Nama Kontak</Label>
+                    <Label htmlFor="contactPerson">{t('contact_person_label')} *</Label>
                     <Input
                       id="contactPerson"
-                      placeholder="Nama Anda"
-                      value={contactFormData.contactPerson}
-                      onChange={handleInputChange}
+                      type="text"
+                      placeholder={t('contact_person_placeholder')}
+                      value={formData.contactPerson}
+                      onChange={(e) => handleInputChange('contactPerson', e.target.value)}
                       required
                     />
                   </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="emailBuyer">Email</Label>
+                    <Label htmlFor="emailBuyer">{t('email_label')} *</Label>
                     <Input
                       id="emailBuyer"
                       type="email"
-                      placeholder="Masukkan alamat email Anda"
-                      value={contactFormData.emailBuyer}
-                      onChange={handleInputChange}
+                      placeholder={t('email_placeholder')}
+                      value={formData.emailBuyer}
+                      onChange={(e) => handleInputChange('emailBuyer', e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="phoneBuyer">Nomor Telepon</Label>
+                    <Label htmlFor="phoneBuyer">{t('phone_number_label')}</Label>
                     <Input
                       id="phoneBuyer"
                       type="tel"
-                      placeholder="Masukkan nomor telepon"
-                      value={contactFormData.phoneBuyer}
-                      onChange={handleInputChange}
-                      required
+                      placeholder={t('phone_number_placeholder')}
+                      value={formData.phoneBuyer}
+                      onChange={(e) => handleInputChange('phoneBuyer', e.target.value)}
                     />
                   </div>
-                  <div className="space-y-2 col-span-full">
-                    <Label htmlFor="message">Pesan Anda</Label>
-                    <textarea
-                      id="message"
-                      rows="4"
-                      className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      placeholder="Sampaikan kebutuhan atau pertanyaan Anda..."
-                      value={contactFormData.message}
-                      onChange={handleInputChange}
-                      required
-                    ></textarea>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="country">{t('country_label')}</Label>
+                    <Input
+                      id="country"
+                      type="text"
+                      placeholder={t('country_placeholder')}
+                      value={formData.country}
+                      onChange={(e) => handleInputChange('country', e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="industry">{t('industry_label')}</Label>
+                    <Input
+                      id="industry"
+                      type="text"
+                      placeholder={t('industry_placeholder')}
+                      value={formData.industry}
+                      onChange={(e) => handleInputChange('industry', e.target.value)}
+                    />
                   </div>
                 </div>
-                <Button type="submit" className="w-full bg-primary hover:bg-primary-dark" disabled={submissionStatus === 'loading'}>
-                  {submissionStatus === 'loading' ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Mengirim...
-                    </>
-                  ) : (
-                    <>
-                      Kirim Pesan
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </>
-                  )}
-                </Button>
-              </form>
 
-              {/* Submission Status Message */}
-              {submissionMessage && (
-                <div className={`mt-4 p-3 rounded-lg text-sm ${
-                  submissionStatus === 'success' ? 'bg-green-100 text-green-700' :
-                  submissionStatus === 'error' ? 'bg-red-100 text-red-700' :
-                  'bg-blue-100 text-blue-700'
-                }`}>
-                  {submissionMessage}
+                <div className="space-y-2">
+                  <Label htmlFor="carbonVolume">{t('estimated_carbon_volume_label')}</Label>
+                  <Select value={formData.carbonVolume} onValueChange={(value) => handleInputChange('carbonVolume', value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder={t('select_carbon_volume_placeholder')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="less-than-1000">{t('volume_less_1000')}</SelectItem>
+                      <SelectItem value="1000-5000">{t('volume_1000_5000')}</SelectItem>
+                      <SelectItem value="5000-10000">{t('volume_5000_10000')}</SelectItem>
+                      <SelectItem value="more-than-10000">{t('volume_more_10000')}</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-              )}
+
+                <div className="space-y-2">
+                  <Label htmlFor="message">{t('message_label')} *</Label>
+                  <Textarea
+                    id="message"
+                    placeholder={t('message_placeholder')}
+                    rows={6}
+                    value={formData.message}
+                    onChange={(e) => handleInputChange('message', e.target.value)}
+                    required
+                  />
+                </div>
+
+                <Button type="submit" className="w-full bg-green-600 hover:bg-green-700" disabled={submissionStatus === 'loading'}>
+                  {submissionStatus === 'loading' ? t('submitting_form') : t('submit_form_button')}
+                </Button>
+
+                {submissionStatus === 'success' && (
+                  <p className="text-green-600 text-center mt-4">{t('form_submission_success')}</p>
+                )}
+                {submissionStatus === 'error' && (
+                  <p className="text-red-600 text-center mt-4">{t('form_submission_error')}</p>
+                )}
+              </form>
             </CardContent>
           </Card>
         </div>
       </section>
 
-      {/* Market Insights Section - Reused from Homepage for context */}
-      <section className="py-16 bg-white">
+      {/* Contact Info (Reused from Footer/Contact page for consistency) */}
+      <section className="py-16 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Wawasan Pasar Karbon
-            </h2>
-            <p className="text-xl text-gray-600">
-              Pantau pergerakan harga karbon global dan Indonesia
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('contact_info_title')}</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {t('contact_info_description_carbon_buyers')}
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <Globe className="h-5 w-5 text-blue-600" />
-                  <span>Harga Karbon Global</span>
+                  <MapPin className="h-5 w-5 text-green-600" />
+                  <span>{t('office_address_title')}</span>
                 </CardTitle>
-                <CardDescription>EU ETS & California Cap-and-Trade</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="text-3xl font-bold text-blue-600">
-                    $85.50 <span className="text-sm text-gray-500">per ton CO2e</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <LineChart className="h-4 w-4 text-green-500" /> {/* Changed from TrendingUp to LineChart for variety */}
-                    <span className="text-green-500 font-medium">+2.3%</span>
-                    <span className="text-gray-500 text-sm">24h</span>
-                  </div>
-                </div>
+                <p className="text-gray-700">
+                  {t('address_line1')}<br />
+                  {t('address_line2')}<br />
+                  {t('address_line3')}
+                </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <BarChart className="h-5 w-5 text-green-600" />
-                  <span>Harga Karbon Indonesia</span>
+                  <Phone className="h-5 w-5 text-green-600" />
+                  <span>{t('phone_whatsapp_title')}</span>
                 </CardTitle>
-                <CardDescription>IDX Carbon & OTC Market</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="text-3xl font-bold text-green-600">
-                    $12.75 <span className="text-sm text-gray-500">per ton CO2e</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <LineChart className="h-4 w-4 text-green-500" /> {/* Changed from TrendingUp to LineChart for variety */}
-                    <span className="text-green-500 font-medium">+1.8%</span>
-                    <span className="text-gray-500 text-sm">24h</span>
-                  </div>
+                <p className="text-gray-700">+62 812-1826-9298</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Mail className="h-5 w-5 text-green-600" />
+                  <span>{t('email_title')}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">info@impactinstitute.asia</p>
+                <p className="text-gray-700">carbon@impactinstitute.asia</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Clock className="h-5 w-5 text-green-600" />
+                  <span>{t('operating_hours_title_contact')}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-gray-700">
+                  <p><strong>{t('operating_hours_weekday_title')}:</strong> {t('operating_hours_weekday_contact')}</p>
+                  <p><strong>{t('operating_hours_saturday_title')}:</strong> {t('operating_hours_saturday_contact')}</p>
+                  <p><strong>{t('operating_hours_sunday_title')}:</strong> {t('operating_hours_sunday_contact')}</p>
                 </div>
               </CardContent>
             </Card>
-          </div>
-          <div className="mt-6 text-center text-sm text-gray-500">
-            Data diperbarui secara berkala. Sumber: Platform Perdagangan Internasional & IDX Carbon
           </div>
         </div>
       </section>
@@ -388,4 +366,4 @@ const ForBuyer = () => {
   );
 };
 
-export default ForBuyer;
+export default ForCarbonBuyers;

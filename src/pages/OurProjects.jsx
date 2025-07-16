@@ -1,111 +1,110 @@
 // src/pages/OurProjects.jsx
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge'; // Memastikan Badge diimpor jika digunakan
+import { Badge } from '@/components/ui/badge';
 import {
   MapPin,
-  Recycle,
-  Zap,
-  // Mengganti 'Forest' dengan 'TreePine' karena 'Forest' tidak ada di lucide-react
-  TreePine,
   Users,
   ArrowRight,
   Calendar,
   DollarSign,
   BarChart2,
   HeartHandshake,
-  Lightbulb,
-  Award
+  TreePine // Changed from Forest to TreePine as per previous instruction
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const OurProjects = () => {
+  const { t } = useTranslation();
+  const { lang } = useParams();
+
   const projects = [
     {
       id: 1,
-      name: 'Agroforestri Kopi Berkelanjutan di Aceh',
-      location: 'Aceh Tengah, Indonesia',
-      description: 'Proyek ini berfokus pada penerapan sistem agroforestri di perkebunan kopi untuk meningkatkan serapan karbon dan keanekaragaman hayati, sekaligus meningkatkan pendapatan petani.',
-      imageUrl: 'https://placehold.co/600x400/0E2C40/C1E1A7?text=Proyek+Kopi',
+      name: t('project_agroforestry_name'),
+      location: t('project_agroforestry_location_full'),
+      description: t('project_agroforestry_description'),
+      imageUrl: 'https://placehold.co/600x400/0E2C40/C1E1A7?text=' + t('project_image_text'),
       carbonSaved: '2,450 ton CO2e/tahun',
       farmersImpacted: 150,
-      status: 'Aktif',
-      type: 'Agroforestri',
+      status: t('project_status_active'),
+      type: t('project_type_agroforestry'),
       startDate: 'Jan 2022',
       investmentNeeded: 'USD 50,000',
       progress: '85%',
       benefits: [
-        'Peningkatan pendapatan petani',
-        'Peningkatan kualitas tanah',
-        'Konservasi air',
-        'Pengurangan emisi karbon'
+        t('benefit_increased_farmer_income'),
+        t('benefit_improved_soil_quality'),
+        t('benefit_water_conservation'),
+        t('benefit_carbon_emission_reduction')
       ],
-      tags: ['Kopi', 'Agroforestri', 'Karbon', 'Aceh']
+      tags: [t('tag_coffee'), t('tag_agroforestry'), t('tag_carbon'), t('tag_aceh')]
     },
     {
       id: 2,
-      name: 'Restorasi Hutan Mangrove di Lampung',
-      location: 'Lampung Timur, Indonesia',
-      description: 'Program restorasi ekosistem mangrove yang rusak untuk melindungi garis pantai, menyediakan habitat bagi satwa laut, dan menyerap karbon dalam jumlah besar.',
-      imageUrl: 'https://placehold.co/600x400/1A4A5A/EFBC75?text=Proyek+Mangrove',
+      name: t('project_mangrove_name'),
+      location: t('project_mangrove_location_full'),
+      description: t('project_mangrove_description'),
+      imageUrl: 'https://placehold.co/600x400/1A4A5A/EFBC75?text=' + t('project_image_text'),
       carbonSaved: '3,200 ton CO2e/tahun',
       farmersImpacted: 89,
-      status: 'Aktif',
-      type: 'Restorasi Ekosistem',
+      status: t('project_status_active'),
+      type: t('project_type_ecosystem_restoration'),
       startDate: 'Mar 2021',
       investmentNeeded: 'USD 75,000',
       progress: '92%',
       benefits: [
-        'Perlindungan garis pantai',
-        'Habitat keanekaragaman hayati',
-        'Peningkatan perikanan lokal',
-        'Mitigasi perubahan iklim'
+        t('benefit_coastal_protection'),
+        t('benefit_biodiversity_habitat'),
+        t('benefit_local_fisheries_increase'),
+        t('benefit_climate_change_mitigation')
       ],
-      tags: ['Mangrove', 'Restorasi', 'Pesisir', 'Lampung']
+      tags: [t('tag_mangrove'), t('tag_restoration'), t('tag_coastal'), t('tag_lampung')]
     },
     {
       id: 3,
-      name: 'Perkebunan Karet Ramah Lingkungan di Jambi',
-      location: 'Jambi, Indonesia',
-      description: 'Mendorong praktik perkebunan karet yang berkelanjutan dengan mengurangi penggunaan bahan kimia berbahaya dan menerapkan teknik penanaman yang ramah lingkungan.',
-      imageUrl: 'https://placehold.co/600x400/148D8D/0E2C40?text=Proyek+Karet',
+      name: t('project_rubber_name'),
+      location: t('project_rubber_location_full'),
+      description: t('project_rubber_description'),
+      imageUrl: 'https://placehold.co/600x400/148D8D/0E2C40?text=' + t('project_image_text'),
       carbonSaved: '1,800 ton CO2e/tahun',
       farmersImpacted: 120,
-      status: 'Aktif',
-      type: 'Pertanian Berkelanjutan',
+      status: t('project_status_active'),
+      type: t('project_type_sustainable_agriculture'),
       startDate: 'Jul 2023',
       investmentNeeded: 'USD 40,000',
       progress: '70%',
       benefits: [
-        'Pengurangan polusi tanah',
-        'Peningkatan kesehatan petani',
-        'Produk karet berkualitas',
-        'Sertifikasi karbon'
+        t('benefit_soil_pollution_reduction'),
+        t('benefit_farmer_health_improvement'),
+        t('benefit_quality_rubber_products'),
+        t('benefit_carbon_certification')
       ],
-      tags: ['Karet', 'Pertanian', 'Jambi', 'Sertifikasi']
+      tags: [t('tag_rubber'), t('tag_agriculture'), t('tag_jambi'), t('tag_certification')]
     },
     {
       id: 4,
-      name: 'Rehabilitasi Lahan Kritis di Kalimantan',
-      location: 'Kalimantan Barat, Indonesia',
-      description: 'Proyek penanaman kembali lahan-lahan kritis dan terdegradasi dengan spesies pohon asli untuk mengembalikan fungsi ekologis dan kapasitas serapan karbon.',
-      imageUrl: 'https://placehold.co/600x400/C1E1A7/1A4A5A?text=Proyek+Kalimantan',
+      name: t('project_kalimantan_name'),
+      location: t('project_kalimantan_location_full'),
+      description: t('project_kalimantan_description'),
+      imageUrl: 'https://placehold.co/600x400/C1E1A7/1A4A5A?text=' + t('project_image_text'),
       carbonSaved: '4,100 ton CO2e/tahun',
       farmersImpacted: 95,
-      status: 'Sedang Berlangsung',
-      type: 'Rehabilitasi Lahan',
+      status: t('project_status_ongoing'),
+      type: t('project_type_land_rehabilitation'),
       startDate: 'Apr 2024',
       investmentNeeded: 'USD 90,000',
       progress: '40%',
       benefits: [
-        'Pencegahan erosi tanah',
-        'Peningkatan kualitas air',
-        'Peningkatan keanekaragaman hayati',
-        'Pengembangan ekowisata'
+        t('benefit_soil_erosion_prevention'),
+        t('benefit_water_quality_improvement'),
+        t('benefit_biodiversity_enhancement'),
+        t('benefit_ecotourism_development')
       ],
-      tags: ['Rehabilitasi', 'Lahan Kritis', 'Kalimantan', 'Ekowisata']
+      tags: [t('tag_rehabilitation'), t('tag_critical_land'), t('tag_kalimantan'), t('tag_ecotourism')]
     }
   ];
 
@@ -115,11 +114,10 @@ const OurProjects = () => {
       <section className="relative bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white overflow-hidden py-24 lg:py-32">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-            Proyek Kami: Menciptakan Dampak Nyata
+            {t('our_projects_hero_title')}
           </h1>
           <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto">
-            Jelajahi inisiatif kami yang sedang berjalan dan yang telah selesai
-            yang berkontribusi pada keberlanjutan lingkungan dan pemberdayaan masyarakat.
+            {t('our_projects_hero_description')}
           </p>
         </div>
       </section>
@@ -134,7 +132,7 @@ const OurProjects = () => {
                   src={project.imageUrl}
                   alt={project.name}
                   className="w-full h-56 object-cover rounded-t-lg"
-                  onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/600x400/CCCCCC/000000?text=Image+Error"; }}
+                  onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/600x400/CCCCCC/000000?text=" + t('image_error'); }}
                 />
                 <CardHeader className="flex-grow">
                   <CardTitle className="text-2xl font-bold text-gray-900 mb-2">{project.name}</CardTitle>
@@ -146,23 +144,23 @@ const OurProjects = () => {
                 <CardContent className="p-6 pt-0">
                   <div className="space-y-3 mb-4">
                     <div className="flex items-center justify-between text-sm text-gray-600">
-                      <span className="flex items-center"><TreePine className="h-4 w-4 mr-1 text-green-600" /> Karbon Tersimpan:</span>
+                      <span className="flex items-center"><TreePine className="h-4 w-4 mr-1 text-green-600" /> {t('carbon_saved')}:</span>
                       <span className="font-semibold text-green-700">{project.carbonSaved}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm text-gray-600">
-                      <span className="flex items-center"><Users className="h-4 w-4 mr-1 text-green-600" /> Petani Terdampak:</span>
+                      <span className="flex items-center"><Users className="h-4 w-4 mr-1 text-green-600" /> {t('farmers_impacted')}:</span>
                       <span className="font-semibold">{project.farmersImpacted}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm text-gray-600">
-                      <span className="flex items-center"><Calendar className="h-4 w-4 mr-1 text-green-600" /> Dimulai:</span>
+                      <span className="flex items-center"><Calendar className="h-4 w-4 mr-1 text-green-600" /> {t('start_date')}:</span>
                       <span className="font-semibold">{project.startDate}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm text-gray-600">
-                      <span className="flex items-center"><DollarSign className="h-4 w-4 mr-1 text-green-600" /> Investasi Dibutuhkan:</span>
+                      <span className="flex items-center"><DollarSign className="h-4 w-4 mr-1 text-green-600" /> {t('investment_needed')}:</span>
                       <span className="font-semibold text-blue-700">{project.investmentNeeded}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm text-gray-600">
-                      <span className="flex items-center"><BarChart2 className="h-4 w-4 mr-1 text-green-600" /> Progres:</span>
+                      <span className="flex items-center"><BarChart2 className="h-4 w-4 mr-1 text-green-600" /> {t('progress')}:</span>
                       <span className="font-semibold text-purple-700">{project.progress}</span>
                     </div>
                   </div>
@@ -172,8 +170,8 @@ const OurProjects = () => {
                     ))}
                   </div>
                   <Button asChild className="w-full bg-green-600 hover:bg-green-700">
-                    <Link to={`/projects/${project.id}`}>
-                      Lihat Detail Proyek
+                    <Link to={`/${lang}/proyek-kami/${project.id}`}>
+                      {t('view_project_details_button')}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -188,21 +186,20 @@ const OurProjects = () => {
       <section className="py-16 bg-green-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Siap Bergabung dengan Gerakan Karbon Positif?
+            {t('cta_title')}
           </h2>
           <p className="text-xl text-green-100 mb-8">
-            Daftarkan lahan Anda sekarang dan mulai berkontribusi pada solusi perubahan iklim
-            sambil meningkatkan kesejahteraan ekonomi.
+            {t('cta_description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-white text-green-700 hover:bg-green-50">
-              <Link to="/untuk-petani">
+              <Link to={`/${lang}/untuk-petani`}>
                 <HeartHandshake className="mr-2 h-5 w-5" />
-                Daftarkan Lahan Anda
+                {t('register_your_land_cta_button')}
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-700">
-              <Link to="/kontak">Hubungi Kami</Link>
+              <Link to={`/${lang}/kontak`}>{t('contact_us_cta_button')}</Link>
             </Button>
           </div>
         </div>

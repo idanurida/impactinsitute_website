@@ -1,49 +1,37 @@
 // src/pages/ForFarmers.jsx
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom'; // Import useParams
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea'; // Import Textarea component
+import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
   DollarSign,
   Leaf,
   Users,
-  Handshake,
-  ShieldCheck,
-  BarChart,
-  Calculator,
+  Award,
   ArrowRight,
-  Lightbulb,
   HelpCircle,
-  CheckCircle,
-  PiggyBank,
-  Cloud,
-  LandPlot,
-  CalendarDays,
-  Upload, // New icon for file upload
-  FileText, // New icon for document upload
-  ChevronDown, // Icon for accordion
-  ChevronUp // Icon for accordion
+  ChevronDown,
+  ChevronUp,
+  Mail,
+  Phone,
+  MapPin,
+  Clock
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Komponen halaman Untuk Petani.
- * Menyediakan informasi, manfaat, kalkulator potensi karbon, dan FAQ
+ * Menyediakan informasi, manfaat, dan FAQ
  * yang relevan bagi petani yang tertarik untuk bergabung.
  */
 const ForFarmers = () => {
-  const [calculatorData, setCalculatorData] = useState({
-    landType: '',
-    landSize: '',
-    projectAge: '',
-    carbonPrice: 12.75 // Harga karbon default
-  });
-
-  const [calculatorResult, setCalculatorResult] = useState(null);
+  const { t } = useTranslation();
+  const { lang } = useParams();
 
   // State untuk data formulir pendaftaran lahan
   const [registrationFormData, setRegistrationFormData] = useState({
@@ -80,67 +68,29 @@ const ForFarmers = () => {
   // State untuk mengelola FAQ accordion
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
-  /**
-   * Menghitung potensi serapan karbon dan nilai ekonomi berdasarkan input petani.
-   * Ini adalah perhitungan yang disederhanakan untuk tujuan demonstrasi.
-   */
-  const calculateCarbon = () => {
-    if (!calculatorData.landType || !calculatorData.landSize || !calculatorData.projectAge) {
-      setCalculatorResult({ error: "Mohon lengkapi semua bidang kalkulator." });
-      return;
-    }
-
-    const landSizeNum = parseFloat(calculatorData.landSize);
-    const projectAgeNum = parseFloat(calculatorData.projectAge);
-
-    if (isNaN(landSizeNum) || isNaN(projectAgeNum) || landSizeNum <= 0 || projectAgeNum <= 0) {
-      setCalculatorResult({ error: "Luas lahan dan umur proyek harus angka positif." });
-      return;
-    }
-
-    // Faktor serapan karbon per hektar per tahun (ton CO2e/Ha/tahun)
-    const carbonFactors = {
-      'hutan-primer': 15,
-      'hutan-sekunder': 12,
-      'agroforestri': 8,
-      'perkebunan-kopi': 6,
-      'perkebunan-karet': 10,
-      'lahan-restorasi': 14,
-      'pertanian-kering': 4
-    };
-
-    const factor = carbonFactors[calculatorData.landType] || 5; // Default jika jenis lahan tidak cocok
-    const annualCarbon = landSizeNum * factor;
-    const totalCarbonOverProjectLife = annualCarbon * projectAgeNum;
-    const annualValue = annualCarbon * calculatorData.carbonPrice;
-    const totalValueOverProjectLife = totalCarbonOverProjectLife * calculatorData.carbonPrice;
-
-    setCalculatorResult({
-      carbonTonsAnnual: annualCarbon.toFixed(2),
-      carbonTonsTotal: totalCarbonOverProjectLife.toFixed(2),
-      annualValue: annualValue.toLocaleString('id-ID', { style: 'currency', currency: 'USD' }),
-      totalValue: totalValueOverProjectLife.toLocaleString('id-ID', { style: 'currency', currency: 'USD' })
-    });
-  };
-
   // Data untuk dropdown jenis tumbuhan
   const jenisTumbuhanOptions = [
-    'Kopi', 'Kakao', 'Agroforestri', 'Hutan Rakyat', 'Sawit', 'Karet', 'Cengkeh', 'Vanili', 'Lainnya'
+    t('plant_type_coffee'), t('plant_type_cocoa'), t('plant_type_agroforestry'),
+    t('plant_type_community_forest'), t('plant_type_palm_oil'), t('plant_type_rubber'),
+    t('plant_type_clove'), t('plant_type_vanilla'), t('plant_type_other')
   ];
 
   // Data untuk dropdown jenis tanah
   const jenisTanahOptions = [
-    'Tanah Liat', 'Tanah Berpasir', 'Tanah Gambut', 'Tanah Vulkanik', 'Tanah Aluvial', 'Lainnya'
+    t('soil_type_clay'), t('soil_type_sandy'), t('soil_type_peat'),
+    t('soil_type_volcanic'), t('soil_type_alluvial'), t('soil_type_other')
   ];
 
   // Data untuk dropdown riwayat penggunaan lahan
   const riwayatLahanOptions = [
-    'Kebun', 'Belukar', 'Hutan', 'Sawah', 'Lainnya'
+    t('land_history_garden'), t('land_history_bush'), t('land_history_forest'),
+    t('land_history_rice_field'), t('land_history_other')
   ];
 
   // Data untuk dropdown status kepemilikan lahan
   const statusKepemilikanOptions = [
-    'Milik Pribadi/Sertifikat', 'Milik Adat', 'SKT (Surat Keterangan Tanah)', 'Sewa/Pinjam', 'Lainnya'
+    t('ownership_private'), t('ownership_customary'), t('ownership_skt'),
+    t('ownership_rent_loan'), t('ownership_other')
   ];
 
   // Fungsi untuk menangani perubahan input formulir pendaftaran
@@ -157,56 +107,33 @@ const ForFarmers = () => {
   const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
     setSubmissionStatus('loading');
-    setSubmissionMessage('Mengirim formulir Anda...');
+    setSubmissionMessage(t('submitting_form_message')); // Terjemahkan
 
-    // URL endpoint REST API WordPress Anda
-    // Anda perlu mengganti ini dengan endpoint yang sebenarnya di WordPress Anda
-    // Contoh: 'https://impactinstitute.asia/wp-json/your-custom-namespace/v1/submit-farmer-form'
-    const wordpressApiEndpoint = 'https://impactinstitute.asia/wp-json/wp/v2/posts'; // Contoh: Mengirim sebagai post baru
+    // API Key dari wp-config.php, diteruskan sebagai environment variable di Netlify
+    const API_KEY = import.meta.env.VITE_WP_API_KEY; // Pastikan ini sesuai dengan nama env var Anda
 
-    const formData = new FormData();
-    // Menambahkan semua data teks ke FormData
-    for (const key in registrationFormData) {
-      if (registrationFormData.hasOwnProperty(key)) {
-        // Handle array for jenisTumbuhan
-        if (key === 'jenisTumbuhan' && Array.isArray(registrationFormData[key])) {
-          formData.append(key, registrationFormData[key].join(', ')); // Join array into a string
-        } else if (key !== 'fotoLahan' && key !== 'pernyataanKesediaan' && registrationFormData[key] !== null) {
-          formData.append(key, registrationFormData[key]);
-        }
-      }
-    }
-
-    // Menambahkan file foto lahan
-    if (registrationFormData.fotoLahan) {
-      for (let i = 0; i < registrationFormData.fotoLahan.length; i++) {
-        formData.append('foto_lahan[]', registrationFormData.fotoLahan[i]);
-      }
-    }
-
-    // Menambahkan file pernyataan kesediaan
-    if (registrationFormData.pernyataanKesediaan && registrationFormData.pernyataanKesediaan[0]) {
-      formData.append('pernyataan_kesediaan', registrationFormData.pernyataanKesediaan[0]);
+    if (!API_KEY) {
+      console.error("API Key is not defined. Please set VITE_WP_API_KEY in your .env file.");
+      setSubmissionStatus('error');
+      setSubmissionMessage(t('api_key_missing_error')); // Terjemahkan
+      return;
     }
 
     try {
-      const response = await fetch(wordpressApiEndpoint, {
+      const response = await fetch('https://impactinstitute.asia/wp-json/custom/v1/submit-farmer-registration', {
         method: 'POST',
-        // Penting: Jangan set Content-Type header secara manual saat menggunakan FormData
-        // Browser akan mengaturnya secara otomatis dengan boundary yang benar
-        body: formData,
-        // Jika WordPress Anda memerlukan otentikasi (misalnya, token JWT atau Basic Auth)
-        // Anda perlu menambahkannya di sini. Contoh:
-        // headers: {
-        //   'Authorization': 'Bearer YOUR_AUTH_TOKEN'
-        // }
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': API_KEY // Mengirim API Key melalui header kustom
+        },
+        body: JSON.stringify(registrationFormData) // Menggunakan registrationFormData langsung
       });
 
       if (response.ok) {
         const result = await response.json();
         console.log('Form submission successful:', result);
         setSubmissionStatus('success');
-        setSubmissionMessage('Formulir pendaftaran lahan Anda telah terkirim! Tim kami akan segera menghubungi Anda.');
+        setSubmissionMessage(t('form_submission_success')); // Terjemahkan
         // Reset form setelah submit sukses
         setRegistrationFormData({
           namaLengkap: '',
@@ -238,12 +165,12 @@ const ForFarmers = () => {
         const errorData = await response.json();
         console.error('Form submission failed:', response.status, errorData);
         setSubmissionStatus('error');
-        setSubmissionMessage(`Gagal mengirim formulir: ${errorData.message || 'Terjadi kesalahan.'}`);
+        setSubmissionMessage(`${t('form_submission_error')}: ${errorData.message || t('unknown_error')}`); // Terjemahkan
       }
     } catch (error) {
       console.error('Error during form submission:', error);
       setSubmissionStatus('error');
-      setSubmissionMessage(`Terjadi kesalahan jaringan: ${error.message}`);
+      setSubmissionMessage(`${t('network_error')}: ${error.message}`); // Terjemahkan
     }
   };
 
@@ -252,53 +179,55 @@ const ForFarmers = () => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-
   const faqs = [
     {
-      question: "Apa itu kredit karbon dan bagaimana petani bisa mendapatkannya?",
-      answer: "Kredit karbon adalah sertifikat yang mewakili pengurangan satu ton emisi karbon dioksida. Petani bisa mendapatkannya dengan menerapkan praktik pertanian berkelanjutan yang menyerap karbon dari atmosfer, seperti agroforestri atau restorasi lahan."
+      question: t('faq_carbon_credits_q'),
+      answer: t('faq_carbon_credits_a')
     },
     {
-      question: "Berapa pendapatan yang bisa saya harapkan?",
-      answer: "Pendapatan bervariasi tergantung pada jenis lahan, luas lahan, dan praktik yang diterapkan. Kalkulator di atas memberikan estimasi awal. Kami akan melakukan penilaian lebih lanjut untuk estimasi yang lebih akurat."
+      question: t('faq_expected_income_q'),
+      answer: t('faq_expected_income_a')
     },
     {
-      question: "Apakah ada biaya di muka untuk bergabung?",
-      answer: "Tidak ada biaya di muka untuk petani. Kami berinvestasi dalam proyek Anda dan membagi keuntungan dari penjualan kredit karbon."
+      question: t('faq_upfront_cost_q'),
+      answer: t('faq_upfront_cost_a')
     },
     {
-      question: "Bagaimana proses verifikasi karbon dilakukan?",
-      answer: "Kami bekerja dengan lembaga verifikasi pihak ketiga yang independen untuk mengukur dan memverifikasi serapan karbon di lahan Anda sesuai dengan standar internasional."
+      question: t('faq_carbon_verification_process_q'),
+      answer: t('faq_carbon_verification_process_a')
     },
     {
-      question: "Apa yang terjadi jika proyek saya tidak menghasilkan karbon sebanyak yang diharapkan?",
-      answer: "Kami akan bekerja sama dengan Anda untuk mengidentifikasi tantangan dan menyesuaikan strategi. Risiko dibagi, dan kami berkomitmen untuk mendukung keberhasilan proyek Anda."
+      question: t('faq_project_performance_q'),
+      answer: t('faq_project_performance_a')
     }
   ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section for Farmers */}
-      <section className="relative bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white overflow-hidden py-24 lg:py-32">
+      <section
+        id="hero"
+        className="relative bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white overflow-hidden py-24 lg:py-32"
+      >
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-            Potensi Ekonomi dari Lahan Anda
+            {t('farmers_hero_title_part1')}<br />
+            <span className="text-accent-green">{t('farmers_hero_title_part2')}</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto">
-            Ubah praktik pertanian Anda menjadi sumber pendapatan baru melalui
-            penjualan kredit karbon. Mari berkontribusi pada iklim dan kesejahteraan.
+            {t('farmers_hero_description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
               {/* Mengarahkan ke section form pendaftaran lahan */}
-              <Link to="#daftar-lahan">
-                Daftarkan Lahan Anda
+              <Link to={`/${lang}/untuk-petani#daftar-lahan`}>
+                {t('register_land_button')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary-dark">
-              <Link to="#faq">Pelajari Lebih Lanjut</Link>
+              <Link to={`/${lang}/bagaimana-kami-bekerja`}>{t('learn_more_button')}</Link>
             </Button>
           </div>
         </div>
@@ -308,9 +237,9 @@ const ForFarmers = () => {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Manfaat untuk Petani</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('benefits_title')}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Kami berkomitmen untuk memberikan nilai lebih kepada petani mitra kami
+              {t('benefits_description')}
             </p>
           </div>
 
@@ -319,32 +248,32 @@ const ForFarmers = () => {
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
                 <DollarSign className="h-8 w-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Pendapatan Tambahan</h3>
-              <p className="text-gray-600">Dapatkan keuntungan dari penjualan kredit karbon yang dihasilkan lahan Anda.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('additional_income_title')}</h3>
+              <p className="text-gray-600">{t('additional_income_desc')}</p>
             </div>
 
             <div className="text-center space-y-4">
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
                 <Leaf className="h-8 w-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Praktik Berkelanjutan</h3>
-              <p className="text-gray-600">Menerapkan metode pertanian yang ramah lingkungan dan meningkatkan kesehatan tanah.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('sustainable_practices_title')}</h3>
+              <p className="text-gray-600">{t('sustainable_practices_desc')}</p>
             </div>
 
             <div className="text-center space-y-4">
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
                 <Users className="h-8 w-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Dukungan Teknis</h3>
-              <p className="text-gray-600">Pendampingan dan pelatihan dari ahli kami untuk praktik terbaik.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('community_support_title')}</h3>
+              <p className="text-gray-600">{t('community_support_desc')}</p>
             </div>
 
             <div className="text-center space-y-4">
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                <ShieldCheck className="h-8 w-8 text-green-600" />
+                <Award className="h-8 w-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Akses Pasar Global</h3>
-              <p className="text-gray-600">Menghubungkan Anda ke pasar karbon internasional yang transparan.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('global_market_access_title')}</h3>
+              <p className="text-gray-600">{t('global_market_access_desc')}</p>
             </div>
           </div>
         </div>
@@ -354,8 +283,8 @@ const ForFarmers = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Bagaimana Prosesnya?</h2>
-            <p className="text-xl text-gray-600">Langkah mudah untuk memulai perjalanan karbon positif Anda</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('how_it_works_farmers_title')}</h2>
+            <p className="text-xl text-gray-600">{t('how_it_works_farmers_description')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -363,173 +292,42 @@ const ForFarmers = () => {
               <div className="bg-primary text-primary-foreground w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                 1
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Daftar & Penilaian Awal</h3>
-              <p className="text-gray-600">Isi formulir pendaftaran dan tim kami akan melakukan penilaian awal potensi lahan Anda.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('how_it_works_step1_title')}</h3>
+              <p className="text-gray-600">{t('how_it_works_step1_desc')}</p>
             </div>
 
             <div className="text-center space-y-4 p-6 bg-card rounded-lg shadow-md">
               <div className="bg-primary text-primary-foreground w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                 2
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Pengembangan & Implementasi Proyek</h3>
-              <p className="text-gray-600">Kami membantu merancang dan menerapkan praktik berkelanjutan di lahan Anda.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('how_it_works_step2_title')}</h3>
+              <p className="text-gray-600">{t('how_it_works_step2_desc')}</p>
             </div>
 
             <div className="text-center space-y-4 p-6 bg-card rounded-lg shadow-md">
               <div className="bg-primary text-primary-foreground w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                 3
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Monitoring & Verifikasi Karbon</h3>
-              <p className="text-gray-600">Pemantauan rutin dan verifikasi independen untuk mengukur serapan karbon.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('how_it_works_step3_title')}</h3>
+              <p className="text-gray-600">{t('how_it_works_step3_desc')}</p>
             </div>
 
             <div className="text-center space-y-4 p-6 bg-card rounded-lg shadow-md">
               <div className="bg-primary text-primary-foreground w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                 4
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Penjualan Kredit Karbon</h3>
-              <p className="text-gray-600">Kami menjual kredit karbon Anda di pasar global dan membagikan keuntungan.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('how_it_works_step4_title')}</h3>
+              <p className="text-gray-600">{t('how_it_works_step4_desc')}</p>
             </div>
 
             <div className="text-center space-y-4 p-6 bg-card rounded-lg shadow-md">
               <div className="bg-primary text-primary-foreground w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
                 5
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">Pembayaran & Dampak Berkelanjutan</h3>
-              <p className="text-gray-600">Anda menerima pembayaran dan terus berkontribusi pada lingkungan.</p>
+              <h3 className="text-xl font-semibold text-gray-900">{t('how_it_works_step5_title')}</h3>
+              <p className="text-gray-600">{t('how_it_works_step5_desc')}</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Carbon Potential Calculator */}
-      <section id="kalkulator-potensi" className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Kalkulator Potensi Karbon Anda
-            </h2>
-            <p className="text-xl text-gray-600">
-              Dapatkan estimasi potensi serapan karbon dan nilai ekonomi dari lahan Anda
-            </p>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Calculator className="h-5 w-5 text-green-600" />
-                <span>Estimasi Potensi Karbon</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="landType">Jenis Tutupan Lahan</Label>
-                  <Select value={calculatorData.landType} onValueChange={(value) =>
-                    setCalculatorData(prev => ({ ...prev, landType: value }))
-                  }>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Pilih jenis lahan" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white shadow-lg">
-                      <SelectItem value="hutan-primer">Hutan Primer</SelectItem>
-                      <SelectItem value="hutan-sekunder">Hutan Sekunder</SelectItem>
-                      <SelectItem value="agroforestri">Agroforestri</SelectItem>
-                      <SelectItem value="perkebunan-kopi">Perkebunan Kopi</SelectItem>
-                      <SelectItem value="perkebunan-karet">Perkebunan Karet</SelectItem>
-                      <SelectItem value="lahan-restorasi">Lahan Restorasi</SelectItem>
-                      <SelectItem value="pertanian-kering">Pertanian Lahan Kering</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="landSize">Luas Lahan (Hektar)</Label>
-                  <Input
-                    id="landSize"
-                    type="number"
-                    placeholder="Masukkan luas lahan"
-                    value={calculatorData.landSize}
-                    onChange={(e) => setCalculatorData(prev => ({ ...prev, landSize: e.target.value }))}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="projectAge">Umur Proyek (Tahun)</Label>
-                  <Input
-                    id="projectAge"
-                    type="number"
-                    placeholder="Umur tanaman/proyek"
-                    value={calculatorData.projectAge}
-                    onChange={(e) => setCalculatorData(prev => ({ ...prev, projectAge: e.target.value }))}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="carbonPrice">Harga Karbon (USD/ton CO2e)</Label>
-                  <Input
-                    id="carbonPrice"
-                    type="number"
-                    step="0.01"
-                    placeholder="Harga karbon saat ini"
-                    value={calculatorData.carbonPrice}
-                    onChange={(e) => setCalculatorData(prev => ({ ...prev, carbonPrice: parseFloat(e.target.value) }))}
-                  />
-                </div>
-              </div>
-
-              <Button onClick={calculateCarbon} className="w-full bg-green-600 hover:bg-green-700">
-                Hitung Potensi Karbon
-              </Button>
-
-              {calculatorResult && (
-                <div className="bg-green-50 p-6 rounded-lg space-y-4">
-                  {calculatorResult.error ? (
-                    <p className="text-red-600 text-center font-semibold">{calculatorResult.error}</p>
-                  ) : (
-                    <>
-                      <h3 className="text-lg font-semibold text-green-800">Hasil Estimasi:</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-sm text-green-600">Perkiraan Serapan Karbon per Tahun</p>
-                          <p className="text-2xl font-bold text-green-800 flex items-center">
-                            <Cloud className="h-6 w-6 mr-2" />{calculatorResult.carbonTonsAnnual} ton CO2e
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-green-600">Perkiraan Total Serapan Karbon (umur proyek)</p>
-                          <p className="text-2xl font-bold text-green-800 flex items-center">
-                            <Cloud className="h-6 w-6 mr-2" />{calculatorResult.carbonTonsTotal} ton CO2e
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-green-600">Perkiraan Nilai Ekonomi per Tahun</p>
-                          <p className="text-2xl font-bold text-green-800 flex items-center">
-                            <PiggyBank className="h-6 w-6 mr-2" />{calculatorResult.annualValue}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-green-600">Perkiraan Total Nilai Ekonomi (umur proyek)</p>
-                          <p className="text-2xl font-bold text-green-800 flex items-center">
-                            <PiggyBank className="h-6 w-6 mr-2" />{calculatorResult.totalValue}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
-                        <p className="text-sm text-yellow-800">
-                          <strong>Disclaimer:</strong> Ini adalah perkiraan awal dan bukan jaminan.
-                          Nilai sebenarnya akan ditentukan setelah verifikasi dan validasi proyek.
-                        </p>
-                      </div>
-                      <Button asChild className="w-full">
-                        <Link to="#daftar-lahan">Daftarkan Lahan untuk Analisis Lebih Lanjut</Link>
-                      </Button>
-                    </>
-                  )}
-                </div>
-              )}
-            </CardContent>
-          </Card>
         </div>
       </section>
 
@@ -537,24 +335,24 @@ const ForFarmers = () => {
       <section id="daftar-lahan" className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Daftarkan Lahan Anda Sekarang
+            {t('register_land_now_title')}
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Siap mengubah lahan Anda menjadi aset iklim dan ekonomi? Isi formulir di bawah ini.
+            {t('register_land_now_description')}
           </p>
           <Card className="p-6">
             <CardHeader>
-              <CardTitle>Formulir Pendaftaran Lahan</CardTitle>
-              <CardDescription>Tim kami akan menghubungi Anda setelah menerima formulir.</CardDescription>
+              <CardTitle>{t('land_registration_form_title')}</CardTitle>
+              <CardDescription>{t('land_registration_form_description')}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6"> {/* Increased spacing for better look */}
+            <CardContent className="space-y-6">
               <form onSubmit={handleRegistrationSubmit} className="space-y-6">
                 {/* Nama Lengkap sesuai KTP */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="namaLengkap">Nama Lengkap sesuai KTP *</Label>
+                  <Label htmlFor="namaLengkap">{t('full_name_ktp_label')} *</Label>
                   <Input
                     id="namaLengkap"
-                    placeholder="Masukkan nama lengkap Anda sesuai KTP"
+                    placeholder={t('full_name_ktp_placeholder')}
                     value={registrationFormData.namaLengkap}
                     onChange={(e) => handleRegistrationInputChange('namaLengkap', e.target.value)}
                     required
@@ -563,11 +361,11 @@ const ForFarmers = () => {
 
                 {/* Nomor KTP */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="nomorKTP">Nomor KTP *</Label>
+                  <Label htmlFor="nomorKTP">{t('ktp_number_label')} *</Label>
                   <Input
                     id="nomorKTP"
                     type="text"
-                    placeholder="Masukkan 16 digit Nomor KTP Anda"
+                    placeholder={t('ktp_number_placeholder')}
                     value={registrationFormData.nomorKTP}
                     onChange={(e) => handleRegistrationInputChange('nomorKTP', e.target.value)}
                     maxLength={16}
@@ -577,10 +375,10 @@ const ForFarmers = () => {
 
                 {/* Alamat Lengkap */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="alamatLengkap">Alamat Lengkap *</Label>
+                  <Label htmlFor="alamatLengkap">{t('full_address_label')} *</Label>
                   <Textarea
                     id="alamatLengkap"
-                    placeholder="Masukkan alamat lengkap Anda (Jalan, Nomor, RT/RW, Kelurahan, Kecamatan, Kota, Provinsi, Kode Pos)"
+                    placeholder={t('full_address_placeholder')}
                     rows={3}
                     value={registrationFormData.alamatLengkap}
                     onChange={(e) => handleRegistrationInputChange('alamatLengkap', e.target.value)}
@@ -590,10 +388,10 @@ const ForFarmers = () => {
 
                 {/* Nama Kelompok Tani/Koperasi */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="namaKelompokTani">Nama Kelompok Tani/Koperasi (Opsional)</Label>
+                  <Label htmlFor="namaKelompokTani">{t('farmer_group_name_label')}</Label>
                   <Input
                     id="namaKelompokTani"
-                    placeholder="Jika tergabung dalam kelompok tani/koperasi"
+                    placeholder={t('farmer_group_name_placeholder')}
                     value={registrationFormData.namaKelompokTani}
                     onChange={(e) => handleRegistrationInputChange('namaKelompokTani', e.target.value)}
                   />
@@ -602,22 +400,22 @@ const ForFarmers = () => {
                 {/* Informasi Kontak (Nomor Telepon/WhatsApp, Email) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2 text-left">
-                    <Label htmlFor="nomorTelepon">Nomor Telepon/WhatsApp *</Label>
+                    <Label htmlFor="nomorTelepon">{t('phone_whatsapp_label')} *</Label>
                     <Input
                       id="nomorTelepon"
                       type="tel"
-                      placeholder="Contoh: +6281234567890"
+                      placeholder={t('phone_whatsapp_placeholder')}
                       value={registrationFormData.nomorTelepon}
                       onChange={(e) => handleRegistrationInputChange('nomorTelepon', e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2 text-left">
-                    <Label htmlFor="email">Email *</Label>
+                    <Label htmlFor="email">{t('email_label')} *</Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="nama@contoh.com"
+                      placeholder={t('email_placeholder')}
                       value={registrationFormData.email}
                       onChange={(e) => handleRegistrationInputChange('email', e.target.value)}
                       required
@@ -628,40 +426,40 @@ const ForFarmers = () => {
                 {/* Lokasi Lahan (Provinsi, Kabupaten/Kota, Kecamatan, Desa/Kelurahan) - Changed to Input */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2 text-left">
-                    <Label htmlFor="provinsi">Provinsi *</Label>
+                    <Label htmlFor="provinsi">{t('province_label')} *</Label>
                     <Input
                       id="provinsi"
-                      placeholder="Masukkan nama Provinsi"
+                      placeholder={t('province_placeholder')}
                       value={registrationFormData.provinsi}
                       onChange={(e) => handleRegistrationInputChange('provinsi', e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2 text-left">
-                    <Label htmlFor="kabupatenKota">Kabupaten/Kota *</Label>
+                    <Label htmlFor="kabupatenKota">{t('regency_city_label')} *</Label>
                     <Input
                       id="kabupatenKota"
-                      placeholder="Masukkan nama Kabupaten/Kota"
+                      placeholder={t('regency_city_placeholder')}
                       value={registrationFormData.kabupatenKota}
                       onChange={(e) => handleRegistrationInputChange('kabupatenKota', e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2 text-left">
-                    <Label htmlFor="kecamatan">Kecamatan *</Label>
+                    <Label htmlFor="kecamatan">{t('district_label')} *</Label>
                     <Input
                       id="kecamatan"
-                      placeholder="Masukkan nama Kecamatan"
+                      placeholder={t('district_placeholder')}
                       value={registrationFormData.kecamatan}
                       onChange={(e) => handleRegistrationInputChange('kecamatan', e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2 text-left">
-                    <Label htmlFor="desaKelurahan">Desa/Kelurahan *</Label>
+                    <Label htmlFor="desaKelurahan">{t('village_label')} *</Label>
                     <Input
                       id="desaKelurahan"
-                      placeholder="Masukkan nama Desa/Kelurahan"
+                      placeholder={t('village_placeholder')}
                       value={registrationFormData.desaKelurahan}
                       onChange={(e) => handleRegistrationInputChange('desaKelurahan', e.target.value)}
                       required
@@ -671,10 +469,10 @@ const ForFarmers = () => {
 
                 {/* Nomor Dokumen Kepemilikan Tanah/lahan */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="nomorDokumenTanah">Nomor Dokumen Kepemilikan Tanah/Lahan *</Label>
+                  <Label htmlFor="nomorDokumenTanah">{t('land_ownership_doc_label')} *</Label>
                   <Input
                     id="nomorDokumenTanah"
-                    placeholder="Contoh: SHM 12345 / SKT 67890"
+                    placeholder={t('land_ownership_doc_placeholder')}
                     value={registrationFormData.nomorDokumenTanah}
                     onChange={(e) => handleRegistrationInputChange('nomorDokumenTanah', e.target.value)}
                     required
@@ -684,31 +482,31 @@ const ForFarmers = () => {
                 {/* Luas Lahan (dalam Hektar atau satuan lain yang relevan) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2 text-left">
-                    <Label htmlFor="luasLahan">Luas Lahan *</Label>
+                    <Label htmlFor="luasLahan">{t('land_size_label_form')} *</Label>
                     <Input
                       id="luasLahan"
                       type="number"
                       step="0.01"
-                      placeholder="Masukkan luas lahan"
+                      placeholder={t('land_size_placeholder_form')}
                       value={registrationFormData.luasLahan}
                       onChange={(e) => handleRegistrationInputChange('luasLahan', e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2 text-left">
-                    <Label htmlFor="satuanLuasLahan">Satuan Luas Lahan *</Label>
+                    <Label htmlFor="satuanLuasLahan">{t('land_unit_label')} *</Label>
                     <Select
                       value={registrationFormData.satuanLuasLahan}
                       onValueChange={(value) => handleRegistrationInputChange('satuanLuasLahan', value)}
                       required
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Pilih Satuan" />
+                        <SelectValue placeholder={t('select_unit_placeholder')} />
                       </SelectTrigger>
                       <SelectContent className="bg-white shadow-lg">
-                        <SelectItem value="hektar">Hektar (Ha)</SelectItem>
-                        <SelectItem value="meter-persegi">Meter Persegi (m²)</SelectItem>
-                        <SelectItem value="are">Are</SelectItem>
+                        <SelectItem value="hektar">{t('unit_hectare')}</SelectItem>
+                        <SelectItem value="meter-persegi">{t('unit_sqm')}</SelectItem>
+                        <SelectItem value="are">{t('unit_are')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -716,14 +514,14 @@ const ForFarmers = () => {
 
                 {/* Jenis Tumbuhan yang Ada/Akan Ditanam */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="jenisTumbuhan">Jenis Tumbuhan yang Ada/Akan Ditanam *</Label>
+                  <Label htmlFor="jenisTumbuhan">{t('plant_type_label')} *</Label>
                   <Select
                     value={registrationFormData.jenisTumbuhan[0] || ''} // Mengambil item pertama jika ada, atau string kosong
                     onValueChange={(value) => handleRegistrationInputChange('jenisTumbuhan', [value])} // Simpan sebagai array
                     required
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Pilih jenis tumbuhan" />
+                      <SelectValue placeholder={t('select_plant_type_placeholder')} />
                     </SelectTrigger>
                     <SelectContent className="bg-white shadow-lg">
                       {jenisTumbuhanOptions.map(option => (
@@ -735,10 +533,10 @@ const ForFarmers = () => {
 
                 {/* Jenis Tanaman Utama */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="jenisTanamanUtama">Jenis Tanaman Utama (Contoh: Kopi Arabika, Kakao Lokal) *</Label>
+                  <Label htmlFor="jenisTanamanUtama">{t('main_crop_type_label')} *</Label>
                   <Input
                     id="jenisTanamanUtama"
-                    placeholder="Contoh: Kopi Arabika, Kakao Lokal"
+                    placeholder={t('main_crop_type_placeholder')}
                     value={registrationFormData.jenisTanamanUtama}
                     onChange={(e) => handleRegistrationInputChange('jenisTanamanUtama', e.target.value)}
                     required
@@ -747,10 +545,10 @@ const ForFarmers = () => {
 
                 {/* Jenis Pohon Penaung */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="jenisPohonPenaung">Jenis Pohon Penaung (Contoh: Lamtoro, Sengon) *</Label>
+                  <Label htmlFor="jenisPohonPenaung">{t('shade_tree_type_label')} *</Label>
                   <Input
                     id="jenisPohonPenaung"
-                    placeholder="Contoh: Lamtoro, Sengon"
+                    placeholder={t('shade_tree_type_placeholder')}
                     value={registrationFormData.jenisPohonPenaung}
                     onChange={(e) => handleRegistrationInputChange('jenisPohonPenaung', e.target.value)}
                     required
@@ -759,14 +557,14 @@ const ForFarmers = () => {
 
                 {/* Tahun Tanam Pohon Penaung */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="tahunTanamPohonPenaung">Tahun Tanam Pohon Penaung *</Label>
+                  <Label htmlFor="tahunTanamPohonPenaung">{t('shade_tree_planting_year_label')} *</Label>
                   <Select
                     value={registrationFormData.tahunTanamPohonPenaung}
                     onValueChange={(value) => handleRegistrationInputChange('tahunTanamPohonPenaung', value)}
                     required
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Pilih Tahun" />
+                      <SelectValue placeholder={t('select_year_placeholder')} />
                     </SelectTrigger>
                     <SelectContent className="bg-white shadow-lg">
                       {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
@@ -778,14 +576,14 @@ const ForFarmers = () => {
 
                 {/* Jenis Tanah */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="jenisTanah">Jenis Tanah *</Label>
+                  <Label htmlFor="jenisTanah">{t('soil_type_label')} *</Label>
                   <Select
                     value={registrationFormData.jenisTanah}
                     onValueChange={(value) => handleRegistrationInputChange('jenisTanah', value)}
                     required
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Pilih Jenis Tanah" />
+                      <SelectValue placeholder={t('select_soil_type_placeholder')} />
                     </SelectTrigger>
                     <SelectContent className="bg-white shadow-lg">
                       {jenisTanahOptions.map(option => (
@@ -797,12 +595,12 @@ const ForFarmers = () => {
 
                 {/* Kemiringan lahan dalam (%) */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="kemiringanLahan">Kemiringan Lahan (%) *</Label>
+                  <Label htmlFor="kemiringanLahan">{t('land_slope_label')} *</Label>
                   <Input
                     id="kemiringanLahan"
                     type="number"
                     step="0.1"
-                    placeholder="Contoh: 15"
+                    placeholder={t('land_slope_placeholder')}
                     value={registrationFormData.kemiringanLahan}
                     onChange={(e) => handleRegistrationInputChange('kemiringanLahan', e.target.value)}
                     required
@@ -811,14 +609,14 @@ const ForFarmers = () => {
 
                 {/* Riwayat Penggunaan Lahan sebelumnya */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="riwayatPenggunaanLahan">Riwayat Penggunaan Lahan Sebelumnya *</Label>
+                  <Label htmlFor="riwayatPenggunaanLahan">{t('land_use_history_label')} *</Label>
                   <Select
                     value={registrationFormData.riwayatPenggunaanLahan}
                     onValueChange={(value) => handleRegistrationInputChange('riwayatPenggunaanLahan', value)}
                     required
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Pilih Riwayat Penggunaan Lahan" />
+                      <SelectValue placeholder={t('select_land_use_history_placeholder')} />
                     </SelectTrigger>
                     <SelectContent className="bg-white shadow-lg">
                       {riwayatLahanOptions.map(option => (
@@ -830,10 +628,10 @@ const ForFarmers = () => {
 
                 {/* Deskripsi aktivitas pertanian yang dilakukan */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="deskripsiAktivitasPertanian">Deskripsi Aktivitas Pertanian yang Dilakukan (Pemupukan, Penyiangan, Pengairan, dll.)</Label>
+                  <Label htmlFor="deskripsiAktivitasPertanian">{t('farming_activities_desc_label')}</Label>
                   <Textarea
                     id="deskripsiAktivitasPertanian"
-                    placeholder="Jelaskan aktivitas pertanian yang biasa Anda lakukan di lahan ini."
+                    placeholder={t('farming_activities_desc_placeholder')}
                     rows={3}
                     value={registrationFormData.deskripsiAktivitasPertanian}
                     onChange={(e) => handleRegistrationInputChange('deskripsiAktivitasPertanian', e.target.value)}
@@ -842,14 +640,14 @@ const ForFarmers = () => {
 
                 {/* Status Kepemilikan Lahan */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="statusKepemilikanLahan">Status Kepemilikan Lahan *</Label>
+                  <Label htmlFor="statusKepemilikanLahan">{t('land_ownership_status_label')} *</Label>
                   <Select
                     value={registrationFormData.statusKepemilikanLahan}
                     onValueChange={(value) => handleRegistrationInputChange('statusKepemilikanLahan', value)}
                     required
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Pilih Status Kepemilikan" />
+                      <SelectValue placeholder={t('select_ownership_status_placeholder')} />
                     </SelectTrigger>
                     <SelectContent className="bg-white shadow-lg">
                       {statusKepemilikanOptions.map(option => (
@@ -861,7 +659,7 @@ const ForFarmers = () => {
 
                 {/* Upload Foto Lahan */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="fotoLahan">Upload Foto Lahan (minimal 3 foto, JPG/PNG, maks 5MB/foto) *</Label>
+                  <Label htmlFor="fotoLahan">{t('upload_land_photos_label')} *</Label>
                   <Input
                     id="fotoLahan"
                     type="file"
@@ -870,12 +668,12 @@ const ForFarmers = () => {
                     onChange={(e) => handleFileUpload('fotoLahan', e.target.files)}
                     required
                   />
-                  <p className="text-xs text-gray-500">Minimal 3 foto dari sudut berbeda. Maksimal 5MB per foto.</p>
+                  <p className="text-xs text-gray-500">{t('upload_land_photos_hint')}</p>
                 </div>
 
                 {/* Lampirkan pernyataan kesediaan (Kuasa Pengelolaan Penjualan Karbon) */}
                 <div className="space-y-2 text-left">
-                  <Label htmlFor="pernyataanKesediaan">Lampirkan Pernyataan Kesediaan (Kuasa Pengelolaan Penjualan Karbon) *</Label>
+                  <Label htmlFor="pernyataanKesediaan">{t('attach_consent_statement_label')} *</Label>
                   <Input
                     id="pernyataanKesediaan"
                     type="file"
@@ -883,15 +681,15 @@ const ForFarmers = () => {
                     onChange={(e) => handleFileUpload('pernyataanKesediaan', e.target.files)}
                     required
                   />
-                  <p className="text-xs text-gray-500">Format PDF atau Word.</p>
+                  <p className="text-xs text-gray-500">{t('attach_consent_statement_hint')}</p>
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary-medium hover:text-white" // Updated hover background and text
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary-medium hover:text-white"
                   disabled={submissionStatus === 'loading'}
                 >
-                  {submissionStatus === 'loading' ? 'Mengirim...' : 'Kirim Pendaftaran'}
+                  {submissionStatus === 'loading' ? t('submitting_form') : t('submit_registration_button')}
                   {submissionStatus === 'loading' ? null : <ArrowRight className="ml-2 h-5 w-5" />}
                 </Button>
               </form>
@@ -912,16 +710,16 @@ const ForFarmers = () => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-16 bg-gray-50"> {/* Background for the entire FAQ section */}
+      <section id="faq" className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Pertanyaan yang Sering Diajukan (FAQ)</h2>
-            <p className="text-xl text-gray-600">Temukan jawaban atas pertanyaan umum Anda</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('faq_title_farmers')}</h2>
+            <p className="text-xl text-gray-600">{t('faq_description_farmers')}</p>
           </div>
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <Card key={index} className="overflow-hidden bg-card dark:bg-card"> {/* Added bg-card for consistent background */}
+              <Card key={index} className="overflow-hidden bg-card dark:bg-card">
                 <CardHeader
                   className="flex flex-row items-center justify-between space-x-4 cursor-pointer py-4 px-6 bg-white hover:bg-gray-100 transition-colors duration-200"
                   onClick={() => toggleFaq(index)}
@@ -940,12 +738,82 @@ const ForFarmers = () => {
                     openFaqIndex === index ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
                   }`}
                 >
-                  <CardContent className="overflow-hidden pt-0 pb-4 px-6 text-gray-700"> {/* Adjusted padding */}
+                  <CardContent className="overflow-hidden pt-0 pb-4 px-6 text-gray-700">
                     <p>{faq.answer}</p>
                   </CardContent>
                 </div>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Info (Reused from Footer/Contact page for consistency) */}
+      <section className="py-16 bg-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('contact_info_title')}</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {t('contact_info_description_farmers')}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <MapPin className="h-5 w-5 text-green-600" />
+                  <span>{t('office_address_title')}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">
+                  {t('address_line1')}<br />
+                  {t('address_line2')}<br />
+                  {t('address_line3')}
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Phone className="h-5 w-5 text-green-600" />
+                  <span>{t('phone_whatsapp_title')}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">+62 812-xxxx-xxxx</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Mail className="h-5 w-5 text-green-600" />
+                  <span>{t('email_title')}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">info@impactinstitute.asia</p>
+                <p className="text-gray-700">carbon@impactinstitute.asia</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Clock className="h-5 w-5 text-green-600" />
+                  <span>{t('operating_hours_title_contact')}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-gray-700">
+                  <p><strong>{t('operating_hours_weekday_title')}:</strong> {t('operating_hours_weekday_contact')}</p>
+                  <p><strong>{t('operating_hours_saturday_title')}:</strong> {t('operating_hours_saturday_contact')}</p>
+                  <p><strong>{t('operating_hours_sunday_title')}:</strong> {t('operating_hours_sunday_contact')}</p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
