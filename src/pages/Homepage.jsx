@@ -85,7 +85,9 @@ const Homepage = () => {
       location: t('project_agroforestry_location'),
       carbonSaved: '2,450 ton CO2e',
       farmersImpacted: 150,
-      imageUrl: 'https://placehold.co/600x400/0E2C40/C1E1A7?text=' + t('project_agroforestry_title')
+      imageUrl: 'https://placehold.co/600x400/0E2C40/C1E1A7?text=' + t('project_agroforestry_title'),
+      // Fallback image in case the primary image fails to load
+      imageErrorFallback: 'https://placehold.co/600x400/CCCCCC/000000?text=' + t('image_error')
     },
     {
       id: 2,
@@ -93,7 +95,8 @@ const Homepage = () => {
       location: t('project_mangrove_location'),
       carbonSaved: '3,200 ton CO2e',
       farmersImpacted: 89,
-      imageUrl: 'https://placehold.co/600x400/1A4A5A/EFBC75?text=' + t('project_mangrove_title')
+      imageUrl: 'https://placehold.co/600x400/1A4A5A/EFBC75?text=' + t('project_mangrove_title'),
+      imageErrorFallback: 'https://placehold.co/600x400/CCCCCC/000000?text=' + t('image_error')
     },
     {
       id: 3,
@@ -101,7 +104,8 @@ const Homepage = () => {
       location: t('project_rubber_location'),
       carbonSaved: '1,800 ton CO2e',
       farmersImpacted: 120,
-      imageUrl: 'https://placehold.co/600x400/148D8D/0E2C40?text=' + t('project_rubber_title')
+      imageUrl: 'https://placehold.co/600x400/148D8D/0E2C40?text=' + t('project_rubber_title'),
+      imageErrorFallback: 'https://placehold.co/600x400/CCCCCC/000000?text=' + t('image_error')
     }
   ];
 
@@ -234,7 +238,7 @@ const Homepage = () => {
                   src={project.imageUrl}
                   alt={project.name}
                   className="w-full h-48 object-cover rounded-t-lg"
-                  onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/600x400/CCCCCC/000000?text=" + t('image_error'); }}
+                  onError={(e) => { e.target.onerror = null; e.target.src = project.imageErrorFallback; }}
                 />
                 <CardHeader>
                   <CardTitle className="text-xl font-bold text-gray-900">{project.name}</CardTitle>
