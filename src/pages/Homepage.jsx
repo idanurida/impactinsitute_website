@@ -18,7 +18,8 @@ import {
   Globe,
   BarChart3,
   Heart,
-  Star
+  Star,
+  Loader2 // Import Loader2 for loading spinner
 } from 'lucide-react'
 
 const Homepage = () => {
@@ -37,6 +38,15 @@ const Homepage = () => {
 
   const [calculatorResult, setCalculatorResult] = useState(null)
 
+  // State untuk data produk dan berita dari CMS
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [productError, setProductError] = useState(null);
+
+  const [latestNews, setLatestNews] = useState([]);
+  const [loadingNews, setLoadingNews] = useState(true);
+  const [newsError, setNewsError] = useState(null);
+
   // Simulate real-time carbon price updates
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,6 +59,72 @@ const Homepage = () => {
 
     return () => clearInterval(interval)
   }, [])
+
+  // Fetch Featured Products from WordPress CMS
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoadingProducts(true);
+      setProductError(null);
+      try {
+        // Ganti URL ini dengan endpoint REST API produk WordPress Anda yang sebenarnya
+        // Anda perlu membuat custom endpoint di WordPress untuk produk
+        const response = await fetch('https://impactinstitute.asia/wp-json/custom/v1/products?per_page=4'); // Contoh endpoint kustom
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        // Asumsi struktur data: [{ id, title, price, rating, image_url, description }]
+        // Sesuaikan pemetaan ini dengan struktur respons API WordPress Anda
+        const mappedProducts = data.map(item => ({
+          name: item.title.rendered || item.name,
+          price: item.price || 'Harga Tidak Tersedia',
+          rating: item.rating || 0,
+          image: item.image_url || 'https://placehold.co/300x200/CCCCCC/000000?text=Produk', // Fallback image
+        }));
+        setFeaturedProducts(mappedProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setProductError("Gagal memuat produk. Silakan coba lagi nanti.");
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Fetch Latest News from WordPress CMS
+  useEffect(() => {
+    const fetchNews = async () => {
+      setLoadingNews(true);
+      setNewsError(null);
+      try {
+        // Menggunakan endpoint default WordPress untuk posts (berita/artikel)
+        const response = await fetch('https://impactinstitute.asia/wp-json/wp/v2/posts?per_page=3&_embed'); // _embed untuk mendapatkan featured image dan data lainnya
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        const mappedNews = data.map(post => ({
+          title: post.title.rendered,
+          excerpt: post.excerpt.rendered.replace(/<[^>]*>?/gm, '').substring(0, 100) + '...', // Hapus tag HTML dan potong
+          date: new Date(post.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }),
+          category: post._embedded?.['wp:term']?.[0]?.[0]?.name || 'Umum', // Ambil kategori pertama
+          link: post.link, // Link ke post di WordPress
+          image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://placehold.co/300x200/CCCCCC/000000?text=Berita' // Featured image
+        }));
+        setLatestNews(mappedNews);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+        setNewsError("Gagal memuat berita. Silakan coba lagi nanti.");
+      } finally {
+        setLoadingNews(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
 
   const calculateCarbon = () => {
     if (!calculatorData.landType || !calculatorData.landSize) return
@@ -101,37 +177,6 @@ const Homepage = () => {
     }
   ]
 
-  const featuredProducts = [
-    {
-      name: 'Kopi Arabika Gayo',
-      price: 'Rp 125.000',
-      rating: 4.8,
-      // Gambar dari pencarian Google: kopi arabika gayo
-      image: 'https://images.unsplash.com/photo-1510202688755-3212a40306c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-    {
-      name: 'Madu Hutan Liar',
-      price: 'Rp 85.000',
-      rating: 4.9,
-      // Gambar dari pencarian Google: madu hutan liar
-      image: 'https://images.unsplash.com/photo-1583096531980-87e22e92c2e9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-    {
-      name: 'Kerajinan Bambu',
-      price: 'Rp 45.000',
-      rating: 4.7,
-      // Gambar dari pencarian Google: kerajinan bambu indonesia
-      image: 'https://images.unsplash.com/photo-1620138546112-2849b2c3d5e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    },
-    {
-      name: 'Teh Herbal Organik',
-      price: 'Rp 35.000',
-      rating: 4.6,
-      // Gambar dari pencarian Google: teh herbal organik
-      image: 'https://images.unsplash.com/photo-1596041695507-6c2e3c7c2e0b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-    }
-  ]
-
   const testimonials = [
     {
       name: 'Bapak Suryadi',
@@ -168,7 +213,7 @@ const Homepage = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
-                <Link to="/untuk-petani">
+                <Link to="/untuk-petani#daftar-lahan"> {/* Mengarahkan ke section form pendaftaran lahan */}
                   Daftarkan Lahan Anda
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
@@ -373,26 +418,32 @@ const Homepage = () => {
 
               {calculatorResult && (
                 <div className="bg-green-50 p-6 rounded-lg space-y-4">
-                  <h3 className="text-lg font-semibold text-green-800">Hasil Estimasi:</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-green-600">Perkiraan Serapan Karbon per Tahun</p>
-                      <p className="text-2xl font-bold text-green-800">{calculatorResult.carbonTons} ton CO2e</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-green-600">Perkiraan Nilai Ekonomi per Tahun</p>
-                      <p className="text-2xl font-bold text-green-800">Rp {calculatorResult.annualValue}</p>
-                    </div>
-                  </div>
-                  <div className="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
-                    <p className="text-sm text-yellow-800">
-                      <strong>Disclaimer:</strong> Ini adalah perkiraan awal dan bukan jaminan.
-                      Nilai sebenarnya akan ditentukan setelah verifikasi dan validasi proyek.
-                    </p>
-                  </div>
-                  <Button asChild className="w-full">
-                    <Link to="/untuk-petani">Daftarkan Lahan untuk Analisis Lebih Lanjut</Link>
-                  </Button>
+                  {calculatorResult.error ? (
+                    <p className="text-red-600 text-center font-semibold">{calculatorResult.error}</p>
+                  ) : (
+                    <>
+                      <h3 className="text-lg font-semibold text-green-800">Hasil Estimasi:</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-sm text-green-600">Perkiraan Serapan Karbon per Tahun</p>
+                          <p className="text-2xl font-bold text-green-800">{calculatorResult.carbonTons} ton CO2e</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-green-600">Perkiraan Nilai Ekonomi per Tahun</p>
+                          <p className="text-2xl font-bold text-green-800">Rp {calculatorResult.annualValue}</p>
+                        </div>
+                      </div>
+                      <div className="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
+                        <p className="text-sm text-yellow-800">
+                          <strong>Disclaimer:</strong> Ini adalah perkiraan awal dan bukan jaminan.
+                          Nilai sebenarnya akan ditentukan setelah verifikasi dan validasi proyek.
+                        </p>
+                      </div>
+                      <Button asChild className="w-full">
+                        <Link to="/untuk-petani#daftar-lahan">Daftarkan Lahan untuk Analisis Lebih Lanjut</Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               )}
             </CardContent>
@@ -435,28 +486,39 @@ const Homepage = () => {
             <p className="text-xl text-gray-600">Produk berkualitas tinggi dari petani mitra kami</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="aspect-square w-full object-cover rounded-t-lg"
-                  onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/200x200/CCCCCC/000000?text=Image+Error"; }}
-                />
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-green-600">{product.price}</span>
-                    <div className="flex items-center space-x-1">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm text-gray-600">{product.rating}</span>
+          {loadingProducts ? (
+            <div className="flex justify-center items-center h-48">
+              <Loader2 className="h-8 w-8 animate-spin text-primary-dark" />
+              <span className="ml-2 text-gray-600">Memuat produk...</span>
+            </div>
+          ) : productError ? (
+            <div className="text-center text-red-600">
+              <p>{productError}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {featuredProducts.map((product, index) => (
+                <Card key={index} className="hover:shadow-lg transition-shadow">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="aspect-square w-full object-cover rounded-t-lg"
+                    onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/200x200/CCCCCC/000000?text=Image+Error"; }}
+                  />
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-green-600">{product.price}</span>
+                      <div className="flex items-center space-x-1">
+                        <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                        <span className="text-sm text-gray-600">{product.rating}</span>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-8">
             <Button asChild variant="outline" size="lg">
@@ -546,49 +608,43 @@ const Homepage = () => {
             <p className="text-xl text-gray-600">Tetap update dengan perkembangan terbaru</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Regulasi Karbon Indonesia Terbaru 2024',
-                excerpt: 'Pemerintah Indonesia mengeluarkan regulasi baru untuk perdagangan karbon yang akan berlaku mulai tahun depan...',
-                date: '15 Desember 2024',
-                category: 'Regulasi'
-              },
-              {
-                title: 'Tips Praktik Pertanian Berkelanjutan',
-                excerpt: 'Pelajari teknik-teknik pertanian yang dapat meningkatkan produktivitas sambil menjaga kelestarian lingkungan...',
-                date: '12 Desember 2024',
-                category: 'Edukasi'
-              },
-              {
-                title: 'Kisah Sukses Petani Kopi Aceh',
-                excerpt: 'Bagaimana petani kopi di Aceh berhasil meningkatkan pendapatan hingga 40% melalui program karbon...',
-                date: '10 Desember 2024',
-                category: 'Studi Kasus'
-              }
-            ].map((article, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <img
-                  src="https://placehold.co/300x200/CCCCCC/000000?text=Berita" // Placeholder URL for news images
-                  alt={article.title}
-                  className="aspect-video w-full object-cover rounded-t-lg"
-                  onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/300x200/CCCCCC/000000?text=Image+Error"; }}
-                />
-                <CardContent className="p-6">
-                  <div className="text-sm text-green-600 font-medium mb-2">{article.category}</div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{article.title}</h3>
-                  <p className="text-gray-600 mb-4">{article.excerpt}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">{article.date}</span>
-                    <Button variant="ghost" size="sm">
-                      Baca Selengkapnya
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {loadingNews ? (
+            <div className="flex justify-center items-center h-48">
+              <Loader2 className="h-8 w-8 animate-spin text-primary-dark" />
+              <span className="ml-2 text-gray-600">Memuat berita...</span>
+            </div>
+          ) : newsError ? (
+            <div className="text-center text-red-600">
+              <p>{newsError}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {latestNews.map((article, index) => (
+                <Card key={index} className="hover:shadow-lg transition-shadow">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="aspect-video w-full object-cover rounded-t-lg"
+                    onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/300x200/CCCCCC/000000?text=Berita"; }}
+                  />
+                  <CardContent className="p-6">
+                    <div className="text-sm text-green-600 font-medium mb-2">{article.category}</div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{article.title}</h3>
+                    <p className="text-gray-600 mb-4">{article.excerpt}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">{article.date}</span>
+                      <Button variant="ghost" size="sm" asChild>
+                        <a href={article.link} target="_blank" rel="noopener noreferrer">
+                          Baca Selengkapnya
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-8">
             <Button asChild variant="outline" size="lg">

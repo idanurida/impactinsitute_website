@@ -1,6 +1,6 @@
-// src/pages/ForBuyer.jsx
+// src/pages/ForCarbonBuyers.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,7 +20,8 @@ import {
   Scale,
   Target,
   LineChart,
-  Mail
+  Mail,
+  Loader2 // Import Loader2 for loading spinner
 } from 'lucide-react';
 
 /**
@@ -29,6 +30,19 @@ import {
  * yang relevan bagi perusahaan atau individu yang tertarik membeli kredit karbon.
  */
 const ForBuyer = () => {
+  // State for contact form data
+  const [contactFormData, setContactFormData] = useState({
+    companyName: '',
+    contactPerson: '',
+    emailBuyer: '',
+    phoneBuyer: '',
+    message: ''
+  });
+
+  // State for form submission status
+  const [submissionStatus, setSubmissionStatus] = useState('idle'); // 'idle', 'loading', 'success', 'error'
+  const [submissionMessage, setSubmissionMessage] = useState('');
+
   const benefits = [
     {
       icon: Target,
@@ -61,7 +75,7 @@ const ForBuyer = () => {
     {
       step: '2',
       title: 'Pilih Proyek',
-      description: 'Jelajahi portofolio proyek kami yang terverifikasi dan pilih yang selaras dengan nilai-nilai Anda.'
+      description: 'Jelajahi portofolio kami yang terverifikasi dan pilih yang selaras dengan nilai-nilai Anda.'
     },
     {
       step: '3',
@@ -74,6 +88,62 @@ const ForBuyer = () => {
       description: 'Terima sertifikat kepemilikan kredit karbon dan laporan dampak proyek Anda.'
     }
   ];
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setContactFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmissionStatus('loading');
+    setSubmissionMessage('Mengirim pesan Anda...');
+
+    // URL endpoint REST API WordPress Anda
+    // Anda perlu membuat custom endpoint di WordPress untuk menerima data ini
+    // dan mengirimkan email ke buyer@impactinstitute.asia
+    const wordpressApiEndpoint = 'https://impactinstitute.asia/wp-json/custom/v1/submit-buyer-contact'; // Contoh endpoint kustom
+
+    const formData = new FormData();
+    for (const key in contactFormData) {
+      formData.append(key, contactFormData[key]);
+    }
+
+    try {
+      const response = await fetch(wordpressApiEndpoint, {
+        method: 'POST',
+        body: formData,
+        // Jika WordPress Anda memerlukan otentikasi, tambahkan di sini
+        // headers: { 'Authorization': 'Bearer YOUR_AUTH_TOKEN' }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Form submission successful:', result);
+        setSubmissionStatus('success');
+        setSubmissionMessage('Pesan Anda telah terkirim! Tim kami akan segera menghubungi Anda.');
+        // Reset form after successful submission
+        setContactFormData({
+          companyName: '',
+          contactPerson: '',
+          emailBuyer: '',
+          phoneBuyer: '',
+          message: ''
+        });
+      } else {
+        const errorData = await response.json();
+        console.error('Form submission failed:', response.status, errorData);
+        setSubmissionStatus('error');
+        setSubmissionMessage(`Gagal mengirim pesan: ${errorData.message || 'Terjadi kesalahan.'}`);
+      }
+    } catch (error) {
+      console.error('Error during form submission:', error);
+      setSubmissionStatus('error');
+      setSubmissionMessage(`Terjadi kesalahan jaringan: ${error.message}`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -90,7 +160,7 @@ const ForBuyer = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
-              <Link to="#explore-projects">
+              <Link to="/marketplace#hero"> {/* Assuming marketplace is where projects are listed */}
                 Jelajahi Proyek
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -166,37 +236,87 @@ const ForBuyer = () => {
               <CardDescription>Kami akan menghubungi Anda sesegera mungkin.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="companyName">Nama Perusahaan</Label>
-                  <Input id="companyName" placeholder="Masukkan nama perusahaan Anda" />
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="companyName">Nama Perusahaan</Label>
+                    <Input
+                      id="companyName"
+                      placeholder="Masukkan nama perusahaan Anda"
+                      value={contactFormData.companyName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="contactPerson">Nama Kontak</Label>
+                    <Input
+                      id="contactPerson"
+                      placeholder="Nama Anda"
+                      value={contactFormData.contactPerson}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="emailBuyer">Email</Label>
+                    <Input
+                      id="emailBuyer"
+                      type="email"
+                      placeholder="Masukkan alamat email Anda"
+                      value={contactFormData.emailBuyer}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="phoneBuyer">Nomor Telepon</Label>
+                    <Input
+                      id="phoneBuyer"
+                      type="tel"
+                      placeholder="Masukkan nomor telepon"
+                      value={contactFormData.phoneBuyer}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-full">
+                    <Label htmlFor="message">Pesan Anda</Label>
+                    <textarea
+                      id="message"
+                      rows="4"
+                      className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      placeholder="Sampaikan kebutuhan atau pertanyaan Anda..."
+                      value={contactFormData.message}
+                      onChange={handleInputChange}
+                      required
+                    ></textarea>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="contactPerson">Nama Kontak</Label>
-                  <Input id="contactPerson" placeholder="Nama Anda" />
+                <Button type="submit" className="w-full bg-primary hover:bg-primary-dark" disabled={submissionStatus === 'loading'}>
+                  {submissionStatus === 'loading' ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Mengirim...
+                    </>
+                  ) : (
+                    <>
+                      Kirim Pesan
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </>
+                  )}
+                </Button>
+              </form>
+
+              {/* Submission Status Message */}
+              {submissionMessage && (
+                <div className={`mt-4 p-3 rounded-lg text-sm ${
+                  submissionStatus === 'success' ? 'bg-green-100 text-green-700' :
+                  submissionStatus === 'error' ? 'bg-red-100 text-red-700' :
+                  'bg-blue-100 text-blue-700'
+                }`}>
+                  {submissionMessage}
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="emailBuyer">Email</Label>
-                  <Input id="emailBuyer" type="email" placeholder="Masukkan alamat email Anda" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phoneBuyer">Nomor Telepon</Label>
-                  <Input id="phoneBuyer" type="tel" placeholder="Masukkan nomor telepon" />
-                </div>
-                <div className="space-y-2 col-span-full">
-                  <Label htmlFor="message">Pesan Anda</Label>
-                  <textarea
-                    id="message"
-                    rows="4"
-                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    placeholder="Sampaikan kebutuhan atau pertanyaan Anda..."
-                  ></textarea>
-                </div>
-              </div>
-              <Button className="w-full bg-primary hover:bg-primary-dark">
-                Kirim Pesan
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              )}
             </CardContent>
           </Card>
         </div>

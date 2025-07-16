@@ -1,7 +1,18 @@
 import { Link } from 'react-router-dom'
 import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select' // Import Select components
+import { useState } from 'react' // Import useState
 
 const Footer = () => {
+  const [currentLang, setCurrentLang] = useState('id') // State untuk bahasa aktif
+
+  // Fungsi untuk menangani perubahan bahasa
+  const handleLanguageChange = (lang) => {
+    setCurrentLang(lang)
+    // Di sini Anda akan menambahkan logika untuk mengganti bahasa di seluruh aplikasi.
+    console.log(`Bahasa diubah ke: ${lang}`)
+  }
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -37,12 +48,13 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Navigasi</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/" className="text-gray-300 hover:text-white transition-colors">Beranda</Link></li>
-              <li><Link to="/tentang-kami" className="text-gray-300 hover:text-white transition-colors">Tentang Kami</Link></li>
-              <li><Link to="/bagaimana-kami-bekerja" className="text-gray-300 hover:text-white transition-colors">Bagaimana Kami Bekerja</Link></li>
-              <li><Link to="/proyek-kami" className="text-gray-300 hover:text-white transition-colors">Proyek Kami</Link></li>
-              <li><Link to="/marketplace" className="text-gray-300 hover:text-white transition-colors">Marketplace</Link></li>
-              <li><Link to="/berita-edukasi" className="text-gray-300 hover:text-white transition-colors">Berita & Edukasi</Link></li>
+              {/* Mengarahkan ke hero section di setiap halaman */}
+              <li><Link to="/#hero" className="text-gray-300 hover:text-white transition-colors">Beranda</Link></li>
+              <li><Link to="/tentang-kami#hero" className="text-gray-300 hover:text-white transition-colors">Tentang Kami</Link></li>
+              <li><Link to="/bagaimana-kami-bekerja#hero" className="text-gray-300 hover:text-white transition-colors">Bagaimana Kami Bekerja</Link></li>
+              <li><Link to="/proyek-kami#hero" className="text-gray-300 hover:text-white transition-colors">Proyek Kami</Link></li>
+              <li><Link to="/marketplace#hero" className="text-gray-300 hover:text-white transition-colors">Marketplace</Link></li>
+              <li><Link to="/berita-edukasi#hero" className="text-gray-300 hover:text-white transition-colors">Berita & Edukasi</Link></li>
             </ul>
           </div>
 
@@ -50,11 +62,13 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Layanan</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/untuk-petani" className="text-gray-300 hover:text-white transition-colors">Untuk Petani</Link></li>
-              <li><Link to="/untuk-pembeli-karbon" className="text-gray-300 hover:text-white transition-colors">Untuk Pembeli Karbon</Link></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Verifikasi Karbon</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Monitoring & Pelaporan</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Pelatihan Berkelanjutan</a></li>
+              {/* Mengarahkan ke hero section atau bagian spesifik di halaman layanan */}
+              <li><Link to="/untuk-petani#hero" className="text-gray-300 hover:text-white transition-colors">Untuk Petani</Link></li>
+              <li><Link to="/untuk-pembeli-karbon#hero" className="text-gray-300 hover:text-white transition-colors">Untuk Pembeli Karbon</Link></li>
+              {/* Asumsi bahwa layanan ini dijelaskan di halaman "Bagaimana Kami Bekerja" atau halaman layanan khusus */}
+              <li><Link to="/bagaimana-kami-bekerja#verifikasi-karbon" className="text-gray-300 hover:text-white transition-colors">Verifikasi Karbon</Link></li>
+              <li><Link to="/bagaimana-kami-bekerja#monitoring-pelaporan" className="text-gray-300 hover:text-white transition-colors">Monitoring & Pelaporan</Link></li>
+              <li><Link to="/bagaimana-kami-bekerja#pelatihan-berkelanjutan" className="text-gray-300 hover:text-white transition-colors">Pelatihan Berkelanjutan</Link></li>
             </ul>
           </div>
 
@@ -105,6 +119,16 @@ const Footer = () => {
                 Disclaimer
               </Link>
             </div>
+            {/* Language Selector for Footer */}
+            <Select value={currentLang} onValueChange={handleLanguageChange}>
+              <SelectTrigger className="w-[80px] h-8 text-gray-300 border-gray-700 bg-gray-800 hover:bg-gray-700">
+                <SelectValue placeholder="Lang" />
+              </SelectTrigger>
+              <SelectContent className="bg-white shadow-lg">
+                <SelectItem value="id">ID</SelectItem>
+                <SelectItem value="en">EN</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </div>

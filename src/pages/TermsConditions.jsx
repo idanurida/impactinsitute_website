@@ -12,12 +12,12 @@ const TermsConditions = () => {
           </CardHeader>
           <CardContent className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
             <p className="font-semibold text-red-600">
-              Penting: Teks di bawah ini adalah contoh dan placeholder. Anda harus berkonsultasi dengan profesional hukum untuk menyusun Syarat dan Ketentuan yang final.
+              
             </p>
 
             <h4>1. Penerimaan Persyaratan</h4>
             <p>
-              Dengan mengakses dan menggunakan situs web impactinstitute.skicreative.net ("Situs"), Anda menerima dan setuju untuk terikat oleh syarat dan ketentuan yang ditetapkan dalam dokumen ini. Jika Anda tidak menyetujui persyaratan ini, Anda tidak boleh menggunakan Situs ini.
+              Dengan mengakses dan menggunakan situs web impactinstitute.asia ("Situs"), Anda menerima dan setuju untuk terikat oleh syarat dan ketentuan yang ditetapkan dalam dokumen ini. Jika Anda tidak menyetujui persyaratan ini, Anda tidak boleh menggunakan Situs ini.
             </p>
 
             <h4>2. Pendaftaran Program Karbon</h4>
@@ -25,22 +25,19 @@ const TermsConditions = () => {
               Dengan mengirimkan formulir pendaftaran minat, Anda setuju untuk memberikan informasi yang akurat, terkini, dan lengkap. Anda memberikan kuasa kepada Impact Institute untuk melakukan verifikasi data dan studi kelayakan di lokasi lahan yang didaftarkan. Pemberian kuasa ini tidak menciptakan kewajiban finansial apa pun pada tahap pendaftaran.
             </p>
 
-            <h4>3. Hak Kekayaan Intelektual</h4>
-            <p>
-              Situs dan konten aslinya, fitur, dan fungsionalitasnya dimiliki oleh Impact Institute dan dilindungi oleh hak cipta internasional, merek dagang, dan undang-undang kekayaan intelektual lainnya.
-            </p>
+            {/* Point 3. Hak Kekayaan Intelektual telah dihapus sesuai permintaan */}
 
-            <h4>4. Penggunaan Situs</h4>
+            <h4>3. Penggunaan Situs</h4> {/* Nomor poin disesuaikan */}
             <p>
               Anda setuju untuk tidak menggunakan Situs ini untuk tujuan yang melanggar hukum atau dilarang oleh Persyaratan ini. Anda tidak boleh menggunakan Situs ini dengan cara apa pun yang dapat merusak, menonaktifkan, membebani, atau mengganggu server kami.
             </p>
             
-            <h4>5. Pembatasan Tanggung Jawab</h4>
+            <h4>4. Pembatasan Tanggung Jawab</h4> {/* Nomor poin disesuaikan */}
             <p>
               Dalam keadaan apa pun Impact Institute tidak akan bertanggung jawab atas kerugian atau kerusakan tidak langsung atau konsekuensial yang timbul dari, atau sehubungan dengan, penggunaan situs web ini.
             </p>
             
-            <h4>6. Hukum yang Mengatur</h4>
+            <h4>5. Hukum yang Mengatur</h4> {/* Nomor poin disesuaikan */}
             <p>
               Persyaratan ini akan diatur dan ditafsirkan sesuai dengan hukum yang berlaku di Republik Indonesia.
             </p>

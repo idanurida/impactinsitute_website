@@ -11,10 +11,7 @@ const PrivacyPolicy = () => {
                         <CardTitle className="text-3xl">Kebijakan Privasi</CardTitle>
                     </CardHeader>
                     <CardContent className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                        <p className="font-semibold text-red-600">
-                            Penting: Teks di bawah ini adalah contoh dan placeholder. Anda harus berkonsultasi dengan profesional hukum untuk menyusun Kebijakan Privasi yang final.
-                        </p>
-
+                        
                         <h4>1. Pengumpulan Informasi</h4>
                         <p>
                             Kami mengumpulkan informasi dari Anda ketika Anda mendaftar di situs kami, mengisi formulir, atau memasukkan informasi di situs kami. Informasi yang dikumpulkan termasuk nama, nomor identitas, alamat, informasi kontak, dan detail lahan Anda.

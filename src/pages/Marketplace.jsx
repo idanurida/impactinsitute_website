@@ -17,7 +17,8 @@ import {
   MapPin,
   Truck,
   Shield,
-  Award
+  Award,
+  Loader2 // Import Loader2 for loading spinner
 } from 'lucide-react'
 
 const Marketplace = () => {
@@ -28,112 +29,11 @@ const Marketplace = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [sortBy, setSortBy] = useState('popularity')
 
-  // Sample product data with relevant images
-  const sampleProducts = [
-    {
-      id: 1,
-      name: 'Kopi Arabika Gayo Premium',
-      price: 125000,
-      originalPrice: 150000,
-      rating: 4.8,
-      reviews: 156,
-      category: 'kopi',
-      location: 'Aceh Tengah',
-      farmer: 'Kelompok Tani Gayo Sejahtera',
-      description: 'Kopi arabika premium dari dataran tinggi Gayo dengan cita rasa yang khas dan aroma yang harum.',
-      image: 'https://images.unsplash.com/photo-1557999691-b3b4e9e7c6b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Kopi Arabika Gayo
-      stock: 25,
-      sustainabilityScore: 95,
-      carbonOffset: '2.5 kg CO2e per kg',
-      tags: ['Organik', 'Fair Trade', 'Single Origin']
-    },
-    {
-      id: 2,
-      name: 'Madu Hutan Liar Asli',
-      price: 85000,
-      originalPrice: 100000,
-      rating: 4.9,
-      reviews: 89,
-      category: 'madu',
-      location: 'Lampung Timur',
-      farmer: 'Komunitas Peternak Lebah Lampung',
-      description: 'Madu murni dari hutan liar yang dipanen secara berkelanjutan tanpa merusak ekosistem.',
-      image: 'https://images.unsplash.com/photo-1596700018596-f6d3d9e8b0a1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Madu Hutan Liar
-      stock: 18,
-      sustainabilityScore: 98,
-      carbonOffset: '1.2 kg CO2e per kg',
-      tags: ['Murni', 'Liar', 'Berkelanjutan']
-    },
-    {
-      id: 3,
-      name: 'Kerajinan Bambu Eco-Friendly',
-      price: 45000,
-      originalPrice: 55000,
-      rating: 4.7,
-      reviews: 234,
-      category: 'kerajinan',
-      location: 'Yogyakarta',
-      farmer: 'Pengrajin Bambu Nusantara',
-      description: 'Kerajinan bambu berkualitas tinggi yang dibuat dengan teknik tradisional dan ramah lingkungan.',
-      image: 'https://images.unsplash.com/photo-1620138546112-2849b2c3d5e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Kerajinan Bambu
-      stock: 42,
-      sustainabilityScore: 92,
-      carbonOffset: '0.8 kg CO2e per item',
-      tags: ['Handmade', 'Tradisional', 'Ramah Lingkungan']
-    },
-    {
-      id: 4,
-      name: 'Teh Herbal Organik Pegunungan',
-      price: 35000,
-      originalPrice: 42000,
-      rating: 4.6,
-      reviews: 167,
-      category: 'teh',
-      location: 'Jawa Barat',
-      farmer: 'Petani Teh Organik Bandung',
-      description: 'Teh herbal organik dari pegunungan Bandung dengan khasiat kesehatan yang tinggi.',
-      image: 'https://images.unsplash.com/photo-1596041695507-6c2e3c7c2e0b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Teh Herbal Organik
-      stock: 33,
-      sustainabilityScore: 90,
-      carbonOffset: '0.5 kg CO2e per pack',
-      tags: ['Organik', 'Herbal', 'Kesehatan']
-    },
-    {
-      id: 5,
-      name: 'Rempah-rempah Tradisional Mix',
-      price: 28000,
-      originalPrice: 35000,
-      rating: 4.5,
-      reviews: 98,
-      category: 'rempah',
-      location: 'Maluku',
-      farmer: 'Petani Rempah Maluku',
-      description: 'Campuran rempah-rempah tradisional asli Maluku dengan kualitas premium.',
-      image: 'https://images.unsplash.com/photo-1576092762744-d83a1c6a7e0f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Rempah-rempah
-      stock: 56,
-      sustainabilityScore: 88,
-      carbonOffset: '0.3 kg CO2e per pack',
-      tags: ['Tradisional', 'Premium', 'Asli']
-    },
-    {
-      id: 6,
-      name: 'Cokelat Kakao Organik',
-      price: 75000,
-      originalPrice: 90000,
-      rating: 4.8,
-      reviews: 145,
-      category: 'cokelat',
-      location: 'Sulawesi Selatan',
-      farmer: 'Koperasi Kakao Sulawesi',
-      description: 'Cokelat premium dari biji kakao organik Sulawesi dengan rasa yang autentik.',
-      image: 'https://images.unsplash.com/photo-1551523315-78e72b4f7b6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Cokelat Kakao
-      stock: 21,
-      sustainabilityScore: 94,
-      carbonOffset: '1.8 kg CO2e per bar',
-      tags: ['Organik', 'Premium', 'Single Origin']
-    }
-  ]
+  // State for loading and error handling
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [productError, setProductError] = useState(null);
 
+  // Categories for filtering
   const categories = [
     { value: 'all', label: 'Semua Kategori' },
     { value: 'kopi', label: 'Kopi' },
@@ -144,11 +44,76 @@ const Marketplace = () => {
     { value: 'cokelat', label: 'Cokelat' }
   ]
 
+  // Fetch Products from WordPress CMS
   useEffect(() => {
-    setProducts(sampleProducts)
-    setFilteredProducts(sampleProducts)
-  }, [])
+    const fetchProducts = async () => {
+      setLoadingProducts(true);
+      setProductError(null);
+      try {
+        // Ganti URL ini dengan endpoint REST API produk WordPress Anda yang sebenarnya
+        // Anda perlu membuat custom endpoint di WordPress untuk produk
+        // Contoh: 'https://impactinstitute.asia/wp-json/custom/v1/products'
+        // Endpoint ini harus mengembalikan data produk dengan format yang bisa dipetakan
+        const response = await fetch('https://impactinstitute.asia/wp-json/custom/v1/products');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        
+        // Asumsi struktur data dari WordPress API:
+        // Setiap item dalam 'data' memiliki properti seperti:
+        // {
+        //   id: number,
+        //   title: { rendered: string }, // Judul produk
+        //   price: number,
+        //   original_price: number, // Opsional
+        //   rating: number, // Opsional
+        //   reviews: number, // Opsional
+        //   category_slug: string, // Slug kategori untuk filter
+        //   location: string,
+        //   farmer_name: string,
+        //   description_raw: string, // Deskripsi mentah
+        //   image_url: string, // URL gambar produk
+        //   stock: number,
+        //   sustainability_score: number,
+        //   carbon_offset: string,
+        //   tags_array: string[] // Array tag
+        // }
+        // Anda perlu menyesuaikan pemetaan ini agar sesuai dengan struktur respons API WordPress Anda
+        const mappedProducts = data.map(item => ({
+          id: item.id,
+          name: item.title.rendered,
+          price: item.price || 0, // Pastikan ini adalah angka
+          originalPrice: item.original_price || item.price || 0, // Pastikan ini adalah angka
+          rating: item.rating || 0,
+          reviews: item.reviews || 0,
+          category: item.category_slug || 'uncategorized', // Gunakan slug kategori
+          location: item.location || 'Tidak Diketahui',
+          farmer: item.farmer_name || 'Petani Anonim',
+          description: item.description_raw || '',
+          image: item.image_url || 'https://placehold.co/300x300/CCCCCC/000000?text=Produk', // Fallback image
+          stock: item.stock || 0,
+          sustainabilityScore: item.sustainability_score || 0,
+          carbonOffset: item.carbon_offset || 'N/A',
+          tags: item.tags_array || []
+        }));
 
+        setProducts(mappedProducts);
+        setFilteredProducts(mappedProducts); // Initialize filtered products with all products
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setProductError("Gagal memuat produk. Silakan coba lagi nanti.");
+        setProducts([]); // Clear products on error
+        setFilteredProducts([]); // Clear filtered products on error
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Empty dependency array means this effect runs once on mount
+
+  // Filter and sort products whenever dependencies change
   useEffect(() => {
     let filtered = products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -177,7 +142,7 @@ const Marketplace = () => {
     }
 
     setFilteredProducts(filtered)
-  }, [products, searchTerm, selectedCategory, sortBy])
+  }, [products, searchTerm, selectedCategory, sortBy]) // Add products to dependency array
 
   const addToCart = (product) => {
     setCart(prevCart => {
@@ -278,7 +243,7 @@ const Marketplace = () => {
                 <SelectTrigger className="w-48">
                   <SelectValue placeholder="Kategori" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                   {categories.map(category => (
                     <SelectItem key={category.value} value={category.value}>
                       {category.label}
@@ -291,7 +256,7 @@ const Marketplace = () => {
                 <SelectTrigger className="w-48">
                   <SelectValue placeholder="Urutkan" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
                   <SelectItem value="popularity">Popularitas</SelectItem>
                   <SelectItem value="rating">Rating Tertinggi</SelectItem>
                   <SelectItem value="price-low">Harga Terendah</SelectItem>
@@ -329,102 +294,119 @@ const Marketplace = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <Card key={product.id} className="hover:shadow-lg transition-shadow group">
-                <div className="relative">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="aspect-square w-full object-cover rounded-t-lg"
-                    onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/300x300/CCCCCC/000000?text=Image+Error"; }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="absolute top-2 right-2 bg-white/80 hover:bg-white"
-                  >
-                    <Heart className="h-4 w-4" />
-                  </Button>
-                  {product.originalPrice > product.price && (
-                    <Badge className="absolute top-2 left-2 bg-red-500">
-                      -{Math.round((1 - product.price / product.originalPrice) * 100)}%
-                    </Badge>
-                  )}
-                </div>
+          {loadingProducts ? (
+            <div className="flex justify-center items-center h-48">
+              <Loader2 className="h-8 w-8 animate-spin text-primary-dark" />
+              <span className="ml-2 text-gray-600">Memuat produk...</span>
+            </div>
+          ) : productError ? (
+            <div className="text-center text-red-600">
+              <p>{productError}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredProducts.map((product) => (
+                <Card key={product.id} className="hover:shadow-lg transition-shadow group">
+                  <div className="relative">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="aspect-square w-full object-cover rounded-t-lg"
+                      onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/300x300/CCCCCC/000000?text=Image+Error"; }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute top-2 right-2 bg-white/80 hover:bg-white"
+                    >
+                      <Heart className="h-4 w-4" />
+                    </Button>
+                    {product.originalPrice > product.price && (
+                      <Badge className="absolute top-2 left-2 bg-red-500">
+                        -{Math.round((1 - product.price / product.originalPrice) * 100)}%
+                      </Badge>
+                    )}
+                  </div>
 
-                <CardContent className="p-4">
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="font-semibold text-gray-900 line-clamp-2">{product.name}</h3>
-                      <div className="flex items-center text-sm text-gray-500 mt-1">
-                        <MapPin className="h-3 w-3 mr-1" />
-                        {product.location}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <div className="flex items-center">
-                        <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                        <span className="text-sm font-medium ml-1">{product.rating}</span>
-                      </div>
-                      <span className="text-sm text-gray-500">({product.reviews} ulasan)</span>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Award className="h-4 w-4 text-green-500" />
-                      <span className="text-sm text-green-600 font-medium">
-                        Skor Keberlanjutan: {product.sustainabilityScore}%
-                      </span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1">
-                      {product.tags.slice(0, 2).map((tag, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-lg font-bold text-green-600">
-                            {formatPrice(product.price)}
-                          </span>
-                          {product.originalPrice > product.price && (
-                            <span className="text-sm text-gray-500 line-through ml-2">
-                              {formatPrice(product.originalPrice)}
-                            </span>
-                          )}
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
+                      <div>
+                        <h3 className="font-semibold text-gray-900 line-clamp-2">{product.name}</h3>
+                        <div className="flex items-center text-sm text-gray-500 mt-1">
+                          <MapPin className="h-3 w-3 mr-1" />
+                          {product.location}
                         </div>
                       </div>
 
+                      <div className="flex items-center space-x-2">
+                        <div className="flex items-center">
+                          <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                          <span className="text-sm font-medium ml-1">{product.rating}</span>
+                        </div>
+                        <span className="text-sm text-gray-500">({product.reviews} ulasan)</span>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Award className="h-4 w-4 text-green-500" />
+                        <span className="text-sm text-green-600 font-medium">
+                          Skor Keberlanjutan: {product.sustainabilityScore}%
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1">
+                        {product.tags.slice(0, 2).map((tag, index) => (
+                          <Badge key={index} variant="secondary" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-lg font-bold text-green-600">
+                              {formatPrice(product.price)}
+                            </span>
+                            {product.originalPrice > product.price && (
+                              <span className="text-sm text-gray-500 line-through ml-2">
+                                {formatPrice(product.originalPrice)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="text-xs text-gray-500">
+                          Carbon offset: {product.carbonOffset}
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => addToCart(product)}
+                          className="flex-1 bg-accent-teal hover:bg-accent-teal/90"
+                          disabled={product.stock === 0}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          {product.stock === 0 ? 'Stok Habis' : 'Tambah ke Keranjang'}
+                        </Button>
+                      </div>
+
                       <div className="text-xs text-gray-500">
-                        Carbon offset: {product.carbonOffset}
+                        Stok tersisa: {product.stock} unit
                       </div>
                     </div>
-
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => addToCart(product)}
-                        className="flex-1 bg-accent-teal hover:bg-accent-teal/90"
-                        disabled={product.stock === 0}
-                      >
-                        <Plus className="h-4 w-4 mr-2" />
-                        {product.stock === 0 ? 'Stok Habis' : 'Tambah ke Keranjang'}
-                      </Button>
-                    </div>
-
-                    <div className="text-xs text-gray-500">
-                      Stok tersisa: {product.stock} unit
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+          {/* If no products found after filtering */}
+          {!loadingProducts && filteredProducts.length === 0 && !productError && (
+            <div className="text-center text-gray-600 mt-8">
+              <p>Tidak ada produk yang ditemukan sesuai kriteria Anda.</p>
+            </div>
+          )}
         </div>
       </section>
 

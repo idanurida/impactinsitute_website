@@ -12,12 +12,12 @@ const Disclaimer = () => {
           </CardHeader>
           <CardContent className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
             <p className="font-semibold text-red-600">
-              Penting: Informasi yang terkandung dalam situs web ini hanya untuk tujuan informasi umum. Teks di bawah ini adalah contoh dan harus ditinjau oleh seorang profesional hukum.
+              
             </p>
             
             <h4>Akurasi Informasi</h4>
             <p>
-              Informasi yang disediakan oleh Impact Institute ("kami," atau "milik kami") di impactinstitute.skicreative.net ("Situs") adalah untuk tujuan informasi umum saja. Meskipun kami berusaha untuk menjaga informasi tetap terkini dan benar, kami tidak membuat pernyataan atau jaminan dalam bentuk apa pun, tersurat maupun tersirat, tentang kelengkapan, keakuratan, keandalan, kesesuaian, atau ketersediaan sehubungan dengan Situs atau informasi, produk, layanan, atau grafik terkait yang terdapat di Situs untuk tujuan apa pun.
+              Informasi yang disediakan oleh Impact Institute ("kami," atau "milik kami") di impactinstitute.asia ("Situs") adalah untuk tujuan informasi umum saja. Meskipun kami berusaha untuk menjaga informasi tetap terkini dan benar, kami tidak membuat pernyataan atau jaminan dalam bentuk apa pun, tersurat maupun tersirat, tentang kelengkapan, keakuratan, keandalan, kesesuaian, atau ketersediaan sehubungan dengan Situs atau informasi, produk, layanan, atau grafik terkait yang terdapat di Situs untuk tujuan apa pun.
             </p>
 
             <h4>Kalkulator dan Estimasi</h4>

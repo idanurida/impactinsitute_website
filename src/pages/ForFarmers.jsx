@@ -25,7 +25,9 @@ import {
   LandPlot,
   CalendarDays,
   Upload, // New icon for file upload
-  FileText // New icon for document upload
+  FileText, // New icon for document upload
+  ChevronDown, // Icon for accordion
+  ChevronUp // Icon for accordion
 } from 'lucide-react';
 
 /**
@@ -33,7 +35,7 @@ import {
  * Menyediakan informasi, manfaat, kalkulator potensi karbon, dan FAQ
  * yang relevan bagi petani yang tertarik untuk bergabung.
  */
-const ForFarmers = () => { // Changed component name to ForFarmers
+const ForFarmers = () => {
   const [calculatorData, setCalculatorData] = useState({
     landType: '',
     landSize: '',
@@ -74,6 +76,9 @@ const ForFarmers = () => { // Changed component name to ForFarmers
   // State untuk status pengiriman formulir
   const [submissionStatus, setSubmissionStatus] = useState('idle'); // 'idle', 'loading', 'success', 'error'
   const [submissionMessage, setSubmissionMessage] = useState('');
+
+  // State untuk mengelola FAQ accordion
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
   /**
    * Menghitung potensi serapan karbon dan nilai ekonomi berdasarkan input petani.
@@ -242,6 +247,11 @@ const ForFarmers = () => { // Changed component name to ForFarmers
     }
   };
 
+  // Fungsi untuk toggle FAQ accordion
+  const toggleFaq = (index) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
+
 
   const faqs = [
     {
@@ -281,6 +291,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
+              {/* Mengarahkan ke section form pendaftaran lahan */}
               <Link to="#daftar-lahan">
                 Daftarkan Lahan Anda
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -420,7 +431,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih jenis lahan" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
+                    <SelectContent className="bg-white shadow-lg">
                       <SelectItem value="hutan-primer">Hutan Primer</SelectItem>
                       <SelectItem value="hutan-sekunder">Hutan Sekunder</SelectItem>
                       <SelectItem value="agroforestri">Agroforestri</SelectItem>
@@ -694,7 +705,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih Satuan" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
+                      <SelectContent className="bg-white shadow-lg">
                         <SelectItem value="hektar">Hektar (Ha)</SelectItem>
                         <SelectItem value="meter-persegi">Meter Persegi (m²)</SelectItem>
                         <SelectItem value="are">Are</SelectItem>
@@ -714,7 +725,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih jenis tumbuhan" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
+                    <SelectContent className="bg-white shadow-lg">
                       {jenisTumbuhanOptions.map(option => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
@@ -757,7 +768,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Tahun" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
+                    <SelectContent className="bg-white shadow-lg">
                       {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
                         <SelectItem key={year} value={String(year)}>{year}</SelectItem>
                       ))}
@@ -776,7 +787,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Jenis Tanah" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
+                    <SelectContent className="bg-white shadow-lg">
                       {jenisTanahOptions.map(option => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
@@ -809,7 +820,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Riwayat Penggunaan Lahan" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
+                    <SelectContent className="bg-white shadow-lg">
                       {riwayatLahanOptions.map(option => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
@@ -840,7 +851,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Status Kepemilikan" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white shadow-lg"> {/* Added bg-white and shadow-lg */}
+                    <SelectContent className="bg-white shadow-lg">
                       {statusKepemilikanOptions.map(option => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
@@ -875,7 +886,11 @@ const ForFarmers = () => { // Changed component name to ForFarmers
                   <p className="text-xs text-gray-500">Format PDF atau Word.</p>
                 </div>
 
-                <Button type="submit" className="w-full bg-primary hover:bg-primary-dark" disabled={submissionStatus === 'loading'}>
+                <Button
+                  type="submit"
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary-medium hover:text-white" // Updated hover background and text
+                  disabled={submissionStatus === 'loading'}
+                >
                   {submissionStatus === 'loading' ? 'Mengirim...' : 'Kirim Pendaftaran'}
                   {submissionStatus === 'loading' ? null : <ArrowRight className="ml-2 h-5 w-5" />}
                 </Button>
@@ -897,7 +912,7 @@ const ForFarmers = () => { // Changed component name to ForFarmers
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-16 bg-gray-50">
+      <section id="faq" className="py-16 bg-gray-50"> {/* Background for the entire FAQ section */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Pertanyaan yang Sering Diajukan (FAQ)</h2>
@@ -906,16 +921,29 @@ const ForFarmers = () => { // Changed component name to ForFarmers
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <Card key={index}>
-                <CardHeader className="flex flex-row items-center justify-between space-x-4">
+              <Card key={index} className="overflow-hidden bg-card dark:bg-card"> {/* Added bg-card for consistent background */}
+                <CardHeader
+                  className="flex flex-row items-center justify-between space-x-4 cursor-pointer py-4 px-6 bg-white hover:bg-gray-100 transition-colors duration-200"
+                  onClick={() => toggleFaq(index)}
+                >
                   <CardTitle className="text-lg font-semibold text-gray-800 flex items-center">
                     <HelpCircle className="h-5 w-5 mr-2 text-primary" />{faq.question}
                   </CardTitle>
-                  {/* Anda bisa menambahkan ikon panah atau tombol expand/collapse di sini */}
+                  {openFaqIndex === index ? (
+                    <ChevronUp className="h-5 w-5 text-gray-600 transition-transform duration-300 transform rotate-0" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 text-gray-600 transition-transform duration-300 transform rotate-180" />
+                  )}
                 </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700">{faq.answer}</p>
-                </CardContent>
+                <div
+                  className={`grid transition-all duration-300 ease-in-out ${
+                    openFaqIndex === index ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                  }`}
+                >
+                  <CardContent className="overflow-hidden pt-0 pb-4 px-6 text-gray-700"> {/* Adjusted padding */}
+                    <p>{faq.answer}</p>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>
@@ -925,4 +953,4 @@ const ForFarmers = () => { // Changed component name to ForFarmers
   );
 };
 
-export default ForFarmers; // Changed export name to ForFarmers
+export default ForFarmers;

@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Menu, X, Leaf } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select' // Import Select components
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [currentLang, setCurrentLang] = useState('id') // State untuk bahasa aktif
   const location = useLocation()
 
   const navigationItems = [
@@ -20,6 +22,14 @@ const Header = () => {
   ]
 
   const isActive = (path) => location.pathname === path
+
+  // Fungsi untuk menangani perubahan bahasa
+  const handleLanguageChange = (lang) => {
+    setCurrentLang(lang)
+    // Di sini Anda akan menambahkan logika untuk mengganti bahasa di seluruh aplikasi.
+    // Ini mungkin melibatkan penggunaan context API atau pustaka i18n seperti react-i18next.
+    console.log(`Bahasa diubah ke: ${lang}`)
+  }
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -38,7 +48,8 @@ const Header = () => {
             {navigationItems.map((item) => (
               <Link
                 key={item.path}
-                to={item.path}
+                // Mengarahkan ke hero section di setiap halaman
+                to={`${item.path}#hero`}
                 className={`text-sm font-medium transition-colors hover:text-green-600 ${
                   isActive(item.path)
                     ? 'text-green-600 border-b-2 border-green-600 pb-1'
@@ -48,17 +59,38 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            {/* Language Selector for Desktop */}
+            <Select value={currentLang} onValueChange={handleLanguageChange}>
+              <SelectTrigger className="w-[80px] h-8">
+                <SelectValue placeholder="Lang" />
+              </SelectTrigger>
+              <SelectContent className="bg-white shadow-lg">
+                <SelectItem value="id">ID</SelectItem>
+                <SelectItem value="en">EN</SelectItem>
+              </SelectContent>
+            </Select>
           </nav>
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
             <Button asChild className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
-              <Link to="/untuk-petani">Daftarkan Lahan</Link>
+              {/* Mengarahkan langsung ke section form pendaftaran lahan */}
+              <Link to="/untuk-petani#daftar-lahan">Daftarkan Lahan</Link>
             </Button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden">
+          <div className="lg:hidden flex items-center space-x-2"> {/* Added flex for spacing */}
+            {/* Language Selector for Mobile */}
+            <Select value={currentLang} onValueChange={handleLanguageChange}>
+              <SelectTrigger className="w-[70px] h-8">
+                <SelectValue placeholder="Lang" />
+              </SelectTrigger>
+              <SelectContent className="bg-white shadow-lg">
+                <SelectItem value="id">ID</SelectItem>
+                <SelectItem value="en">EN</SelectItem>
+              </SelectContent>
+            </Select>
             <Button
               variant="ghost"
               size="sm"
@@ -76,7 +108,8 @@ const Header = () => {
               {navigationItems.map((item) => (
                 <Link
                   key={item.path}
-                  to={item.path}
+                  // Mengarahkan ke hero section di setiap halaman
+                  to={`${item.path}#hero`}
                   className={`block px-3 py-2 text-base font-medium transition-colors hover:text-green-600 hover:bg-green-50 rounded-md ${
                     isActive(item.path)
                       ? 'text-green-600 bg-green-50'
@@ -89,7 +122,8 @@ const Header = () => {
               ))}
               <div className="px-3 py-2">
                 <Button asChild className="w-full bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
-                  <Link to="/untuk-petani" onClick={() => setIsMenuOpen(false)}>
+                  {/* Mengarahkan langsung ke section form pendaftaran lahan */}
+                  <Link to="/untuk-petani#daftar-lahan" onClick={() => setIsMenuOpen(false)}>
                     Daftarkan Lahan Anda
                   </Link>
                 </Button>
@@ -103,4 +137,3 @@ const Header = () => {
 }
 
 export default Header
-
