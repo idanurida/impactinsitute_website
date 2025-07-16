@@ -1,0 +1,24 @@
+/* src/index.css */
+
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom global styles can be added below */
+
+/* Example: Setting a default font for the body */
+body {
+  font-family: 'Inter', sans-serif; /* Assuming 'Inter' font is used or desired */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* You can add more global styles here if needed */
+/* For example, to ensure full height for the root div */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
