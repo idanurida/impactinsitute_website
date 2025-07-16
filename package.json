@@ -22,10 +22,10 @@
     "react-router-dom": "^6.23.1",
     "tailwind-merge": "^2.6.0",
     "tw-animate-css": "^1.3.5",
-    "i18next": "^23.11.5",                     // Ditambahkan untuk inti i18n
-    "react-i18next": "^14.1.2",                 // Ditambahkan untuk integrasi React
-    "i18next-browser-languagedetector": "^7.2.1", // Ditambahkan untuk deteksi bahasa otomatis
-    "i18next-http-backend": "^2.5.2"            // Ditambahkan (opsional) jika Anda ingin memuat terjemahan dari server
+    "i18next": "^23.11.5",
+    "react-i18next": "^14.1.2",
+    "i18next-browser-languagedetector": "^7.2.1",
+    "i18next-http-backend": "^2.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
