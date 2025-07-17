@@ -174,7 +174,7 @@ const Homepage = () => {
       </section>
 
       {/* Why Choose Impact Institute Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-16 bg-gray-50"> {/* Menggunakan py-16 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
@@ -245,8 +245,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Services Section - Menggunakan py-20 untuk jarak standar */}
-      <section className="py-20 bg-white">
+      {/* Services Section - Menggunakan py-16 untuk jarak standar */}
+      <section className="py-16 bg-white"> {/* Menggunakan py-16 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
@@ -303,8 +303,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Achievements Section - Menggunakan py-20 untuk jarak standar */}
-      <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white">
+      {/* Achievements Section - Menggunakan py-16 untuk jarak standar */}
+      <section className="py-16 bg-gradient-to-r from-accent-teal to-primary-medium text-white"> {/* Menggunakan py-16 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -334,7 +334,7 @@ const Homepage = () => {
       </section>
 
       {/* Featured Projects Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-16 bg-gray-50"> {/* Menggunakan py-16 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
@@ -428,7 +428,7 @@ const Homepage = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
+      <section className="py-16 bg-white"> {/* Menggunakan py-16 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
@@ -495,7 +495,7 @@ const Homepage = () => {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-20 bg-gradient-to-r from-primary-dark to-accent-teal text-white">
+      <section className="py-16 bg-gradient-to-r from-primary-dark to-accent-teal text-white"> {/* Menggunakan py-16 */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             {currentContent.joinMovementTitle}
@@ -508,7 +508,7 @@ const Homepage = () => {
               asChild
               size="lg"
               className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4
-              hover:text-primary-dark transition-all duration-300" // Menambahkan transisi
+              hover:text-primary-dark transition-all duration-300" // Pastikan teks tetap terlihat saat hover
             >
               <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
             </Button>
@@ -516,7 +516,7 @@ const Homepage = () => {
               asChild
               variant="outline"
               size="lg"
-              className="border-white bg-white text-primary-dark hover:bg-gray-100 hover:text-primary-dark font-semibold text-lg px-8 py-4 transition-all duration-300" // Perbaikan di sini: bg-white, text-primary-dark, hover:bg-gray-100, dan transisi
+              className="border-white bg-white text-primary-dark hover:bg-gray-100 hover:text-primary-dark font-semibold text-lg px-8 py-4 transition-all duration-300"
             >
               <Link to="/kontak">{language === 'id' ? 'Hubungi Kami' : 'Contact Us'}</Link>
             </Button>
