@@ -143,18 +143,18 @@ const Homepage = () => {
         {/* Content */}
         <div className="relative z-10 max-w-full mx-auto px-4 sm:px-6 lg:px-8 text-center text-white"> {/* max-w-full */}
           <div className="mx-auto max-w-full"> {/* max-w-full */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"> {/* Font size increased */}
               {currentContent.heroTitle}<br />
               <span className="text-accent-green">{currentContent.heroSubtitle}</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100 mx-auto mb-8">
+            <p className="text-2xl md:text-3xl text-gray-100 mx-auto mb-8"> {/* Font size increased */}
               {currentContent.heroDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
+              <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-xl px-8 py-4"> {/* Font size increased */}
                 <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
               </Button>
-              <Button asChild size="lg" className="bg-primary-dark text-white hover:bg-primary-dark/90 font-semibold text-lg px-8 py-4">
+              <Button asChild size="lg" className="bg-primary-dark text-white hover:bg-primary-dark/90 font-semibold text-xl px-8 py-4"> {/* Font size increased */}
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
             </div>
@@ -166,10 +166,10 @@ const Homepage = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4"> {/* Font size increased */}
               {currentContent.whyChooseTitle}
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-2xl text-gray-600 max-w-3xl mx-auto"> {/* Font size increased */}
               {currentContent.whyChooseSubtitle}
             </p>
           </div>
@@ -180,10 +180,10 @@ const Homepage = () => {
                 <div className="w-16 h-16 bg-accent-green rounded-full flex items-center justify-center mx-auto mb-4">
                   <Leaf className="w-8 h-8 text-accent-teal" />
                 </div>
-                <h3 className="text-xl font-semibold text-primary-dark mb-3">
+                <h3 className="text-2xl font-semibold text-primary-dark mb-3"> {/* Font size increased */}
                   {currentContent.sustainablePractices.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-lg text-gray-600"> {/* Font size increased */}
                   {currentContent.sustainablePractices.description}
                 </p>
               </CardContent>
@@ -194,10 +194,10 @@ const Homepage = () => {
                 <div className="w-16 h-16 bg-accent-green rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-accent-teal" />
                 </div>
-                <h3 className="text-xl font-semibold text-primary-dark mb-3">
+                <h3 className="text-2xl font-semibold text-primary-dark mb-3"> {/* Font size increased */}
                   {currentContent.farmerEmpowerment.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-lg text-gray-600"> {/* Font size increased */}
                   {currentContent.farmerEmpowerment.description}
                 </p>
               </CardContent>
@@ -208,10 +208,10 @@ const Homepage = () => {
                 <div className="w-16 h-16 bg-accent-green rounded-full flex items-center justify-center mx-auto mb-4">
                   <Award className="w-8 h-8 text-accent-teal" />
                 </div>
-                <h3 className="text-xl font-semibold text-primary-dark mb-3">
+                <h3 className="text-2xl font-semibold text-primary-dark mb-3"> {/* Font size increased */}
                   {currentContent.trustedCertification.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-lg text-gray-600"> {/* Font size increased */}
                   {currentContent.trustedCertification.description}
                 </p>
               </CardContent>
@@ -222,10 +222,10 @@ const Homepage = () => {
                 <div className="w-16 h-16 bg-accent-green rounded-full flex items-center justify-center mx-auto mb-4">
                   <Globe className="w-8 h-8 text-accent-teal" />
                 </div>
-                <h3 className="text-xl font-semibold text-primary-dark mb-3">
+                <h3 className="text-2xl font-semibold text-primary-dark mb-3"> {/* Font size increased */}
                   {currentContent.globalImpact.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-lg text-gray-600"> {/* Font size increased */}
                   {currentContent.globalImpact.description}
                 </p>
               </CardContent>
@@ -238,10 +238,10 @@ const Homepage = () => {
       <section className="py-20 bg-white">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4"> {/* Font size increased */}
               {currentContent.servicesTitle}
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-2xl text-gray-600 max-w-3xl mx-auto"> {/* Font size increased */}
               {currentContent.servicesSubtitle}
             </p>
           </div>
@@ -252,10 +252,10 @@ const Homepage = () => {
                 <div className="w-20 h-20 bg-accent-green rounded-full flex items-center justify-center mx-auto mb-6">
                   <Sprout className="w-10 h-10 text-accent-teal" />
                 </div>
-                <h3 className="text-2xl font-semibold text-primary-dark mb-4">
+                <h3 className="text-3xl font-semibold text-primary-dark mb-4"> {/* Font size increased */}
                   {currentContent.agriculturalConsultation.title}
                 </h3>
-                <p className="text-gray-600 text-lg">
+                <p className="text-xl text-gray-600 text-lg"> {/* Font size increased */}
                   {currentContent.agriculturalConsultation.description}
                 </p>
               </CardContent>
@@ -266,10 +266,10 @@ const Homepage = () => {
                 <div className="w-20 h-20 bg-accent-green rounded-full flex items-center justify-center mx-auto mb-6">
                   <Users className="w-10 h-10 text-accent-teal" />
                 </div>
-                <h3 className="text-2xl font-semibold text-primary-dark mb-4">
+                <h3 className="text-3xl font-semibold text-primary-dark mb-4"> {/* Font size increased */}
                   {currentContent.trainingMentoring.title}
                 </h3>
-                <p className="text-gray-600 text-lg">
+                <p className="text-xl text-gray-600 text-lg"> {/* Font size increased */}
                   {currentContent.trainingMentoring.description}
                 </p>
               </CardContent>
@@ -280,10 +280,10 @@ const Homepage = () => {
                 <div className="w-20 h-20 bg-accent-green rounded-full flex items-center justify-center mx-auto mb-6">
                   <Award className="w-10 h-10 text-accent-teal" />
                 </div>
-                <h3 className="text-2xl font-semibold text-primary-dark mb-4">
+                <h3 className="text-3xl font-semibold text-primary-dark mb-4"> {/* Font size increased */}
                   {currentContent.projectCertification.title}
                 </h3>
-                <p className="text-gray-600 text-lg">
+                <p className="text-xl text-gray-600 text-lg"> {/* Font size increased */}
                   {currentContent.projectCertification.description}
                 </p>
               </CardContent>
@@ -296,27 +296,27 @@ const Homepage = () => {
       <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4"> {/* Font size increased */}
               {currentContent.achievementsTitle}
             </h2>
           </div>
 
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">500+</div>
-              <div className="text-xl">{currentContent.farmerPartners}</div>
+              <div className="text-5xl md:text-6xl font-bold mb-2">500+</div> {/* Font size increased */}
+              <div className="text-2xl">{currentContent.farmerPartners}</div> {/* Font size increased */}
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">25+</div>
-              <div className="text-xl">{currentContent.activeProjects}</div>
+              <div className="text-5xl md:text-6xl font-bold mb-2">25+</div> {/* Font size increased */}
+              <div className="text-2xl">{currentContent.activeProjects}</div> {/* Font size increased */}
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">15</div>
-              <div className="text-xl">{currentContent.provinces}</div>
+              <div className="text-5xl md:text-6xl font-bold mb-2">15</div> {/* Font size increased */}
+              <div className="text-2xl">{currentContent.provinces}</div> {/* Font size increased */}
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">10,000+</div>
-              <div className="text-xl">{currentContent.hectares}</div>
+              <div className="text-5xl md:text-6xl font-bold mb-2">10,000+</div> {/* Font size increased */}
+              <div className="text-2xl">{currentContent.hectares}</div> {/* Font size increased */}
             </div>
           </div>
         </div>
@@ -326,10 +326,10 @@ const Homepage = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4"> {/* Font size increased */}
               {currentContent.featuredProjectsTitle}
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-2xl text-gray-600 max-w-3xl mx-auto"> {/* Font size increased */}
               {currentContent.featuredProjectsSubtitle}
             </p>
           </div>
@@ -341,18 +341,18 @@ const Homepage = () => {
                 style={{ backgroundImage: 'url(/images/kopi.webp)' }}
               ></div>
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-primary-dark mb-2">
+                <h3 className="text-2xl font-semibold text-primary-dark mb-2"> {/* Font size increased */}
                   Agroforestri Kopi Berkelanjutan
                 </h3>
-                <p className="text-gray-600 mb-4">Aceh Tengah</p>
+                <p className="text-lg text-gray-600 mb-4">Aceh Tengah</p> {/* Font size increased */}
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Dampak:</span>
-                    <span className="text-sm font-medium">150 petani terlibat</span>
+                    <span className="text-base text-gray-500">Dampak:</span> {/* Font size increased */}
+                    <span className="text-base font-medium">150 petani terlibat</span> {/* Font size increased */}
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Luas Area:</span>
-                    <span className="text-sm font-medium">1,200 hektar</span>
+                    <span className="text-base text-gray-500">Luas Area:</span> {/* Font size increased */}
+                    <span className="text-base font-medium">1,200 hektar</span> {/* Font size increased */}
                   </div>
                 </div>
               </CardContent>
@@ -364,18 +364,18 @@ const Homepage = () => {
                 style={{ backgroundImage: 'url(/images/mangrove.webp)' }}
               ></div>
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-primary-dark mb-2">
+                <h3 className="text-2xl font-semibold text-primary-dark mb-2"> {/* Font size increased */}
                   Restorasi Hutan Mangrove
                 </h3>
-                <p className="text-gray-600 mb-4">Lampung Timur</p>
+                <p className="text-lg text-gray-600 mb-4">Lampung Timur</p> {/* Font size increased */}
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Dampak:</span>
-                    <span className="text-sm font-medium">89 petani terlibat</span>
+                    <span className="text-base text-gray-500">Dampak:</span> {/* Font size increased */}
+                    <span className="text-base font-medium">89 petani terlibat</span> {/* Font size increased */}
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Luas Area:</span>
-                    <span className="text-sm font-medium">800 hektar</span>
+                    <span className="text-base text-gray-500">Luas Area:</span> {/* Font size increased */}
+                    <span className="text-base font-medium">800 hektar</span> {/* Font size increased */}
                   </div>
                 </div>
               </CardContent>
@@ -387,18 +387,18 @@ const Homepage = () => {
                 style={{ backgroundImage: 'url(/images/karet.webp)' }}
               ></div>
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-primary-dark mb-2">
+                <h3 className="text-2xl font-semibold text-primary-dark mb-2"> {/* Font size increased */}
                   Perkebunan Karet Ramah Lingkungan
                 </h3>
-                <p className="text-gray-600 mb-4">Jambi</p>
+                <p className="text-lg text-gray-600 mb-4">Jambi</p> {/* Font size increased */}
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Dampak:</span>
-                    <span className="text-sm font-medium">120 petani terlibat</span>
+                    <span className="text-base text-gray-500">Dampak:</span> {/* Font size increased */}
+                    <span className="text-base font-medium">120 petani terlibat</span> {/* Font size increased */}
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500">Luas Area:</span>
-                    <span className="text-sm font-medium">600 hektar</span>
+                    <span className="text-base text-gray-500">Luas Area:</span> {/* Font size increased */}
+                    <span className="text-base font-medium">600 hektar</span> {/* Font size increased */}
                   </div>
                 </div>
               </CardContent>
@@ -411,10 +411,10 @@ const Homepage = () => {
       <section className="py-20 bg-white">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4"> {/* Font size increased */}
               {currentContent.testimonialsTitle}
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-2xl text-gray-600 max-w-3xl mx-auto"> {/* Font size increased */}
               {currentContent.testimonialsSubtitle}
             </p>
           </div>
@@ -427,11 +427,11 @@ const Homepage = () => {
                     <Users className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-primary-dark">Bapak Suryadi</h4>
-                    <p className="text-sm text-gray-500">Petani Kopi, Aceh</p>
+                    <h4 className="text-lg font-semibold text-primary-dark">Bapak Suryadi</h4> {/* Font size increased */}
+                    <p className="text-base text-gray-500">Petani Kopi, Aceh</p> {/* Font size increased */}
                   </div>
                 </div>
-                <p className="text-gray-600 italic">
+                <p className="text-lg text-gray-600 italic"> {/* Font size increased */}
                   "Berkat Impact Institute, hasil panen kopi saya meningkat 40% dan saya mendapat pengetahuan baru tentang pertanian berkelanjutan."
                 </p>
               </CardContent>
@@ -444,11 +444,11 @@ const Homepage = () => {
                     <Users className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-primary-dark">Ibu Sari</h4>
-                    <p className="text-sm text-gray-500">Petani Sayuran, Jawa Barat</p>
+                    <h4 className="text-lg font-semibold text-primary-dark">Ibu Sari</h4> {/* Font size increased */}
+                    <p className="text-base text-gray-500">Petani Sayuran, Jawa Barat</p> {/* Font size increased */}
                   </div>
                 </div>
-                <p className="text-gray-600 italic">
+                <p className="text-lg text-gray-600 italic"> {/* Font size increased */}
                   "Program pelatihan yang diberikan sangat membantu. Sekarang saya bisa menerapkan teknologi modern di lahan saya."
                 </p>
               </CardContent>
@@ -461,11 +461,11 @@ const Homepage = () => {
                     <Users className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-primary-dark">Bapak Ahmad</h4>
-                    <p className="text-sm text-gray-500">Petani Karet, Jambi</p>
+                    <h4 className="text-lg font-semibold text-primary-dark">Bapak Ahmad</h4> {/* Font size increased */}
+                    <p className="text-base text-gray-500">Petani Karet, Jambi</p> {/* Font size increased */}
                   </div>
                 </div>
-                <p className="text-gray-600 italic">
+                <p className="text-lg text-gray-600 italic"> {/* Font size increased */}
                   "Pendampingan dari tim Impact Institute membuat usaha tani saya lebih efisien dan ramah lingkungan."
                 </p>
               </CardContent>
@@ -477,18 +477,18 @@ const Homepage = () => {
       {/* Call to Action Section */}
       <section className="py-20 bg-gradient-to-r from-primary-dark to-accent-teal text-white">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 text-center"> {/* max-w-full */}
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4"> {/* Font size increased */}
             {currentContent.joinMovementTitle}
           </h2>
-          <p className="text-xl mb-8 opacity-90">
+          <p className="text-2xl mb-8 opacity-90"> {/* Font size increased */}
             {currentContent.joinMovementSubtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
+            <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-xl px-8 py-4"> {/* Font size increased */}
               <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
             </Button>
             {/* Tombol "Hubungi Kami" diubah gayanya */}
-            <Button asChild size="lg" className="bg-primary-dark text-white hover:bg-primary-dark/90 font-semibold text-lg px-8 py-4">
+            <Button asChild size="lg" className="bg-primary-dark text-white hover:bg-primary-dark/90 font-semibold text-xl px-8 py-4"> {/* Font size increased */}
               <Link to="/kontak">{language === 'id' ? 'Hubungi Kami' : 'Contact Us'}</Link>
             </Button>
           </div>
