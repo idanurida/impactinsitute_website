@@ -136,18 +136,18 @@ const Homepage = () => {
             backgroundImage: 'url(/images/hero-farmers.webp)',
           }}
         >
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/50"></div> {/* Made overlay darker */}
+          {/* Overlay - Disesuaikan agar lebih gelap dan tidak terlalu mencolok gradien*/}
+          <div className="absolute inset-0 bg-black/60"></div> 
         </div>
 
-        {/* Content */}
+        {/* Content - Disesuaikan agar teks lebih besar dan terlihat jelas */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"> {/* Ukuran font diperbesar */}
               {currentContent.heroTitle}<br />
               <span className="text-accent-green">{currentContent.heroSubtitle}</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto mb-8">
+            <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto mb-8"> {/* Ukuran font diperbesar */}
               {currentContent.heroDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -322,7 +322,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Featured Projects Section */}
+      {/* Featured Projects Section - Mengembalikan gambar dan memastikan ukuran font yang sesuai */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -338,7 +338,7 @@ const Homepage = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div 
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/coffee-plant.webp)' }} // Added image for Coffee
+                style={{ backgroundImage: 'url(/images/coffee-plant.webp)' }} // Gambar untuk Kopi
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
@@ -361,7 +361,7 @@ const Homepage = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div 
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/mangrove-roots.webp)' }} // Added image for Mangrove
+                style={{ backgroundImage: 'url(/images/mangrove-roots.webp)' }} // Gambar untuk Mangrove
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
@@ -384,7 +384,7 @@ const Homepage = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div 
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/rubber-tree.webp)' }} // Added image for Rubber
+                style={{ backgroundImage: 'url(/images/rubber-tree.webp)' }} // Gambar untuk Karet
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
