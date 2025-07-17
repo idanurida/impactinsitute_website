@@ -164,7 +164,7 @@ const Homepage = () => {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-white text-white bg-white/20 hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4" // Perbaikan di sini: bg-white/20 untuk visibilitas default
+                className="border-white bg-white text-primary-dark hover:bg-gray-100 hover:text-primary-dark font-semibold text-lg px-8 py-4" // Perbaikan di sini
               >
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
