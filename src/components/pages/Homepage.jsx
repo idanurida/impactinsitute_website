@@ -133,7 +133,7 @@ const Homepage = () => {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(/images/update-hero-farmers.webp)', // Gambar hero diperbarui
+            backgroundImage: 'url(/images/hero-farmers.webp)', // Menggunakan kembali hero-farmers.webp
           }}
         >
           {/* Overlay */}
@@ -141,8 +141,8 @@ const Homepage = () => {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <div className="mx-auto">
+        <div className="relative z-10 max-w-full mx-auto px-4 sm:px-6 lg:px-8 text-center text-white"> {/* max-w-full */}
+          <div className="mx-auto max-w-full"> {/* max-w-full */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               {currentContent.heroTitle}<br />
               <span className="text-accent-green">{currentContent.heroSubtitle}</span>
@@ -154,7 +154,6 @@ const Homepage = () => {
               <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
                 <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
               </Button>
-              {/* Tombol "Pelajari Lebih Lanjut" dengan background tile */}
               <Button asChild size="lg" className="bg-primary-dark text-white hover:bg-primary-dark/90 font-semibold text-lg px-8 py-4">
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
@@ -165,7 +164,7 @@ const Homepage = () => {
 
       {/* Why Choose Impact Institute Section */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               {currentContent.whyChooseTitle}
@@ -237,7 +236,7 @@ const Homepage = () => {
 
       {/* Services Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               {currentContent.servicesTitle}
@@ -295,7 +294,7 @@ const Homepage = () => {
 
       {/* Achievements Section */}
       <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {currentContent.achievementsTitle}
@@ -325,7 +324,7 @@ const Homepage = () => {
 
       {/* Featured Projects Section */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               {currentContent.featuredProjectsTitle}
@@ -339,7 +338,7 @@ const Homepage = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/kopi.webp)' }} // Gambar Kopi
+                style={{ backgroundImage: 'url(/images/kopi.webp)' }}
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
@@ -362,7 +361,7 @@ const Homepage = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/mangrove.webp)' }} // Gambar Mangrove
+                style={{ backgroundImage: 'url(/images/mangrove.webp)' }}
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
@@ -385,7 +384,7 @@ const Homepage = () => {
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
               <div
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/karet.webp)' }} // Gambar Karet
+                style={{ backgroundImage: 'url(/images/karet.webp)' }}
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
@@ -410,7 +409,7 @@ const Homepage = () => {
 
       {/* Testimonials Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"> {/* max-w-full */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               {currentContent.testimonialsTitle}
@@ -477,7 +476,7 @@ const Homepage = () => {
 
       {/* Call to Action Section */}
       <section className="py-20 bg-gradient-to-r from-primary-dark to-accent-teal text-white">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 text-center"> {/* max-w-full */}
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             {currentContent.joinMovementTitle}
           </h2>
@@ -488,7 +487,8 @@ const Homepage = () => {
             <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
               <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4">
+            {/* Tombol "Hubungi Kami" diubah gayanya */}
+            <Button asChild size="lg" className="bg-primary-dark text-white hover:bg-primary-dark/90 font-semibold text-lg px-8 py-4">
               <Link to="/kontak">{language === 'id' ? 'Hubungi Kami' : 'Contact Us'}</Link>
             </Button>
           </div>
