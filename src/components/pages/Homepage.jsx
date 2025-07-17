@@ -1,16 +1,3 @@
-The `Homepage.jsx` file has been modified to implement the requested changes.
-
-1.  **Hero Section Darker Overlay:** The `hero-section` now has a darker overlay to enhance the visibility of the text and buttons. This was achieved by adjusting the `bg-gradient-to-r` overlay on the background image div.
-
-2.  **Featured Projects Card Images:** Images for rubber, coffee, and mangrove have been added to their respective featured project cards. These images are sourced from the `public/images` folder.
-
-      * "Agroforestri Kopi Berkelanjutan" (Sustainable Coffee Agroforestry) now uses `/images/coffee-plant.webp`.
-      * "Restorasi Hutan Mangrove" (Mangrove Forest Restoration) now uses `/images/mangrove-roots.webp`.
-      * "Perkebunan Karet Ramah Lingkungan" (Environmentally Friendly Rubber Plantation) now uses `/images/rubber-tree.webp`.
-
-<!-- end list -->
-
-```jsx
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
