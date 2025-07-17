@@ -1,26 +1,22 @@
-// src/components/ui/badge.jsx
-
 import * as React from "react"
-import { cva } from "class-variance-authority"; // Import cva
-import { cn } from "@/lib/utils" // Pastikan jalur ini benar untuk utils Anda
+import { Slot } from "@radix-ui/react-slot"
+import { cva } from "class-variance-authority";
 
-/**
- * Mendefinisikan varian gaya untuk komponen Badge menggunakan `cva` dari `class-variance-authority`.
- * Ini memungkinkan Anda memiliki beberapa varian badge (default, secondary, destructive, outline)
- * dengan properti gaya yang berbeda.
- */
+import { cn } from "@/lib/utils"
+
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
         destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground",
+          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        outline:
+          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
       },
     },
     defaultVariants: {
@@ -29,15 +25,20 @@ const badgeVariants = cva(
   }
 )
 
-/**
- * Komponen Badge yang dapat digunakan kembali.
- * Menerima props `variant` untuk mengubah gaya, `className` untuk kustomisasi tambahan,
- * dan props HTML lainnya untuk elemen `div`.
- */
-function Badge({ className, variant, ...props }) {
+function Badge({
+  className,
+  variant,
+  asChild = false,
+  ...props
+}) {
+  const Comp = asChild ? Slot : "span"
+
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  )
+    <Comp
+      data-slot="badge"
+      className={cn(badgeVariants({ variant }), className)}
+      {...props} />
+  );
 }
 
 export { Badge, badgeVariants }
