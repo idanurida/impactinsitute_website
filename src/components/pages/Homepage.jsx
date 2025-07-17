@@ -156,7 +156,7 @@ const Homepage = () => {
                 asChild
                 size="lg"
                 className="bg-accent-orange text-white hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4
-                hover:text-white" // Teks putih tetap kontras pada hover
+                hover:text-white transition-all duration-300" // Menambahkan transisi
               >
                 <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
               </Button>
@@ -164,7 +164,7 @@ const Homepage = () => {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-accent-green bg-accent-green text-white hover:bg-accent-green/90 hover:text-white font-semibold text-lg px-8 py-4" // Perbaikan di sini
+                className="border-accent-green bg-accent-green text-white hover:bg-accent-green/90 hover:text-white font-semibold text-lg px-8 py-4 transition-all duration-300" // Menambahkan transisi
               >
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
@@ -246,7 +246,7 @@ const Homepage = () => {
       </section>
 
       {/* Services Section - Padding bottom diatur ke standar py-20 */}
-      <section className="py-20 bg-white"> {/* Perbaikan di sini: pb-0 dihapus */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
@@ -304,7 +304,7 @@ const Homepage = () => {
       </section>
 
       {/* Achievements Section - Margin top diatur ke standar py-20 */}
-      <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white"> {/* Perbaikan di sini: mt-0 dihapus */}
+      <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -351,7 +351,7 @@ const Homepage = () => {
               <img
                 src="/images/kopi.webp" // Gambar Kopi
                 alt="Ilustrasi Agroforestri Kopi Berkelanjutan"
-                className="h-48 w-full object-cover"
+                className="h-36 w-full object-cover" // Perbaikan di sini: h-36
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
               />
               <CardContent className="p-6">
@@ -377,7 +377,7 @@ const Homepage = () => {
               <img
                 src="/images/mangrove.webp" // Gambar Mangrove
                 alt="Ilustrasi Restorasi Hutan Mangrove"
-                className="h-48 w-full object-cover"
+                className="h-36 w-full object-cover" // Perbaikan di sini: h-36
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
               />
               <CardContent className="p-6">
@@ -403,7 +403,7 @@ const Homepage = () => {
               <img
                 src="/images/karet.webp" // Gambar Karet
                 alt="Ilustrasi Perkebunan Karet Ramah Lingkungan"
-                className="h-48 w-full object-cover"
+                className="h-36 w-full object-cover" // Perbaikan di sini: h-36
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
               />
               <CardContent className="p-6">
@@ -508,7 +508,7 @@ const Homepage = () => {
               asChild
               size="lg"
               className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4
-              hover:text-primary-dark" // Pastikan teks tetap terlihat saat hover
+              hover:text-primary-dark transition-all duration-300" // Menambahkan transisi
             >
               <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
             </Button>
@@ -516,7 +516,7 @@ const Homepage = () => {
               asChild
               variant="outline"
               size="lg"
-              className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4"
+              className="border-white bg-white text-primary-dark hover:bg-gray-100 hover:text-primary-dark font-semibold text-lg px-8 py-4 transition-all duration-300" // Perbaikan di sini: bg-white, text-primary-dark, hover:bg-gray-100, dan transisi
             >
               <Link to="/kontak">{language === 'id' ? 'Hubungi Kami' : 'Contact Us'}</Link>
             </Button>
