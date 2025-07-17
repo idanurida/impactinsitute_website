@@ -136,8 +136,8 @@ const Homepage = () => {
             backgroundImage: 'url(/images/hero-farmers.webp)',
           }}
         >
-          {/* Overlay untuk Opacity Gambar */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/80 via-primary-medium/70 to-accent-teal/60"></div>
+          {/* Overlay untuk Opacity Gambar - Dibuat lebih gelap */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/90 via-primary-medium/80 to-accent-teal/70"></div>
         </div>
 
         {/* Content */}
@@ -244,8 +244,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Services Section - Padding bottom dikurangi */}
-      <section className="py-20 pb-10 bg-white"> {/* Perubahan di sini: pb-10 */}
+      {/* Services Section - Padding bottom dikurangi lebih lanjut */}
+      <section className="py-20 pb-6 bg-white"> {/* Perubahan di sini: pb-6 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
