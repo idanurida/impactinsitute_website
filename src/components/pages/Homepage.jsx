@@ -137,7 +137,8 @@ const Homepage = () => {
           }}
         >
           {/* Overlay untuk Opacity Gambar - Dibuat JAUH lebih gelap */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary-medium/95 to-accent-teal/90"></div>
+          {/* Menggunakan overlay hitam dengan opacity tinggi untuk kontras maksimal */}
+          <div className="absolute inset-0 bg-black/70"></div> {/* Perbaikan di sini */}
         </div>
 
         {/* Content */}
@@ -163,7 +164,7 @@ const Homepage = () => {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-white text-white bg-white/10 hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4" // Perbaikan di sini: bg-white/10
+                className="border-white text-white bg-white/20 hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4" // Perbaikan di sini: bg-white/20 untuk visibilitas default
               >
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
@@ -244,8 +245,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Services Section - Padding bottom dikurangi lebih lanjut */}
-      <section className="py-20 pb-0 bg-white"> {/* Perubahan di sini: pb-0 */}
+      {/* Services Section - Padding bottom diatur ke 0 */}
+      <section className="py-20 pb-0 bg-white"> {/* Perbaikan di sini: pb-0 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
@@ -302,8 +303,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Achievements Section - Tambahkan margin-top untuk memisahkan dari Services jika pb-0 terlalu rapat */}
-      <section className="py-20 mt-5 bg-gradient-to-r from-accent-teal to-primary-medium text-white"> {/* Perubahan di sini: mt-5 */}
+      {/* Achievements Section - Margin top diatur ke 0 */}
+      <section className="py-20 mt-0 bg-gradient-to-r from-accent-teal to-primary-medium text-white"> {/* Perbaikan di sini: mt-0 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
