@@ -164,7 +164,7 @@ const Homepage = () => {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-white bg-white text-primary-dark hover:bg-gray-100 hover:text-primary-dark font-semibold text-lg px-8 py-4" // Perbaikan di sini
+                className="border-accent-green bg-accent-green text-white hover:bg-accent-green/90 hover:text-white font-semibold text-lg px-8 py-4" // Perbaikan di sini
               >
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
@@ -245,8 +245,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Services Section - Padding bottom diatur ke 0 */}
-      <section className="py-20 pb-0 bg-white"> {/* Perbaikan di sini: pb-0 */}
+      {/* Services Section - Padding bottom diatur ke standar py-20 */}
+      <section className="py-20 bg-white"> {/* Perbaikan di sini: pb-0 dihapus */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
@@ -303,8 +303,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Achievements Section - Margin top diatur ke 0 */}
-      <section className="py-20 mt-0 bg-gradient-to-r from-accent-teal to-primary-medium text-white"> {/* Perbaikan di sini: mt-0 */}
+      {/* Achievements Section - Margin top diatur ke standar py-20 */}
+      <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white"> {/* Perbaikan di sini: mt-0 dihapus */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
