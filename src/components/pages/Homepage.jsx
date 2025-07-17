@@ -164,7 +164,7 @@ const Homepage = () => {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-accent-green bg-accent-green text-white hover:bg-accent-green/90 hover:text-white font-semibold text-lg px-8 py-4 transition-all duration-300" // Menambahkan transisi
+                className="border-white bg-white text-primary-dark hover:bg-gray-100 hover:text-primary-dark font-semibold text-lg px-8 py-4 transition-all duration-300" // Perbaikan di sini: bg-white, text-primary-dark, hover:bg-gray-100, dan transisi
               >
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
@@ -245,7 +245,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Services Section - Padding bottom diatur ke standar py-20 */}
+      {/* Services Section - Menggunakan py-20 untuk jarak standar */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -303,7 +303,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Achievements Section - Margin top diatur ke standar py-20 */}
+      {/* Achievements Section - Menggunakan py-20 untuk jarak standar */}
       <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -351,7 +351,7 @@ const Homepage = () => {
               <img
                 src="/images/kopi.webp" // Gambar Kopi
                 alt="Ilustrasi Agroforestri Kopi Berkelanjutan"
-                className="h-36 w-full object-cover" // Perbaikan di sini: h-36
+                className="h-48 w-full object-cover" // Dikembalikan ke h-48
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
               />
               <CardContent className="p-6">
@@ -377,7 +377,7 @@ const Homepage = () => {
               <img
                 src="/images/mangrove.webp" // Gambar Mangrove
                 alt="Ilustrasi Restorasi Hutan Mangrove"
-                className="h-36 w-full object-cover" // Perbaikan di sini: h-36
+                className="h-48 w-full object-cover" // Dikembalikan ke h-48
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
               />
               <CardContent className="p-6">
@@ -403,7 +403,7 @@ const Homepage = () => {
               <img
                 src="/images/karet.webp" // Gambar Karet
                 alt="Ilustrasi Perkebunan Karet Ramah Lingkungan"
-                className="h-36 w-full object-cover" // Perbaikan di sini: h-36
+                className="h-48 w-full object-cover" // Dikembalikan ke h-48
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
               />
               <CardContent className="p-6">
