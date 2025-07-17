@@ -130,13 +130,13 @@ const Homepage = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: 'url(/images/hero-farmers.webp)',
           }}
         >
-          {/* Overlay */}
+          {/* Overlay untuk Opacity Gambar */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/80 via-primary-medium/70 to-accent-teal/60"></div>
         </div>
 
@@ -151,10 +151,20 @@ const Homepage = () => {
               {currentContent.heroDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
+              <Button
+                asChild
+                size="lg"
+                className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4
+                hover:text-primary-dark" // Pastikan teks tetap terlihat saat hover
+              >
                 <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4"
+              >
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
             </div>
@@ -234,8 +244,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-20 bg-white">
+      {/* Services Section - Padding bottom dikurangi */}
+      <section className="py-20 pb-10 bg-white"> {/* Perubahan di sini: pb-10 */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
@@ -335,8 +345,14 @@ const Homepage = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
+            {/* Proyek Agroforestri Kopi Berkelanjutan */}
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-gradient-to-br from-green-400 to-green-600"></div>
+              <img
+                src="/images/kopi.webp" // Gambar Kopi
+                alt="Ilustrasi Agroforestri Kopi Berkelanjutan"
+                className="h-48 w-full object-cover"
+                onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
+              />
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
                   Agroforestri Kopi Berkelanjutan
@@ -355,8 +371,14 @@ const Homepage = () => {
               </CardContent>
             </Card>
 
+            {/* Proyek Restorasi Hutan Mangrove */}
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-gradient-to-br from-blue-400 to-blue-600"></div>
+              <img
+                src="/images/mangrove.webp" // Gambar Mangrove
+                alt="Ilustrasi Restorasi Hutan Mangrove"
+                className="h-48 w-full object-cover"
+                onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
+              />
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
                   Restorasi Hutan Mangrove
@@ -375,8 +397,14 @@ const Homepage = () => {
               </CardContent>
             </Card>
 
+            {/* Proyek Perkebunan Karet Ramah Lingkungan */}
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-gradient-to-br from-yellow-400 to-orange-500"></div>
+              <img
+                src="/images/karet.webp" // Gambar Karet
+                alt="Ilustrasi Perkebunan Karet Ramah Lingkungan"
+                className="h-48 w-full object-cover"
+                onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/E0F2F1/004D40?text=Gambar+Tidak+Ditemukan'; }}
+              />
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
                   Perkebunan Karet Ramah Lingkungan
@@ -475,10 +503,20 @@ const Homepage = () => {
             {currentContent.joinMovementSubtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
+            <Button
+              asChild
+              size="lg"
+              className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4
+              hover:text-primary-dark" // Pastikan teks tetap terlihat saat hover
+            >
               <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4"
+            >
               <Link to="/kontak">{language === 'id' ? 'Hubungi Kami' : 'Contact Us'}</Link>
             </Button>
           </div>
@@ -489,4 +527,3 @@ const Homepage = () => {
 }
 
 export default Homepage
-
