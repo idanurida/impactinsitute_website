@@ -128,33 +128,34 @@ const Homepage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(/images/hero-farmers.webp)',
+            backgroundImage: 'url(/images/update-hero-farmers.webp)', // Gambar hero diperbarui
           }}
         >
-          {/* Overlay - Disesuaikan agar lebih gelap dan tidak terlalu mencolok gradien*/}
-          <div className="absolute inset-0 bg-black/60"></div> 
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/75"></div> {/* Overlay dipergelap */}
         </div>
 
-        {/* Content - Disesuaikan agar teks lebih besar dan terlihat jelas */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"> {/* Ukuran font diperbesar */}
+        {/* Content */}
+        <div className="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+          <div className="mx-auto">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               {currentContent.heroTitle}<br />
               <span className="text-accent-green">{currentContent.heroSubtitle}</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto mb-8"> {/* Ukuran font diperbesar */}
+            <p className="text-xl md:text-2xl text-gray-100 mx-auto mb-8">
               {currentContent.heroDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
                 <Link to="/untuk-petani#registration-form">{currentContent.ctaRegister}</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4">
+              {/* Tombol "Pelajari Lebih Lanjut" dengan background tile */}
+              <Button asChild size="lg" className="bg-primary-dark text-white hover:bg-primary-dark/90 font-semibold text-lg px-8 py-4">
                 <Link to="/bagaimana-kami-bekerja">{currentContent.ctaLearnMore}</Link>
               </Button>
             </div>
@@ -164,7 +165,7 @@ const Homepage = () => {
 
       {/* Why Choose Impact Institute Section */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               {currentContent.whyChooseTitle}
@@ -236,7 +237,7 @@ const Homepage = () => {
 
       {/* Services Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               {currentContent.servicesTitle}
@@ -294,7 +295,7 @@ const Homepage = () => {
 
       {/* Achievements Section */}
       <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {currentContent.achievementsTitle}
@@ -322,9 +323,9 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Featured Projects Section - Mengembalikan gambar dan memastikan ukuran font yang sesuai */}
+      {/* Featured Projects Section */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               {currentContent.featuredProjectsTitle}
@@ -336,9 +337,9 @@ const Homepage = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div 
+              <div
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/coffee-plant.webp)' }} // Gambar untuk Kopi
+                style={{ backgroundImage: 'url(/images/kopi.webp)' }} // Gambar Kopi
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
@@ -359,9 +360,9 @@ const Homepage = () => {
             </Card>
 
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div 
+              <div
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/mangrove-roots.webp)' }} // Gambar untuk Mangrove
+                style={{ backgroundImage: 'url(/images/mangrove.webp)' }} // Gambar Mangrove
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
@@ -382,9 +383,9 @@ const Homepage = () => {
             </Card>
 
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div 
+              <div
                 className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/images/rubber-tree.webp)' }} // Gambar untuk Karet
+                style={{ backgroundImage: 'url(/images/karet.webp)' }} // Gambar Karet
               ></div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
@@ -409,7 +410,7 @@ const Homepage = () => {
 
       {/* Testimonials Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               {currentContent.testimonialsTitle}
@@ -476,7 +477,7 @@ const Homepage = () => {
 
       {/* Call to Action Section */}
       <section className="py-20 bg-gradient-to-r from-primary-dark to-accent-teal text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             {currentContent.joinMovementTitle}
           </h2>
