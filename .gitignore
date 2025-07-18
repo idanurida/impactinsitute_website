@@ -1,0 +1,33 @@
+# Dependencies (Harus diabaikan, jangan diunggah ke Git!)
+/node_modules
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment variables (Harus diabaikan, jangan diunggah ke Git!)
+.env
+.env.local
+.env.*.local
+
+# IDEs and other tooling
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Testing
+/coverage
+
+# Local development server specific files
+.svelte-kit/
+.nuxt/
+.next/
+.output/
+
+# Build output (Ini tidak diabaikan karena Hostinger tidak bisa build)
+# Hapus baris /dist jika ada
+# (Dalam kasus Anda, karena dist perlu di-push, kita pastikan TIDAK ada /dist di sini)
