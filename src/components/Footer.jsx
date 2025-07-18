@@ -20,7 +20,11 @@ const Footer = () => {
 
   const content = {
     id: {
+<<<<<<< HEAD
       companyDescription: "Yayasan nirlaba yang berkomitmen mendorong perubahan positif di sektor pertanian, perkebunan, dan kehutanan di Indonesia melalui solusi iklim berkelanjutan.",
+=======
+      companyDescription: "Impact Institute berkomitmen mendorong perubahan positif di sektor pertanian, perkebunan, dan kehutanan di Indonesia melalui solusi iklim berkelanjutan.",
+>>>>>>> 5af6b8d82ad15b74efdd92ad035b05c45649552c
       navigation: "Navigasi",
       services: "Layanan",
       contact: "Kontak",
@@ -48,7 +52,11 @@ const Footer = () => {
       ]
     },
     en: {
+<<<<<<< HEAD
       companyDescription: "A non-profit foundation committed to driving positive change in Indonesia's agriculture, plantation, and forestry sectors through sustainable climate solutions.",
+=======
+      companyDescription: "Impact Institute is committed to driving positive change in Indonesia's agriculture, plantation, and forestry sectors through sustainable climate solutions.",
+>>>>>>> 5af6b8d82ad15b74efdd92ad035b05c45649552c
       navigation: "Navigation",
       services: "Services",
       contact: "Contact",
