@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-const NewsEducation = () => {
-  return (
-    <div className="min-h-screen py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">NewsEducation</h1>
-          <p className="text-xl text-gray-600">Halaman ini sedang dalam pengembangan.</p>
-        </div>
-      </div>
-=======
 import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -324,13 +313,9 @@ const NewsEducation = () => {
           </div>
         </div>
       </section>
->>>>>>> 5af6b8d82ad15b74efdd92ad035b05c45649552c
     </div>
   )
 }
 
 export default NewsEducation
-<<<<<<< HEAD
-=======
 
->>>>>>> 5af6b8d82ad15b74efdd92ad035b05c45649552c
