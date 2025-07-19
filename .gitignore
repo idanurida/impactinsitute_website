@@ -1,33 +1,56 @@
-# Dependencies (Harus diabaikan, jangan diunggah ke Git!)
+# Dependencies (Direktori tempat library dan paket node diinstal - jangan diunggah ke Git!)
 /node_modules
 
-# Log files
+# Log files (File log yang dihasilkan oleh aplikasi atau tools)
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
+log.txt
 
-# Environment variables (Harus diabaikan, jangan diunggah ke Git!)
+# Environment variables (File yang berisi variabel lingkungan sensitif - jangan diunggah ke Git!)
 .env
 .env.local
 .env.*.local
+.env.*
+.env.development.local
+.env.test.local
+.env.production.local
 
-# IDEs and other tooling
+# IDEs and other tooling (File konfigurasi atau cache dari Integrated Development Environments)
 .idea/
 .vscode/
 *.iml
-.DS_Store
-Thumbs.db
+.DS_Store             # macOS specific file
+Thumbs.db             # Windows specific file
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+.cache/
 
-# Testing
+# Testing (Direktori output hasil testing atau coverage report)
 /coverage
+/.nyc_output
+/test-results/
 
-# Local development server specific files
+# Local development server specific files (File atau folder yang dihasilkan server pengembangan lokal)
 .svelte-kit/
 .nuxt/
 .next/
 .output/
+/dist/                   # <<< INI SANGAT PENTING: Folder output build Anda, HARUS diabaikan oleh Git. Netlify yang akan membangunnya.
+/build/                  # Contoh lain jika output build Anda bernama 'build'
+/public/                 # Contoh lain jika output build Anda bernama 'public' (biasanya untuk Jekyll, Hugo, dsb. jika tidak ada dist/ atau build/)
 
-# Build output (Ini tidak diabaikan karena Hostinger tidak bisa build)
-# Hapus baris /dist jika ada
-# (Dalam kasus Anda, karena dist perlu di-push, kita pastikan TIDAK ada /dist di sini)
+# Miscellaneous (File lain-lain yang umumnya tidak perlu di-track oleh Git)
+*.swp
+*.bak
+*.swo
+*~
+*.orig
+.npm
+.yarn/
+.pnpm-store/
