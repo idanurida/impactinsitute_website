@@ -285,18 +285,34 @@ const OurProjects = () => {
     }
   }
 
-  return (
+  ret  return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              {currentContent.title}
-            </h1>
-            <p className="text-xl text-gray-100 max-w-4xl mx-auto mb-8">
-              {currentContent.subtitle}
-            </p>
+      <section className="relative min-h-[60vh] flex items-center justify-center">
+        {/* Background Image with Dark Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/images/ourproject.webp)',
+          }}
+        >
+          {/* Dark overlay for better text contrast */}
+          <div className="absolute inset-0 bg-black/60"></div>
+        </div>
+
+        {/* Additional gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/80 via-primary-medium/70 to-accent-teal/60"></div>
+
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            {currentContent.pageTitle}
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto">
+            {currentContent.heroSubtitle}
+          </p>
+        </div>
+      </section>/p>
             <p className="text-lg text-gray-200 max-w-5xl mx-auto">
               {currentContent.hero.description}
             </p>

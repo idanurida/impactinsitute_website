@@ -1,265 +1,217 @@
-import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Link } from 'react-router-dom'
-import { 
-  CheckCircle, 
-  Users, 
-  Leaf, 
-  TrendingUp, 
-  Shield, 
-  Globe,
-  ArrowRight,
-  FileText,
-  BarChart3,
-  Award,
-  Clock,
-  Target
-} from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Card, CardContent } from '@/components/ui/card'
+import { CheckCircle, ArrowRight } from 'lucide-react'
 
 const HowWeWork = () => {
   const [language, setLanguage] = useState('id')
 
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'id'
+    setLanguage(savedLanguage)
+  }, [])
+
   const content = {
     id: {
-      title: "Bagaimana Kami Bekerja",
-      subtitle: "Proses Transparan dan Terstruktur untuk Solusi Karbon Berkelanjutan",
-      description: "Impact Institute menggunakan metodologi yang telah terbukti dan standar internasional untuk memastikan setiap proyek karbon memberikan dampak nyata bagi lingkungan dan masyarakat.",
+      pageTitle: "Bagaimana Kami Bekerja",
+      heroSubtitle: "Proses komprehensif untuk menciptakan dampak berkelanjutan",
+      description: "Kami menggunakan pendekatan sistematis dan terstruktur untuk memastikan setiap proyek pertanian berkelanjutan memberikan dampak maksimal bagi petani dan lingkungan.",
+      processTitle: "Proses Kerja Kami",
+      processSubtitle: "6 langkah strategis menuju pertanian berkelanjutan",
       steps: [
         {
           number: "01",
-          title: "Pendaftaran & Verifikasi Lahan",
-          description: "Petani mendaftarkan lahan mereka melalui platform kami. Tim ahli kami melakukan verifikasi kelayakan lahan menggunakan teknologi satelit dan survei lapangan untuk memastikan potensi serapan karbon yang akurat.",
+          title: "Verifikasi & Penilaian Lahan",
+          description: "Tim ahli kami melakukan survei mendalam untuk menilai kondisi lahan, potensi produktivitas, dan kesesuaian untuk praktik pertanian berkelanjutan.",
           details: [
-            "Analisis citra satelit untuk pemetaan lahan",
-            "Survei lapangan oleh tim ahli bersertifikat",
-            "Penilaian kondisi tanah dan vegetasi",
-            "Verifikasi kepemilikan dan legalitas lahan"
-          ]
-        },
-        {
-          number: "02", 
-          title: "Pengembangan Rencana Proyek",
-          description: "Berdasarkan hasil verifikasi, kami mengembangkan rencana proyek karbon yang disesuaikan dengan karakteristik lahan dan kebutuhan petani. Setiap rencana mengikuti standar internasional seperti VCS dan Gold Standard.",
-          details: [
-            "Desain proyek sesuai standar VCS/Gold Standard",
-            "Perhitungan baseline dan proyeksi serapan karbon",
-            "Rencana implementasi dan timeline",
-            "Strategi monitoring dan evaluasi"
-          ]
-        },
-        {
-          number: "03",
-          title: "Implementasi & Pendampingan",
-          description: "Tim lapangan kami mendampingi petani dalam implementasi praktik pertanian berkelanjutan. Kami menyediakan pelatihan, bibit, dan teknologi yang diperlukan untuk memastikan keberhasilan proyek.",
-          details: [
-            "Pelatihan praktik pertanian berkelanjutan",
-            "Penyediaan bibit dan teknologi",
-            "Pendampingan teknis berkelanjutan",
-            "Monitoring progres implementasi"
-          ]
-        },
-        {
-          number: "04",
-          title: "Monitoring & Pelaporan",
-          description: "Kami melakukan monitoring berkala menggunakan teknologi IoT, drone, dan satelit untuk memastikan proyek berjalan sesuai rencana. Data yang dikumpulkan digunakan untuk pelaporan transparan kepada semua stakeholder.",
-          details: [
-            "Monitoring real-time dengan teknologi IoT",
-            "Survei berkala menggunakan drone",
-            "Analisis citra satelit bulanan",
-            "Pelaporan transparan kepada stakeholder"
-          ]
-        },
-        {
-          number: "05",
-          title: "Verifikasi & Sertifikasi",
-          description: "Proyek yang telah berjalan akan diverifikasi oleh pihak ketiga independen yang terakreditasi. Proses ini memastikan bahwa serapan karbon yang diklaim benar-benar terjadi dan dapat dipertanggungjawabkan.",
-          details: [
-            "Verifikasi oleh pihak ketiga terakreditasi",
-            "Audit lapangan independen",
-            "Validasi data serapan karbon",
-            "Penerbitan sertifikat karbon"
-          ]
-        },
-        {
-          number: "06",
-          title: "Penjualan & Pembagian Keuntungan",
-          description: "Kredit karbon yang telah tersertifikasi dijual kepada pembeli yang telah terverifikasi. Keuntungan dibagikan secara adil kepada petani dengan transparansi penuh dalam setiap transaksi.",
-          details: [
-            "Penjualan kepada pembeli terverifikasi",
-            "Pembagian keuntungan yang adil",
-            "Transparansi dalam setiap transaksi",
-            "Pelaporan keuangan berkala"
-          ]
-        }
-      ],
-      principles: {
-        title: "Prinsip Kerja Kami",
-        items: [
-          {
-            icon: Shield,
-            title: "Transparansi",
-            description: "Semua proses dan data dapat diakses dan diverifikasi oleh stakeholder"
-          },
-          {
-            icon: Users,
-            title: "Partisipatif",
-            description: "Melibatkan masyarakat lokal dalam setiap tahap pengembangan proyek"
-          },
-          {
-            icon: Award,
-            title: "Standar Internasional",
-            description: "Mengikuti standar VCS, Gold Standard, dan regulasi karbon Indonesia"
-          },
-          {
-            icon: Target,
-            title: "Dampak Terukur",
-            description: "Setiap proyek memiliki target dan indikator dampak yang jelas dan terukur"
-          }
-        ]
-      },
-      technology: {
-        title: "Teknologi yang Kami Gunakan",
-        description: "Impact Institute menggunakan teknologi terdepan untuk memastikan akurasi dan transparansi dalam setiap proyek karbon.",
-        items: [
-          {
-            title: "Teknologi Satelit",
-            description: "Monitoring perubahan tutupan lahan dan biomassa secara real-time"
-          },
-          {
-            title: "Internet of Things (IoT)",
-            description: "Sensor tanah dan cuaca untuk monitoring kondisi lahan secara otomatis"
-          },
-          {
-            title: "Blockchain",
-            description: "Sistem pencatatan transaksi yang transparan dan tidak dapat diubah"
-          },
-          {
-            title: "Machine Learning",
-            description: "Analisis prediktif untuk optimalisasi serapan karbon"
-          }
-        ]
-      }
-    },
-    en: {
-      title: "How We Work",
-      subtitle: "Transparent and Structured Process for Sustainable Carbon Solutions",
-      description: "Impact Institute uses proven methodologies and international standards to ensure every carbon project delivers real impact for the environment and communities.",
-      steps: [
-        {
-          number: "01",
-          title: "Land Registration & Verification",
-          description: "Farmers register their land through our platform. Our expert team conducts land eligibility verification using satellite technology and field surveys to ensure accurate carbon sequestration potential.",
-          details: [
-            "Satellite imagery analysis for land mapping",
-            "Field surveys by certified expert teams",
-            "Soil and vegetation condition assessment",
-            "Ownership and land legality verification"
-          ]
+            "Analisis kondisi tanah dan topografi",
+            "Penilaian biodiversitas existing",
+            "Evaluasi akses air dan infrastruktur",
+            "Dokumentasi dengan teknologi satelit"
+          ],
+          image: "/images/step1-verification.webp"
         },
         {
           number: "02",
-          title: "Project Plan Development", 
-          description: "Based on verification results, we develop carbon project plans tailored to land characteristics and farmer needs. Each plan follows international standards such as VCS and Gold Standard.",
+          title: "Perencanaan Strategis",
+          description: "Berdasarkan hasil verifikasi, kami menyusun rencana komprehensif yang disesuaikan dengan kondisi spesifik lahan dan kebutuhan petani.",
           details: [
-            "Project design according to VCS/Gold Standard",
-            "Baseline calculation and carbon sequestration projection",
-            "Implementation plan and timeline",
-            "Monitoring and evaluation strategy"
-          ]
+            "Desain sistem pertanian berkelanjutan",
+            "Perhitungan proyeksi hasil dan dampak",
+            "Penjadwalan implementasi bertahap",
+            "Perencanaan anggaran dan sumber daya"
+          ],
+          image: "/images/step2-planning.webp"
         },
         {
           number: "03",
-          title: "Implementation & Assistance",
-          description: "Our field team assists farmers in implementing sustainable farming practices. We provide training, seedlings, and necessary technology to ensure project success.",
+          title: "Implementasi & Pelatihan",
+          description: "Pelaksanaan rencana dengan pendampingan intensif, termasuk pelatihan teknis dan transfer pengetahuan kepada petani mitra.",
           details: [
-            "Sustainable farming practice training",
-            "Provision of seedlings and technology",
-            "Continuous technical assistance",
-            "Implementation progress monitoring"
-          ]
+            "Pelatihan praktik pertanian berkelanjutan",
+            "Implementasi teknologi modern",
+            "Pendampingan teknis berkelanjutan",
+            "Pembentukan kelompok tani"
+          ],
+          image: "/images/step3-implementation.webp"
         },
         {
           number: "04",
-          title: "Monitoring & Reporting",
-          description: "We conduct regular monitoring using IoT technology, drones, and satellites to ensure projects run according to plan. Collected data is used for transparent reporting to all stakeholders.",
+          title: "Monitoring & Evaluasi",
+          description: "Sistem monitoring real-time menggunakan teknologi IoT dan satelit untuk memastikan implementasi berjalan sesuai rencana.",
           details: [
-            "Real-time monitoring with IoT technology",
-            "Regular surveys using drones",
-            "Monthly satellite imagery analysis",
-            "Transparent reporting to stakeholders"
-          ]
+            "Monitoring pertumbuhan tanaman",
+            "Pengukuran dampak lingkungan",
+            "Evaluasi produktivitas lahan",
+            "Laporan berkala kepada stakeholder"
+          ],
+          image: "/images/step4-monitoring.webp"
         },
         {
           number: "05",
-          title: "Verification & Certification",
-          description: "Running projects will be verified by accredited independent third parties. This process ensures that claimed carbon sequestration actually occurs and is accountable.",
+          title: "Sertifikasi & Validasi",
+          description: "Proses sertifikasi oleh lembaga independen untuk memastikan standar internasional tercapai dan dampak terverifikasi.",
           details: [
-            "Verification by accredited third parties",
-            "Independent field audits",
-            "Carbon sequestration data validation",
-            "Carbon certificate issuance"
-          ]
+            "Audit oleh lembaga sertifikasi",
+            "Verifikasi dampak karbon",
+            "Dokumentasi compliance",
+            "Penerbitan sertifikat resmi"
+          ],
+          image: "/images/step5-certification.webp"
         },
         {
           number: "06",
-          title: "Sales & Profit Sharing",
-          description: "Certified carbon credits are sold to verified buyers. Profits are shared fairly with farmers with full transparency in every transaction.",
+          title: "Akses Pasar & Keberlanjutan",
+          description: "Menghubungkan petani dengan pasar yang tepat dan memastikan keberlanjutan jangka panjang melalui dukungan berkelanjutan.",
           details: [
-            "Sales to verified buyers",
-            "Fair profit sharing",
-            "Transparency in every transaction",
-            "Regular financial reporting"
-          ]
+            "Koneksi dengan pembeli premium",
+            "Negosiasi harga yang adil",
+            "Program loyalitas jangka panjang",
+            "Dukungan teknis berkelanjutan"
+          ],
+          image: "/images/step6-marketplace.webp"
         }
       ],
-      principles: {
-        title: "Our Working Principles",
-        items: [
-          {
-            icon: Shield,
-            title: "Transparency",
-            description: "All processes and data can be accessed and verified by stakeholders"
-          },
-          {
-            icon: Users,
-            title: "Participatory",
-            description: "Involving local communities in every stage of project development"
-          },
-          {
-            icon: Award,
-            title: "International Standards",
-            description: "Following VCS, Gold Standard, and Indonesian carbon regulations"
-          },
-          {
-            icon: Target,
-            title: "Measurable Impact",
-            description: "Every project has clear and measurable targets and impact indicators"
-          }
-        ]
-      },
-      technology: {
-        title: "Technology We Use",
-        description: "Impact Institute uses cutting-edge technology to ensure accuracy and transparency in every carbon project.",
-        items: [
-          {
-            title: "Satellite Technology",
-            description: "Real-time monitoring of land cover and biomass changes"
-          },
-          {
-            title: "Internet of Things (IoT)",
-            description: "Soil and weather sensors for automatic land condition monitoring"
-          },
-          {
-            title: "Blockchain",
-            description: "Transparent and immutable transaction recording system"
-          },
-          {
-            title: "Machine Learning",
-            description: "Predictive analysis for carbon sequestration optimization"
-          }
-        ]
-      }
+      benefitsTitle: "Manfaat Pendekatan Kami",
+      benefitsSubtitle: "Keunggulan metodologi yang telah terbukti",
+      benefits: [
+        {
+          title: "Pendekatan Holistik",
+          description: "Mempertimbangkan semua aspek dari lingkungan, ekonomi, hingga sosial"
+        },
+        {
+          title: "Teknologi Terdepan",
+          description: "Menggunakan IoT, satelit, dan AI untuk monitoring dan optimasi"
+        },
+        {
+          title: "Dukungan Berkelanjutan",
+          description: "Pendampingan jangka panjang untuk memastikan kesuksesan proyek"
+        },
+        {
+          title: "Standar Internasional",
+          description: "Mengikuti protokol dan standar yang diakui secara global"
+        }
+      ]
+    },
+    en: {
+      pageTitle: "How We Work",
+      heroSubtitle: "Comprehensive process to create sustainable impact",
+      description: "We use a systematic and structured approach to ensure every sustainable agriculture project delivers maximum impact for farmers and the environment.",
+      processTitle: "Our Work Process",
+      processSubtitle: "6 strategic steps towards sustainable agriculture",
+      steps: [
+        {
+          number: "01",
+          title: "Land Verification & Assessment",
+          description: "Our expert team conducts in-depth surveys to assess land conditions, productivity potential, and suitability for sustainable agricultural practices.",
+          details: [
+            "Soil condition and topography analysis",
+            "Existing biodiversity assessment",
+            "Water access and infrastructure evaluation",
+            "Documentation with satellite technology"
+          ],
+          image: "/images/step1-verification.webp"
+        },
+        {
+          number: "02",
+          title: "Strategic Planning",
+          description: "Based on verification results, we develop comprehensive plans tailored to specific land conditions and farmer needs.",
+          details: [
+            "Sustainable farming system design",
+            "Yield and impact projection calculations",
+            "Phased implementation scheduling",
+            "Budget and resource planning"
+          ],
+          image: "/images/step2-planning.webp"
+        },
+        {
+          number: "03",
+          title: "Implementation & Training",
+          description: "Plan execution with intensive mentoring, including technical training and knowledge transfer to partner farmers.",
+          details: [
+            "Sustainable farming practice training",
+            "Modern technology implementation",
+            "Continuous technical mentoring",
+            "Farmer group formation"
+          ],
+          image: "/images/step3-implementation.webp"
+        },
+        {
+          number: "04",
+          title: "Monitoring & Evaluation",
+          description: "Real-time monitoring system using IoT and satellite technology to ensure implementation runs according to plan.",
+          details: [
+            "Plant growth monitoring",
+            "Environmental impact measurement",
+            "Land productivity evaluation",
+            "Regular stakeholder reporting"
+          ],
+          image: "/images/step4-monitoring.webp"
+        },
+        {
+          number: "05",
+          title: "Certification & Validation",
+          description: "Certification process by independent institutions to ensure international standards are met and impact is verified.",
+          details: [
+            "Certification body audit",
+            "Carbon impact verification",
+            "Compliance documentation",
+            "Official certificate issuance"
+          ],
+          image: "/images/step5-certification.webp"
+        },
+        {
+          number: "06",
+          title: "Market Access & Sustainability",
+          description: "Connecting farmers with the right markets and ensuring long-term sustainability through continuous support.",
+          details: [
+            "Premium buyer connections",
+            "Fair price negotiations",
+            "Long-term loyalty programs",
+            "Continuous technical support"
+          ],
+          image: "/images/step6-marketplace.webp"
+        }
+      ],
+      benefitsTitle: "Benefits of Our Approach",
+      benefitsSubtitle: "Advantages of our proven methodology",
+      benefits: [
+        {
+          title: "Holistic Approach",
+          description: "Considering all aspects from environmental, economic, to social"
+        },
+        {
+          title: "Cutting-edge Technology",
+          description: "Using IoT, satellites, and AI for monitoring and optimization"
+        },
+        {
+          title: "Continuous Support",
+          description: "Long-term mentoring to ensure project success"
+        },
+        {
+          title: "International Standards",
+          description: "Following globally recognized protocols and standards"
+        }
+      ]
     }
   }
 
@@ -267,43 +219,38 @@ const HowWeWork = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Language Toggle */}
-      <div className="fixed top-20 right-4 z-50">
-        <div className="bg-white rounded-lg shadow-lg p-2 flex gap-2">
-          <button
-            onClick={() => setLanguage('id')}
-            className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-              language === 'id' 
-                ? 'bg-accent-teal text-white' 
-                : 'text-gray-600 hover:text-accent-teal'
-            }`}
-          >
-            ID
-          </button>
-          <button
-            onClick={() => setLanguage('en')}
-            className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-              language === 'en' 
-                ? 'bg-accent-teal text-white' 
-                : 'text-gray-600 hover:text-accent-teal'
-            }`}
-          >
-            EN
-          </button>
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-dark via-primary-medium to-accent-teal text-white py-20">
+      <section className="relative min-h-[60vh] flex items-center justify-center">
+        {/* Background Image with Dark Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/images/howwework.webp)',
+          }}
+        >
+          {/* Dark overlay for better text contrast */}
+          <div className="absolute inset-0 bg-black/60"></div>
+        </div>
+
+        {/* Additional gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/80 via-primary-medium/70 to-accent-teal/60"></div>
+
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            {currentContent.pageTitle}
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto">
+            {currentContent.heroSubtitle}
+          </p>
+        </div>
+      </section>
+
+      {/* Description Section */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              {currentContent.title}
-            </h1>
-            <p className="text-xl text-gray-100 max-w-4xl mx-auto mb-8">
-              {currentContent.subtitle}
-            </p>
-            <p className="text-lg text-gray-200 max-w-5xl mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-xl text-gray-600 leading-relaxed">
               {currentContent.description}
             </p>
           </div>
@@ -311,45 +258,51 @@ const HowWeWork = () => {
       </section>
 
       {/* Process Steps */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
+              {currentContent.processTitle}
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {currentContent.processSubtitle}
+            </p>
+          </div>
+
           <div className="space-y-16">
             {currentContent.steps.map((step, index) => (
-              <div key={index} className={`flex flex-col lg:flex-row items-center gap-12 ${
-                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-              }`}>
-                <div className="lg:w-1/2">
-                  <div className="relative">
-                    <div className="text-6xl font-bold text-accent-green/20 mb-4">
+              <div key={index} className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12`}>
+                <div className="flex-1">
+                  <div className="flex items-center mb-6">
+                    <div className="w-16 h-16 bg-accent-teal text-white rounded-full flex items-center justify-center text-2xl font-bold mr-4">
                       {step.number}
                     </div>
-                    <h3 className="text-2xl font-bold text-primary-dark mb-4">
+                    <h3 className="text-2xl md:text-3xl font-bold text-primary-dark">
                       {step.title}
                     </h3>
-                    <p className="text-gray-600 mb-6 leading-relaxed">
-                      {step.description}
-                    </p>
-                    <ul className="space-y-2">
-                      {step.details.map((detail, detailIndex) => (
-                        <li key={detailIndex} className="flex items-start gap-3">
-                          <CheckCircle className="h-5 w-5 text-accent-teal mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-700">{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
+                  <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                    {step.description}
+                  </p>
+                  <ul className="space-y-3">
+                    {step.details.map((detail, detailIndex) => (
+                      <li key={detailIndex} className="flex items-start">
+                        <CheckCircle className="w-5 h-5 text-accent-teal mt-1 mr-3 flex-shrink-0" />
+                        <span className="text-gray-600">{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="lg:w-1/2">
+                <div className="flex-1">
                   <div className="relative">
                     <img 
-                      src={`/images/step${index + 1}-${step.number === '01' ? 'verification' : 
-                        step.number === '02' ? 'planning' : 
-                        step.number === '03' ? 'implementation' : 
-                        step.number === '04' ? 'monitoring' : 
-                        'verification'}.png`}
+                      src={step.image} 
                       alt={step.title}
-                      className="w-full h-80 object-cover rounded-2xl shadow-lg"
+                      className="w-full h-80 object-cover rounded-lg shadow-lg"
                     />
+                    <div className="absolute top-4 left-4 w-12 h-12 bg-accent-orange text-primary-dark rounded-full flex items-center justify-center text-xl font-bold">
+                      {step.number}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -358,58 +311,30 @@ const HowWeWork = () => {
         </div>
       </section>
 
-      {/* Working Principles */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
-              {currentContent.principles.title}
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {currentContent.principles.items.map((principle, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="w-16 h-16 bg-accent-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <principle.icon className="h-8 w-8 text-accent-teal" />
-                  </div>
-                  <CardTitle className="text-xl text-primary-dark">
-                    {principle.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    {principle.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Technology Section */}
+      {/* Benefits Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
-              {currentContent.technology.title}
+              {currentContent.benefitsTitle}
             </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-              {currentContent.technology.description}
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {currentContent.benefitsSubtitle}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {currentContent.technology.items.map((tech, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-xl text-primary-dark">
-                    {tech.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {currentContent.benefits.map((benefit, index) => (
+              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="w-16 h-16 bg-accent-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-accent-teal" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-primary-dark mb-3">
+                    {benefit.title}
+                  </h3>
                   <p className="text-gray-600">
-                    {tech.description}
+                    {benefit.description}
                   </p>
                 </CardContent>
               </Card>
@@ -419,32 +344,31 @@ const HowWeWork = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-dark to-accent-teal text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            {language === 'id' 
-              ? 'Siap Bergabung dengan Gerakan Karbon Positif?' 
-              : 'Ready to Join the Carbon Positive Movement?'
-            }
+      <section className="py-20 bg-gradient-to-br from-accent-teal to-primary-medium text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            {language === 'id' ? 'Siap Memulai Proyek Berkelanjutan?' : 'Ready to Start a Sustainable Project?'}
           </h2>
-          <p className="text-xl text-gray-100 mb-8">
-            {language === 'id'
-              ? 'Daftarkan lahan Anda sekarang dan mulai berkontribusi pada solusi perubahan iklim'
-              : 'Register your land now and start contributing to climate change solutions'
+          <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
+            {language === 'id' 
+              ? 'Mari bersama-sama menciptakan dampak positif untuk lingkungan dan masyarakat melalui pertanian berkelanjutan.'
+              : 'Let\'s work together to create positive impact for the environment and society through sustainable agriculture.'
             }
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90">
-              <Link to="/untuk-petani">
-                {language === 'id' ? 'Daftarkan Lahan Anda' : 'Register Your Land'}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary-dark">
-              <Link to="/kontak">
-                {language === 'id' ? 'Hubungi Kami' : 'Contact Us'}
-              </Link>
-            </Button>
+            <a 
+              href="/untuk-petani" 
+              className="bg-accent-orange hover:bg-accent-orange/90 text-primary-dark font-semibold px-8 py-3 text-lg rounded-md inline-flex items-center justify-center transition-colors"
+            >
+              {language === 'id' ? 'Daftarkan Lahan' : 'Register Land'}
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </a>
+            <a 
+              href="/kontak" 
+              className="bg-white hover:bg-gray-100 text-primary-dark font-semibold px-8 py-3 text-lg rounded-md inline-flex items-center justify-center transition-colors"
+            >
+              {language === 'id' ? 'Hubungi Kami' : 'Contact Us'}
+            </a>
           </div>
         </div>
       </section>

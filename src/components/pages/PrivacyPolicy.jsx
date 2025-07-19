@@ -62,7 +62,21 @@ Kami tidak akan menjual atau menyewakan informasi pribadi Anda kepada pihak keti
 Meskipun kami mengambil langkah-langkah yang wajar untuk melindungi informasi Anda, tidak ada sistem yang 100% aman.`
         },
         {
-          title: "5. Cookies dan Teknologi Pelacakan",
+          title: "5. Hak Anda",
+          content: `Anda memiliki hak untuk:
+
+• Mengakses informasi pribadi yang kami miliki tentang Anda
+• Meminta koreksi atau pembaruan informasi yang tidak akurat
+• Meminta penghapusan informasi pribadi dalam kondisi tertentu
+• Membatasi pemrosesan informasi Anda
+• Meminta portabilitas data
+• Menarik persetujuan kapan saja
+• Mengajukan keluhan kepada otoritas perlindungan data
+
+Untuk menggunakan hak-hak ini, silakan hubungi kami melalui informasi kontak di bawah.`
+        },
+        {
+          title: "6. Cookies dan Teknologi Pelacakan",
           content: `Website kami menggunakan cookies dan teknologi serupa untuk:
 
 • Mengingat preferensi dan pengaturan Anda
@@ -73,7 +87,7 @@ Meskipun kami mengambil langkah-langkah yang wajar untuk melindungi informasi An
 Anda dapat mengontrol penggunaan cookies melalui pengaturan browser Anda. Namun, menonaktifkan cookies dapat mempengaruhi fungsionalitas website.`
         },
         {
-          title: "6. Penyimpanan Data",
+          title: "7. Penyimpanan Data",
           content: `Kami menyimpan informasi pribadi Anda selama diperlukan untuk:
 
 • Menyediakan layanan yang Anda minta
@@ -84,7 +98,7 @@ Anda dapat mengontrol penggunaan cookies melalui pengaturan browser Anda. Namun,
 Data akan dihapus atau dianonimkan ketika tidak lagi diperlukan, kecuali jika diwajibkan oleh hukum untuk disimpan lebih lama.`
         },
         {
-          title: "7. Transfer Data Internasional",
+          title: "8. Transfer Data Internasional",
           content: `Informasi Anda dapat ditransfer dan diproses di negara lain untuk keperluan:
 
 • Verifikasi dan sertifikasi internasional
@@ -94,7 +108,7 @@ Data akan dihapus atau dianonimkan ketika tidak lagi diperlukan, kecuali jika di
 Kami memastikan bahwa transfer tersebut dilakukan sesuai dengan hukum yang berlaku dan dengan perlindungan yang memadai.`
         },
         {
-          title: "8. Perubahan Kebijakan",
+          title: "9. Perubahan Kebijakan",
           content: `Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Perubahan material akan diberitahukan melalui:
 
 • Email kepada pengguna terdaftar
@@ -104,7 +118,7 @@ Kami memastikan bahwa transfer tersebut dilakukan sesuai dengan hukum yang berla
 Penggunaan berkelanjutan layanan kami setelah perubahan menunjukkan penerimaan Anda terhadap kebijakan yang diperbarui.`
         },
         {
-          title: "9. Kontak Kami",
+          title: "10. Kontak Kami",
           content: `Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini atau ingin menggunakan hak-hak Anda, silakan hubungi kami:
 
 Impact Institute
@@ -175,7 +189,21 @@ We will not sell or rent your personal information to third parties for marketin
 While we take reasonable steps to protect your information, no system is 100% secure.`
         },
         {
-          title: "5. Cookies and Tracking Technologies",
+          title: "5. Your Rights",
+          content: `You have the right to:
+
+• Access personal information we hold about you
+• Request correction or update of inaccurate information
+• Request deletion of personal information under certain conditions
+• Restrict processing of your information
+• Request data portability
+• Withdraw consent at any time
+• File complaints with data protection authorities
+
+To exercise these rights, please contact us using the information below.`
+        },
+        {
+          title: "6. Cookies and Tracking Technologies",
           content: `Our website uses cookies and similar technologies to:
 
 • Remember your preferences and settings
@@ -186,7 +214,7 @@ While we take reasonable steps to protect your information, no system is 100% se
 You can control cookie usage through your browser settings. However, disabling cookies may affect website functionality.`
         },
         {
-          title: "6. Data Retention",
+          title: "7. Data Retention",
           content: `We retain your personal information as long as necessary to:
 
 • Provide the services you requested
@@ -197,7 +225,7 @@ You can control cookie usage through your browser settings. However, disabling c
 Data will be deleted or anonymized when no longer needed, unless required by law to be retained longer.`
         },
         {
-          title: "7. International Data Transfers",
+          title: "8. International Data Transfers",
           content: `Your information may be transferred and processed in other countries for:
 
 • International verification and certification
@@ -207,7 +235,7 @@ Data will be deleted or anonymized when no longer needed, unless required by law
 We ensure such transfers comply with applicable laws and provide adequate protection.`
         },
         {
-          title: "8. Policy Changes",
+          title: "9. Policy Changes",
           content: `We may update this Privacy Policy from time to time. Material changes will be notified through:
 
 • Email to registered users
@@ -217,7 +245,7 @@ We ensure such transfers comply with applicable laws and provide adequate protec
 Continued use of our services after changes indicates your acceptance of the updated policy.`
         },
         {
-          title: "9. Contact Us",
+          title: "10. Contact Us",
           content: `If you have questions about this Privacy Policy or want to exercise your rights, please contact us:
 
 Impact Institute

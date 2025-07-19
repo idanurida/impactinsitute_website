@@ -7,12 +7,10 @@ import HowWeWork from './components/pages/HowWeWork'
 import OurProjects from './components/pages/OurProjects'
 import ForFarmers from './components/pages/ForFarmers'
 import ForCarbonBuyers from './components/pages/ForCarbonBuyers'
-import Contact from './components/pages/Contact'
-import FAQ from './components/pages/FAQ'
 import NewsEducation from './components/pages/NewsEducation'
+import FAQ from './components/pages/FAQ'
+import Contact from './components/pages/Contact'
 import PrivacyPolicy from './components/pages/PrivacyPolicy'
-import TermsConditions from './components/pages/TermsConditions'
-import Disclaimer from './components/pages/Disclaimer'
 import './App.css'
 
 function App() {
@@ -29,12 +27,9 @@ function App() {
             <Route path="/untuk-petani" element={<ForFarmers />} />
             <Route path="/untuk-pembeli-karbon" element={<ForCarbonBuyers />} />
             <Route path="/berita-edukasi" element={<NewsEducation />} />
-            <Route path="/kontak" element={<Contact />} />
             <Route path="/faq" element={<FAQ />} />
-            <Route path="/news-education" element={<NewsEducation />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-conditions" element={<TermsConditions />} />
-            <Route path="/disclaimer" element={<Disclaimer />} />
+            <Route path="/kontak" element={<Contact />} />
+            <Route path="/kebijakan-privasi" element={<PrivacyPolicy />} />
           </Routes>
         </main>
         <Footer />
