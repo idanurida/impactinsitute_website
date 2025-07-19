@@ -1,3 +1,4 @@
+pageTitle: "Tentang Impact Institute!",
 import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Leaf, Users, Award, Globe, Target, Eye, Heart, Shield } from 'lucide-react'
