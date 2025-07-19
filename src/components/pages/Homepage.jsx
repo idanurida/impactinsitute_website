@@ -1,20 +1,3 @@
-Baik, mari kita modifikasi file `Homepage.jsx` Anda sesuai dengan instruksi yang Anda berikan.
-
-Saya akan melakukan perubahan berikut:
-
-1.  **Hero Section Background Image:** Mengganti gambar latar belakang hero section menjadi `how_we_work.webp`. Saya berasumsi file ini sudah ada di folder `public/images/` dengan nama `how_we_work.webp`.
-2.  **Gambar Card pada Section Proyek Unggulan (yang akan menjadi "Rencana Project"):** Kode Anda sudah menggunakan `url(/images/kopi.webp)`, `url(/images/mangrove.webp)`, dan `url(/images/karet.webp)` pada card di bagian ini. Saya akan memastikan itu tetap seperti itu dan memberikan styling yang sesuai.
-3.  **Warna Tombol "Pelajari Lebih Lanjut":**
-      * Tombol "Pelajari Lebih Lanjut" di Hero Section dan Services Section akan diubah warna latar belakangnya menjadi warna biru gelap (misal: `bg-blue-600`) dengan teks putih, dan hover effect yang sedikit lebih gelap (`hover:bg-blue-700`) agar tetap kontras dan terbaca.
-      * Tombol "Pelajari Lebih Lanjut" di section paling bawah akan diperlakukan serupa.
-4.  **Perubahan Judul Section:**
-      * "Pencapaian Kami" akan diubah menjadi "Target Project".
-      * "Proyek Unggulan" akan diubah menjadi "Rencana Project".
-5.  **Background Kontras untuk "Rencana Project" Section:**
-      * Untuk section "Rencana Project" (sebelumnya "Proyek Unggulan"), saya akan memastikan latar belakang paragraf di dalam card kontras dengan teks. Karena `CardContent` secara default putih dan teksnya gelap (`text-primary-dark`, `text-gray-600`), kontras sudah baik. Saya tidak akan menambahkan layer background lagi di dalam `CardContent` agar tidak redundan, melainkan memastikan styling sudah mendukung keterbacaan.
-
-Berikut adalah kode `Homepage.jsx` yang sudah dimodifikasi:
-
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
