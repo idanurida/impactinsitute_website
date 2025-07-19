@@ -39,7 +39,7 @@ const Homepage = () => {
       },
       servicesTitle: "Layanan Kami",
       servicesSubtitle: "Solusi komprehensif untuk pertanian berkelanjutan",
-      agricultureConsultation: {
+      agricultureConsultation: { // Keeping 'agricultureConsultation' as per user's provided content object
         title: "Konsultasi Pertanian",
         description: "Analisis lahan dan rekomendasi praktik terbaik untuk meningkatkan produktivitas"
       },
@@ -60,8 +60,8 @@ const Homepage = () => {
       featuredProjectsSubtitle: "Dampak nyata yang telah kami ciptakan bersama petani Indonesia",
       testimonialsTitle: "Testimoni Petani",
       testimonialsSubtitle: "Dengarkan pengalaman langsung dari petani mitra kami",
-      ctaTitle: "Bergabunglah dengan Gerakan Pertanian Berkelanjutan",
-      ctaSubtitle: "Mari bersama-sama menciptakan dampak positif untuk lingkungan dan masyarakat"
+      ctaTitle: "Bergabunglah dengan Gerakan Pertanian Berkelanjutan", // Keeping ctaTitle
+      ctaSubtitle: "Mari bersama-sama menciptakan dampak positif untuk lingkungan dan masyarakat" // Keeping ctaSubtitle
     },
     en: {
       heroTitle: "Together with Indonesian Farmers",
@@ -89,7 +89,7 @@ const Homepage = () => {
       },
       servicesTitle: "Our Services",
       servicesSubtitle: "Comprehensive solutions for sustainable agriculture",
-      agricultureConsultation: {
+      agricultureConsultation: { // Keeping 'agricultureConsultation' as per user's provided content object
         title: "Agricultural Consultation",
         description: "Land analysis and best practice recommendations to increase productivity"
       },
@@ -110,8 +110,8 @@ const Homepage = () => {
       featuredProjectsSubtitle: "Real impact we have created together with Indonesian farmers",
       testimonialsTitle: "Farmer Testimonials",
       testimonialsSubtitle: "Listen to direct experiences from our partner farmers",
-      ctaTitle: "Join the Sustainable Agriculture Movement",
-      ctaSubtitle: "Let's work together to create positive impact for the environment and society"
+      ctaTitle: "Join the Sustainable Agriculture Movement", // Keeping ctaTitle
+      ctaSubtitle: "Let's work together to create positive impact for the environment and society" // Keeping ctaSubtitle
     }
   }
 
@@ -120,19 +120,20 @@ const Homepage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        {/* Background Image with Dark Overlay */}
-        <div 
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden"> {/* Merged remote's overflow-hidden */}
+        {/* Background Image */}
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: 'url(/images/hero-farmers.webp)',
           }}
         >
-          {/* Dark overlay for better text contrast - 70% opacity */}
-          <div className="absolute inset-0 bg-black/70"></div>
+          {/* Overlay - Using remote's gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/80 via-primary-medium/70 to-accent-teal/60"></div>
         </div>
 
         {/* Additional gradient overlay */}
+        {/* Keeping this existing gradient overlay as it was already outside the conflict block */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/80 via-primary-medium/70 to-accent-teal/60"></div>
 
         {/* Content */}
@@ -146,11 +147,13 @@ const Homepage = () => {
               {currentContent.heroDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="bg-accent-orange hover:bg-accent-orange/90 text-primary-dark font-semibold px-8 py-3 text-lg">
-                <Link to="/untuk-petani">{currentContent.registerLand}</Link>
+              {/* Button 1: Using local content key with remote's styling and link target */}
+              <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
+                <Link to="/untuk-petani#registration-form">{currentContent.registerLand}</Link>
               </Button>
-              <Button asChild className="bg-accent-teal hover:bg-accent-teal/90 text-white font-semibold px-8 py-3 text-lg">
-                <Link to="/tentang-kami">{currentContent.learnMore}</Link>
+              {/* Button 2: Using local content key with remote's styling and link target */}
+              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4">
+                <Link to="/bagaimana-kami-bekerja">{currentContent.learnMore}</Link>
               </Button>
             </div>
           </div>
@@ -248,10 +251,10 @@ const Homepage = () => {
                   <Leaf className="w-8 h-8 text-accent-teal" />
                 </div>
                 <h3 className="text-2xl font-semibold text-primary-dark mb-4">
-                  {currentContent.agricultureConsultation.title}
+                  {currentContent.agricultureConsultation.title} {/* Keeping user's content key */}
                 </h3>
-                <p className="text-gray-600 mb-6">
-                  {currentContent.agricultureConsultation.description}
+                <p className="text-gray-600 text-lg"> {/* Adopted remote's text-lg */}
+                  {currentContent.agricultureConsultation.description} {/* Keeping user's content key */}
                 </p>
                 <Button asChild className="bg-accent-teal hover:bg-accent-teal/90 text-white">
                   <Link to="/bagaimana-kami-bekerja">
@@ -269,7 +272,7 @@ const Homepage = () => {
                 <h3 className="text-2xl font-semibold text-primary-dark mb-4">
                   {currentContent.trainingMentoring.title}
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 text-lg"> {/* Adopted remote's text-lg */}
                   {currentContent.trainingMentoring.description}
                 </p>
                 <Button asChild className="bg-accent-teal hover:bg-accent-teal/90 text-white">
@@ -288,7 +291,7 @@ const Homepage = () => {
                 <h3 className="text-2xl font-semibold text-primary-dark mb-4">
                   {currentContent.projectCertification.title}
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 text-lg"> {/* Adopted remote's text-lg */}
                   {currentContent.projectCertification.description}
                 </p>
                 <Button asChild className="bg-accent-teal hover:bg-accent-teal/90 text-white">
@@ -303,7 +306,7 @@ const Homepage = () => {
       </section>
 
       {/* Achievements Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-dark to-primary-medium text-white">
+      <section className="py-20 bg-gradient-to-r from-accent-teal to-primary-medium text-white"> {/* Adopted remote's gradient */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -313,20 +316,20 @@ const Homepage = () => {
 
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl md:text-5xl font-bold text-accent-green mb-2">500+</div>
-              <div className="text-xl text-gray-200">{currentContent.farmerPartners}</div>
+              <div className="text-4xl md:text-5xl font-bold text-accent-green mb-2">500+</div> {/* Keeping user's text-accent-green */}
+              <div className="text-xl text-gray-200">{currentContent.farmerPartners}</div> {/* Keeping user's text-gray-200 */}
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold text-accent-green mb-2">25+</div>
-              <div className="text-xl text-gray-200">{currentContent.activeProjects}</div>
+              <div className="text-4xl md:text-5xl font-bold text-accent-green mb-2">25+</div> {/* Keeping user's text-accent-green */}
+              <div className="text-xl text-gray-200">{currentContent.activeProjects}</div> {/* Keeping user's text-gray-200 */}
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold text-accent-green mb-2">15</div>
-              <div className="text-xl text-gray-200">{currentContent.provinces}</div>
+              <div className="text-4xl md:text-5xl font-bold text-accent-green mb-2">15</div> {/* Keeping user's text-accent-green */}
+              <div className="text-xl text-gray-200">{currentContent.provinces}</div> {/* Keeping user's text-gray-200 */}
             </div>
             <div>
-              <div className="text-4xl md:text-5xl font-bold text-accent-green mb-2">10,000+</div>
-              <div className="text-xl text-gray-200">{currentContent.hectares}</div>
+              <div className="text-4xl md:text-5xl font-bold text-accent-green mb-2">10,000+</div> {/* Keeping user's text-accent-green */}
+              <div className="text-xl text-gray-200">{currentContent.hectares}</div> {/* Keeping user's text-gray-200 */}
             </div>
           </div>
         </div>
@@ -346,43 +349,61 @@ const Homepage = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-cover bg-center" style={{backgroundImage: 'url(/images/kopi.webp)'}}></div>
+              <div className="h-48 bg-cover bg-center" style={{backgroundImage: 'url(/images/kopi.webp)'}}></div> {/* Keeping user's background image */}
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
                   Agroforestri Kopi Berkelanjutan
                 </h3>
                 <p className="text-gray-600 mb-4">Aceh Tengah</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <div><strong>Dampak:</strong> 150 petani terlibat</div>
-                  <div><strong>Luas Area:</strong> 1,200 hektar</div>
+                <div className="space-y-2"> {/* Adopted remote's structured div */}
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-500">Dampak:</span>
+                    <span className="text-sm font-medium">150 petani terlibat</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-500">Luas Area:</span>
+                    <span className="text-sm font-medium">1,200 hektar</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-cover bg-center" style={{backgroundImage: 'url(/images/mangrove.webp)'}}></div>
+              <div className="h-48 bg-cover bg-center" style={{backgroundImage: 'url(/images/mangrove.webp)'}}></div> {/* Keeping user's background image */}
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
                   Restorasi Hutan Mangrove
                 </h3>
                 <p className="text-gray-600 mb-4">Lampung Timur</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <div><strong>Dampak:</strong> 89 petani terlibat</div>
-                  <div><strong>Luas Area:</strong> 800 hektar</div>
+                <div className="space-y-2"> {/* Adopted remote's structured div */}
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-500">Dampak:</span>
+                    <span className="text-sm font-medium">89 petani terlibat</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-500">Luas Area:</span>
+                    <span className="text-sm font-medium">800 hektar</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-cover bg-center" style={{backgroundImage: 'url(/images/karet.webp)'}}></div>
+              <div className="h-48 bg-cover bg-center" style={{backgroundImage: 'url(/images/karet.webp)'}}></div> {/* Keeping user's background image */}
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold text-primary-dark mb-2">
                   Perkebunan Karet Ramah Lingkungan
                 </h3>
                 <p className="text-gray-600 mb-4">Jambi</p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <div><strong>Dampak:</strong> 120 petani terlibat</div>
-                  <div><strong>Luas Area:</strong> 600 hektar</div>
+                <div className="space-y-2"> {/* Adopted remote's structured div */}
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-500">Dampak:</span>
+                    <span className="text-sm font-medium">120 petani terlibat</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-500">Luas Area:</span>
+                    <span className="text-sm font-medium">600 hektar</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -406,51 +427,57 @@ const Homepage = () => {
             <Card className="p-6">
               <CardContent>
                 <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
+                  {/* Adopted remote's user info structure */}
+                  <div className="w-12 h-12 bg-accent-teal rounded-full flex items-center justify-center mr-4">
+                    <Users className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-primary-dark">Bapak Suryadi</h4>
+                    <p className="text-sm text-gray-500">Petani Kopi, Aceh</p>
+                  </div>
                 </div>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 italic"> {/* Adopted remote's italic */}
                   "Berkat Impact Institute, hasil panen kopi saya meningkat 40% dan saya mendapat pengetahuan baru tentang pertanian berkelanjutan."
                 </p>
-                <div className="border-t pt-4">
-                  <h4 className="font-semibold text-primary-dark">Bapak Suryadi</h4>
-                  <p className="text-sm text-gray-500">Petani Kopi, Aceh</p>
-                </div>
+                {/* Removed the redundant border-t pt-4 div here */}
               </CardContent>
             </Card>
 
             <Card className="p-6">
               <CardContent>
                 <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
+                  {/* Adopted remote's user info structure */}
+                  <div className="w-12 h-12 bg-accent-teal rounded-full flex items-center justify-center mr-4">
+                    <Users className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-primary-dark">Ibu Sari</h4>
+                    <p className="text-sm text-gray-500">Petani Sayuran, Jawa Barat</p>
+                  </div>
                 </div>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 italic"> {/* Adopted remote's italic */}
                   "Program pelatihan yang diberikan sangat membantu. Sekarang saya bisa menerapkan teknologi modern di lahan saya."
                 </p>
-                <div className="border-t pt-4">
-                  <h4 className="font-semibold text-primary-dark">Ibu Sari</h4>
-                  <p className="text-sm text-gray-500">Petani Sayuran, Jawa Barat</p>
-                </div>
+                {/* Removed the redundant border-t pt-4 div here */}
               </CardContent>
             </Card>
 
             <Card className="p-6">
               <CardContent>
                 <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
+                  {/* Adopted remote's user info structure */}
+                  <div className="w-12 h-12 bg-accent-teal rounded-full flex items-center justify-center mr-4">
+                    <Users className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-primary-dark">Bapak Ahmad</h4>
+                    <p className="text-sm text-gray-500">Petani Karet, Jambi</p>
+                  </div>
                 </div>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 italic"> {/* Adopted remote's italic */}
                   "Pendampingan dari tim Impact Institute membuat usaha tani saya lebih efisien dan ramah lingkungan."
                 </p>
-                <div className="border-t pt-4">
-                  <h4 className="font-semibold text-primary-dark">Bapak Ahmad</h4>
-                  <p className="text-sm text-gray-500">Petani Karet, Jambi</p>
-                </div>
+                {/* Removed the redundant border-t pt-4 div here */}
               </CardContent>
             </Card>
           </div>
@@ -458,20 +485,22 @@ const Homepage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-accent-teal to-primary-medium text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-20 bg-gradient-to-r from-primary-dark to-accent-teal text-white"> {/* Adopted remote's gradient */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {currentContent.ctaTitle}
+            {currentContent.ctaTitle} {/* Keeping user's content key */}
           </h2>
-          <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
-            {currentContent.ctaSubtitle}
+          <p className="text-xl mb-8 opacity-90"> {/* Adopted remote's opacity-90 */}
+            {currentContent.ctaSubtitle} {/* Keeping user's content key */}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild className="bg-accent-orange hover:bg-accent-orange/90 text-primary-dark font-semibold px-8 py-3 text-lg">
-              <Link to="/untuk-petani">{currentContent.registerLand}</Link>
+            {/* Button 1: Using local content key with remote's styling and link target */}
+            <Button asChild size="lg" className="bg-accent-orange text-primary-dark hover:bg-accent-orange/90 font-semibold text-lg px-8 py-4">
+              <Link to="/untuk-petani#registration-form">{currentContent.registerLand}</Link>
             </Button>
-            <Button asChild className="bg-white hover:bg-gray-100 text-primary-dark font-semibold px-8 py-3 text-lg">
-              <Link to="/kontak">{currentContent.learnMore}</Link>
+            {/* Button 2: Using remote's hardcoded text and styling, with local link target */}
+            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary-dark font-semibold text-lg px-8 py-4">
+              <Link to="/kontak">{language === 'id' ? 'Hubungi Kami' : 'Contact Us'}</Link> {/* Using remote's hardcoded text for clarity */}
             </Button>
           </div>
         </div>
@@ -481,4 +510,3 @@ const Homepage = () => {
 }
 
 export default Homepage
-
