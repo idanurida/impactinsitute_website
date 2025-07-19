@@ -1,4 +1,5 @@
-pageTitle: "Tentang Impact Institute!",
+// Ini adalah perubahan paksa untuk deploy ulang Netlify - HAPUS NANTI
+return (
 import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Leaf, Users, Award, Globe, Target, Eye, Heart, Shield } from 'lucide-react'
